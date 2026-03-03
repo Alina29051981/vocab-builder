@@ -12,8 +12,52 @@ The application allows users to register, manage their own vocabulary, discover 
 
 [Live Pages].(https://vocab-builder-delta.vercel.app/)
 
+---
+
 ## Design & API
 
 [Design]. (https://www.figma.com/file/XRhVBdCX1wPyzCRA567kud/VocabBuilder)
 
 [Backend API].( https://vocab-builder-backend.p.goit.global/api-docs/)
+
+---
+
+## Features
+
+### Authentication
+
+- User registration and login
+- Form validation using `react-hook-form` + `yup`
+- Password visibility toggle
+- Error handling with notifications
+- Auto-login after successful registration
+
+---
+
+### Dictionary
+
+- Add, edit, delete words
+- Words table with progress tracking
+- Search with debounce
+- Filtering by category
+- Server-side pagination
+- Statistics dashboard
+
+---
+
+### Recommendations
+
+- Browse words added by other users
+- Add words to personal dictionary
+- Shared table component
+
+---
+
+### Training
+
+- Interactive word training system
+- Progress tracking
+- Save training results
+- Result modal after completion
+
+---
