@@ -1,0 +1,73 @@
+/* === CSS RESET === */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: var(--font-main), sans-serif;
+    background-color: #f8f8f8;
+    color: #111111;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* === MEDIA DEFAULTS === */
+
+img,
+picture,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* === FORM RESET === */
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* === LINKS === */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* === LISTS === */
+
+ul {
+    list-style: none;
+}
+
+/* === CONTAINER (опційно) === */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
