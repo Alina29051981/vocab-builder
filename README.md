@@ -61,3 +61,26 @@ The application allows users to register, manage their own vocabulary, discover 
 - Result modal after completion
 
 ---
+
+### UI/UX
+
+- Responsive design (mobile, tablet, desktop)
+- Semantic HTML5
+- Optimized images and retina support
+- Icons via sprite
+- Modal windows (ESC, backdrop, close button)
+
+---
+
+## Technologies
+
+- **React / Next.js**
+- **TypeScript**
+- **Redux / Zustand** (state management)
+- **React Query (TanStack Query)**
+- **Axios**
+- **React Hook Form + Yup**
+- **CSS / Modules**
+- **MUI (optional components)**
+
+---
