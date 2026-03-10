@@ -84,3 +84,50 @@ The application allows users to register, manage their own vocabulary, discover 
 - **MUI (optional components)**
 
 ---
+
+## Project Structure
+
+```
+app/
+│ ├─ (auth routes)/
+│ │ ├─ Login/
+│ │ ├─ Register/
+│ │ ├─ styles/
+│ │ └─ layout.tsx
+│ └─ (private routes)/
+│ ├─ dictionary/
+│ ├─ recommend/
+│ ├─ training/
+│ └─layout.tsx
+├─ components/
+│ ├─ AuthNavigation/
+│ ├─ Dashboard/
+│ │ ├─ Filters
+│ │ │ └─ SortDropdown/
+│ │ └─ Statistics
+│ ├─ Header/
+│ │ ├─ Header
+│ │ ├─ LogoutButton/
+│ │ └─ UserMenu
+│ ├─ modals/
+│ │ ├─AddWordModal/
+│ │ ├─EditWordModal/
+│ │ ├─MobileMenu/
+│ │ ├─WordActionsMenu/
+│ │ ├─WordFormFields/
+│ │ └─WellDoneModal
+│ ├─ ProgressBar/
+│ ├─ EmptyState/
+│ ├─ words/
+│ │ ├─ WordsClient/
+│ │ ├─ WordsPagination
+│ │ └─ WordsTable
+├─ lib/
+│ ├─ api/
+│ ├─ auth/
+│ └─ validation/
+├─ public/
+├─ services/
+├─ types/
+└─ middleware.ts
+```
