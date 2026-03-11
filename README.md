@@ -74,13 +74,13 @@ The application allows users to register, manage their own vocabulary, discover 
 
 ## Technologies
 
-- **React / Next.js**
+- **Next.js**
 - **TypeScript**
 - **Redux / Zustand** (state management)
 - **React Query (TanStack Query)**
 - **Axios**
 - **React Hook Form + Yup**
-- **CSS / Modules**
+- **CSS Modules**
 - **MUI (optional components)**
 
 ---
@@ -131,3 +131,19 @@ app/
 ├─ types/
 └─ middleware.ts
 ```
+
+## How to Run
+
+```bash
+git clone https://github.com/your-username/vocab-builder.git
+cd vocab-builder
+npm install
+npm run dev
+```
+
+## Notes
+
+- Forms are fully validated
+- API errors are handled via notifications
+- All main components are reusable
+- Data is fetched from backend with pagination
