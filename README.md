@@ -147,3 +147,21 @@ npm run dev
 - API errors are handled via notifications
 - All main components are reusable
 - Data is fetched from backend with pagination
+
+## Screenshots
+
+### Authentication
+
+![Register](./public/screenshots/register.webp)
+
+### Dictionary
+
+![Dictionary](./public/screenshots/dictionary.webp)
+
+### Training
+
+![Training](./public/screenshots/training.webp)
+
+### Result Modal
+
+![Well Done](./public/screenshots/WellDoneModal.webp)
