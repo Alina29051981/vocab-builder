@@ -152,16 +152,16 @@ npm run dev
 
 ### Authentication
 
-![Register](./public/screenshots/register.webp)
+![Register](./screenshots/register.webp)
 
 ### Dictionary
 
-![Dictionary](./public/screenshots/dictionary.webp)
+![Dictionary](./screenshots/dictionary.webp)
 
 ### Training
 
-![Training](./public/screenshots/training.webp)
+![Training](./screenshots/training.webp)
 
 ### Result Modal
 
-![Well Done](./public/screenshots/WellDoneModal.webp)
+![Well Done](./screenshots/WellDoneModal.webp)
