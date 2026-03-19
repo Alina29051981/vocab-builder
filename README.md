@@ -10,15 +10,15 @@ The application allows users to register, manage their own vocabulary, discover 
 
 ## Live Demo
 
-[Live Pages].(https://vocab-builder-delta.vercel.app/)
+[Open App](https://vocab-builder-delta.vercel.app/)
 
 ---
 
 ## Design & API
 
-[Design]. (https://www.figma.com/file/XRhVBdCX1wPyzCRA567kud/VocabBuilder)
+[Design](https://www.figma.com/file/XRhVBdCX1wPyzCRA567kud/VocabBuilder)
 
-[Backend API].( https://vocab-builder-backend.p.goit.global/api-docs/)
+[Backend API](https://vocab-builder-backend.p.goit.global/api-docs/)
 
 ---
 
@@ -76,7 +76,7 @@ The application allows users to register, manage their own vocabulary, discover 
 
 - **Next.js**
 - **TypeScript**
-- **Redux / Zustand** (state management)
+- **Redux** (state management)
 - **React Query (TanStack Query)**
 - **Axios**
 - **React Hook Form + Yup**
@@ -89,12 +89,12 @@ The application allows users to register, manage their own vocabulary, discover 
 
 ```
 app/
-│ ├─ (auth routes)/
+│ ├─ (auth)/
 │ │ ├─ Login/
 │ │ ├─ Register/
 │ │ ├─ styles/
 │ │ └─ layout.tsx
-│ └─ (private routes)/
+│ └─ (private)/
 │ ├─ dictionary/
 │ ├─ recommend/
 │ ├─ training/
