@@ -3,7 +3,7 @@
 
 import { AxiosError } from "axios";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../../lib/validation/registerSchema";
 import { useAuth } from "../../../lib/auth/AuthContext";
@@ -11,46 +11,51 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import css from "../styles/AuthForm.module.css";
+import type { SignUpRequest } from "../../../types/auth";
 
-type FormValues = {
-  name: string;
-  email: string;
-  password: string;
-};
+// Тип строго відповідає Swagger: всі поля обов'язкові
+type FormValues = SignUpRequest;
 
 export default function RegisterPage() {
   const router = useRouter();
   const { register: registerUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
   });
 
- const onSubmit = async (data: FormValues) => {
-  try {
-    await registerUser(data); // ✅ тепер data містить name, email, password
-    toast.success("Successfully registered");
-    router.push("/dictionary");
-  } catch (err: unknown) {
-    if (err instanceof AxiosError) {
-      const message = err.response?.data?.message;
-      if (typeof message === "string" && message.includes("exists")) {
-        toast.error("User already exists. Try login.");
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const payload: SignUpRequest = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+
+    try {
+      await registerUser(payload); // ✅ відправка на backend
+      toast.success("Successfully registered");
+      router.push("/dictionary");
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        const message = err.response?.data?.message;
+        if (typeof message === "string" && message.includes("exists")) {
+          toast.error("User already exists. Try login.");
+        } else {
+          toast.error(message || "Register failed");
+        }
+      } else if (err instanceof Error) {
+        toast.error(err.message);
       } else {
-        toast.error(message || "Register failed");
+        toast.error("Register failed");
       }
-    } else if (err instanceof Error) {
-      toast.error(err.message);
-    } else {
-      toast.error("Register failed");
     }
-  }
-};
+  };
 
   return (
     <div className={css.card}>

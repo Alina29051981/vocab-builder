@@ -2,7 +2,7 @@
 "use client";
 
 import { AxiosError } from "axios";
-import { useForm, SubmitHandler, Resolver } from "react-hook-form";
+import { useForm, SubmitHandler, Resolver  } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../../lib/validation/loginSchema";
 import { useAuth } from "../../../lib/auth/AuthContext";
@@ -10,35 +10,34 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useState } from "react";
-import { InferType } from "yup";
 import css from "../styles/AuthForm.module.css";
+import type { SignInRequest } from "../../../types/auth";
 
-// Тип форми з Yup
-type FormValues = InferType<typeof loginSchema>;
+// Для yup беремо InferType, але поля не опційні
+type FormValues = SignInRequest;
 
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-
-  // Явно типізуємо resolver як Resolver<FormValues>
-  const resolver: Resolver<FormValues> = yupResolver(loginSchema) as Resolver<FormValues>;
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({
-    resolver,
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+const resolver: Resolver<FormValues> = yupResolver(loginSchema);
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+  resolver,
+  defaultValues: {
+    email: "",
+    password: "",
+  },
+});
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    // payload повністю відповідає SignInRequest
+    const payload: SignInRequest = {
+      email: data.email,
+      password: data.password,
+    };
+
     try {
-      await login(data);
+      await login(payload);
       toast.success("Successfully logged in");
       router.push("/dictionary");
     } catch (err: unknown) {
@@ -80,7 +79,7 @@ export default function LoginPage() {
           <button
             type="button"
             className={css.togglePassword}
-            onClick={() => setShowPassword((prev) => !prev)}
+            onClick={() => setShowPassword(prev => !prev)}
           >
             <svg width="20" height="20">
               <use
@@ -88,9 +87,7 @@ export default function LoginPage() {
               />
             </svg>
           </button>
-          {errors.password && (
-            <p className={css.error}>{errors.password.message}</p>
-          )}
+          {errors.password && <p className={css.error}>{errors.password.message}</p>}
         </div>
 
         <button type="submit" className={css.button}>
