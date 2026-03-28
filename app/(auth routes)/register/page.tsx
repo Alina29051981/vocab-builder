@@ -27,30 +27,30 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm({
     resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit = async (data: FormValues) => {
-    try {
-      await registerUser(data);
-      toast.success("Successfully registered");
-      router.push("/dictionary");
-    } catch (err: unknown) {
-      if (err instanceof AxiosError) {
-        const message = err.response?.data?.message;
-        if (typeof message === "string" && message.includes("exists")) {
-          toast.error("User already exists. Try login.");
-        } else {
-          toast.error(message || "Register failed");
-        }
-      } else if (err instanceof Error) {
-        toast.error(err.message);
+ const onSubmit = async (data: FormValues) => {
+  try {
+    await registerUser(data); // ✅ тепер data містить name, email, password
+    toast.success("Successfully registered");
+    router.push("/dictionary");
+  } catch (err: unknown) {
+    if (err instanceof AxiosError) {
+      const message = err.response?.data?.message;
+      if (typeof message === "string" && message.includes("exists")) {
+        toast.error("User already exists. Try login.");
       } else {
-        toast.error("Register failed");
+        toast.error(message || "Register failed");
       }
+    } else if (err instanceof Error) {
+      toast.error(err.message);
+    } else {
+      toast.error("Register failed");
     }
-  };
+  }
+};
 
   return (
     <div className={css.card}>

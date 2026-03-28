@@ -1,7 +1,7 @@
-// components/words/WordsTable.tsx
 "use client";
 
-import { memo } from "react";
+import { memo, useState } from "react";
+import { AxiosError } from "axios";
 import css from "./WordsTable.module.css";
 import type { Word } from "@/types/word";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
@@ -13,26 +13,42 @@ interface Props {
   loading?: boolean;
   variant?: "dictionary" | "recommend";
   onDelete?: (id: string) => void;
-  onEdit?: (word: Word) => void; 
-  showArrow?: boolean; 
+  onEdit?: (word: Word) => void;
+  showArrow?: boolean;
 }
 
-function WordsTable({ data, loading = false, variant = "dictionary", onDelete, showArrow }: Props) {
+function WordsTable({
+  data,
+  loading = false,
+  variant = "dictionary",
+  onDelete,
+  showArrow,
+}: Props) {
+ 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   if (loading) return <p className={css.state}>Loading...</p>;
-  if (!data || data.length === 0) return <p className={css.state}>No words found.</p>;
+  if (!data || data.length === 0)
+    return <p className={css.state}>No words found.</p>;
 
   const handleAdd = async (id: string) => {
     try {
+      setErrorMessage(null);
       await addWordFromOtherUser(id);
-      alert("Added to dictionary");
-    } catch (e) {
-      console.error(e);
-      alert("Error adding word");
+    } catch (err) {
+      if (err instanceof AxiosError && err.response?.status === 409) {
+        setErrorMessage("This word is already in your dictionary");
+      } else {
+        setErrorMessage("Error adding word");
+      }
     }
   };
 
   return (
     <div className={css.tableWrapper}>
+     
+      {errorMessage && <p className={css.error}>{errorMessage}</p>}
+
       <table className={css.table}>
         <thead>
           <tr>

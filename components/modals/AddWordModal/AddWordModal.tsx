@@ -25,7 +25,7 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
+  } = useForm({
     resolver: yupResolver(createWordSchema),
     defaultValues: {
       en: "",

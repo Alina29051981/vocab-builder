@@ -2,7 +2,7 @@
 "use client";
 
 import { AxiosError } from "axios";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler, Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../../lib/validation/loginSchema";
 import { useAuth } from "../../../lib/auth/AuthContext";
@@ -10,27 +10,33 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useState } from "react";
+import { InferType } from "yup";
 import css from "../styles/AuthForm.module.css";
 
-type FormValues = {
-  email: string;
-  password: string;
-};
+// Тип форми з Yup
+type FormValues = InferType<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
+  // Явно типізуємо resolver як Resolver<FormValues>
+  const resolver: Resolver<FormValues> = yupResolver(loginSchema) as Resolver<FormValues>;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
-    resolver: yupResolver(loginSchema),
+    resolver,
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       await login(data);
       toast.success("Successfully logged in");
@@ -74,7 +80,7 @@ export default function LoginPage() {
           <button
             type="button"
             className={css.togglePassword}
-            onClick={() => setShowPassword(prev => !prev)}
+            onClick={() => setShowPassword((prev) => !prev)}
           >
             <svg width="20" height="20">
               <use
@@ -82,7 +88,9 @@ export default function LoginPage() {
               />
             </svg>
           </button>
-          {errors.password && <p className={css.error}>{errors.password.message}</p>}
+          {errors.password && (
+            <p className={css.error}>{errors.password.message}</p>
+          )}
         </div>
 
         <button type="submit" className={css.button}>
