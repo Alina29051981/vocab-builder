@@ -1,0 +1,30 @@
+/* app/components/ProgressBar/ProgressBar.module.css */
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.percent {
+    display: none;
+}
+
+.circle {
+    width: 26px;
+    height: 26px;
+}
+
+.circle circle:nth-child(2) {
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+@media (min-width: 768px) {
+    .percent {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #121417;
+        width: 30px;
+        text-align: right;
+    }
+}

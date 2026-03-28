@@ -1,0 +1,157 @@
+/* app/(private routes)/dictionary/Dictionary.module.css */
+
+.dictionaryPage {
+    padding-top: 32px;
+    min-height: 100vh;
+    background-color: #f7f8fa;
+}
+
+.pageTitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #121417;
+}
+
+.studyText {
+    padding-block: 40px 8px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: rgba(18, 20, 23, 0.5);
+}
+
+.studyNumber {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+}
+
+.addWordLink {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.addWordLink .plus {
+    color: var(--green);
+    font-size: 16px;
+    margin-right: 16px;
+}
+
+.trainButton {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.trainArrow {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 16px;
+    transition: transform 0.2s;
+}
+
+.trainButton:hover .trainArrow {
+    transform: translateX(2px);
+}
+
+.counterWrapper {
+    padding-bottom: 32px;
+}
+
+.topBar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.addWordButton {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 999px;
+    background-color: #85aa9f;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.addWordButton:hover {
+    background-color: #6f9c91;
+}
+
+.dashboardWrapper {
+    margin-bottom: 20px;
+}
+
+.wordsTableWrapper {
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.paginationWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .dictionaryPage {
+        padding: 24px;
+    }
+
+    .pageTitle {
+        font-size: 28px;
+    }
+
+    .topBar {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .addWordButton {
+        width: auto;
+        padding: 0 24px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .dictionaryPage {
+        padding: 32px;
+    }
+
+    .pageTitle {
+        margin-bottom: 24px;
+    }
+
+    .topBar {
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .dashboardWrapper {
+        margin-bottom: 24px;
+    }
+
+    .wordsTableWrapper {
+        margin-bottom: 24px;
+    }
+}

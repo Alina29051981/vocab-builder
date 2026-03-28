@@ -1,9 +1,12 @@
+// components/lib/validation/registerSchema.ts
+
 import * as Yup from "yup";
 
 export const registerSchema = Yup.object({
   name: Yup.string().required("Name is required"),
 
   email: Yup.string()
+     .trim()
     .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "Invalid email")
     .required("Email is required"),
 

@@ -1,3 +1,4 @@
+// components/types/auth.ts
 export interface SignUpRequest {
   name: string;
   email: string;
@@ -13,6 +14,7 @@ export interface AuthResponse {
   email: string;
   name: string;
   token: string;
+  avatar?: string;
 }
 
 export interface GetCurrentResponse {

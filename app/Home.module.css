@@ -1,3 +1,4 @@
+/* app/Home.module.css */
 .main {
     flex: 1;
 }
@@ -5,21 +6,21 @@
 .container {
     width: 90%;
     max-width: 1280px;
-    margin: 0px auto;
-    padding: 0 16px 16px;
+    margin: 0 auto;
+    padding: 0 16px;
 }
 
 .title {
     font-size: 36px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 60px;
     text-align: center;
+    margin: 0;
 }
 
-.description {
-    font-size: 18px;
-    color: #444444;
-    line-height: 28px;
-    margin-bottom: 16px;
+.logo svg {
+    display: block;
+    width: 36px;
+    height: 36px;
+    fill: #FCFCFC;
 }

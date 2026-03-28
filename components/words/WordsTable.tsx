@@ -1,72 +1,83 @@
+// components/words/WordsTable.tsx
 "use client";
 
 import { memo } from "react";
 import css from "./WordsTable.module.css";
 import type { Word } from "@/types/word";
+import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import WordActionsMenu from "../modals/WordActionsMenu/WordActionsMenu";
+import { addWordFromOtherUser } from "@/lib/api/words";
 
 interface Props {
   data: Word[];
   loading?: boolean;
-  onEdit?: (word: Word) => void;
+  variant?: "dictionary" | "recommend";
   onDelete?: (id: string) => void;
-  showActions?: boolean;
+  onEdit?: (word: Word) => void; 
+  showArrow?: boolean; 
 }
 
-function WordsTable({
-  data,
-  loading = false,
-  onEdit,
-  onDelete,
-  showActions = true,
-}: Props) {
-  if (loading) return <p>Loading...</p>;
-  if (!data || data.length === 0) return <p>No words found.</p>;
+function WordsTable({ data, loading = false, variant = "dictionary", onDelete, showArrow }: Props) {
+  if (loading) return <p className={css.state}>Loading...</p>;
+  if (!data || data.length === 0) return <p className={css.state}>No words found.</p>;
+
+  const handleAdd = async (id: string) => {
+    try {
+      await addWordFromOtherUser(id);
+      alert("Added to dictionary");
+    } catch (e) {
+      console.error(e);
+      alert("Error adding word");
+    }
+  };
 
   return (
-    <table className={css.table}>
-      <thead>
-        <tr>
-          <th>English</th>
-          <th>Ukrainian</th>
-          <th>Category</th>
-          <th>Progress</th>
-          {showActions && <th>Actions</th>}
-        </tr>
-      </thead>
+    <div className={css.tableWrapper}>
+      <table className={css.table}>
+        <thead>
+          <tr>
+            <th>Word</th>
+            <th>Translation</th>
+            <th className={css.categoryHeader}>Category</th>
+            {variant === "dictionary" && <th>Progress</th>}
+            <th></th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {data.map((word) => (
-          <tr key={word._id}>
-            <td>{word.en}</td>
-            <td>{word.ua}</td>
-            <td>{word.category}</td>
-            <td>{word.progress ?? 0}%</td>
+        <tbody>
+          {data.map((word) => (
+            <tr key={word._id} className={css.row}>
+              <td className={css.clickableCell}>{word.en}</td>
+              <td className={css.clickableCell}>{word.ua}</td>
+              <td className={`${css.category} ${css.categoryCell}`}>
+                {word.category}
+              </td>
 
-            {showActions && (
+              {variant === "dictionary" && (
+                <td className={css.progressCell}>
+                  <ProgressBar current={word.progress ?? 0} total={100} />
+                </td>
+              )}
+
               <td className={css.actions}>
-                {onEdit && (
-                  <button
-                    type="button"
-                    onClick={() => onEdit(word)}
-                  >
-                    Edit
-                  </button>
+                {variant === "dictionary" && (
+                  <WordActionsMenu word={word} onDelete={onDelete} />
                 )}
 
-                {onDelete && (
+                {variant === "recommend" && showArrow && (
                   <button
-                    type="button"
-                    onClick={() => onDelete(word._id)}
+                    className={css.arrowLink}
+                    onClick={() => handleAdd(word._id)}
                   >
-                    Delete
+                    →
                   </button>
                 )}
               </td>
-            )}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

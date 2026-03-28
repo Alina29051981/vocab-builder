@@ -1,4 +1,4 @@
-/* === CSS RESET === */
+/* app/globals.css */
 
 *,
 *::before,
@@ -12,6 +12,18 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+:root {
+    --black: #121417;
+    --green: #85aa9f;
+    --white: #fcfcfc;
+    --white-1: #f8f8f8;
+}
+
+:root {
+    --font-family: "MacPaw Fixel Display", sans-serif;
+    --second-family: "SF Pro Display", sans-serif;
+}
+
 html,
 body {
     height: 100%;
@@ -19,14 +31,12 @@ body {
 
 body {
     min-height: 100vh;
-    font-family: var(--font-main), sans-serif;
+    font-family: var(--font-family), sans-serif;
     background-color: #f8f8f8;
     color: #111111;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
-
-/* === MEDIA DEFAULTS === */
 
 img,
 picture,
@@ -34,8 +44,6 @@ svg {
     display: block;
     max-width: 100%;
 }
-
-/* === FORM RESET === */
 
 input,
 button,
@@ -51,20 +59,14 @@ button {
     cursor: pointer;
 }
 
-/* === LINKS === */
-
 a {
     text-decoration: none;
     color: inherit;
 }
 
-/* === LISTS === */
-
 ul {
     list-style: none;
 }
-
-/* === CONTAINER (опційно) === */
 
 .container {
     max-width: 1200px;

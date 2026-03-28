@@ -1,3 +1,5 @@
+// components/types/training.ts
+
 export interface UsersStatisticsResponse {
   totalCount: number;
 }
@@ -5,7 +7,7 @@ export interface UsersStatisticsResponse {
 export interface TaskWord {
   _id: string;
   en?: string;
-  ua?: string;
+  ua: string;
   task: "en" | "ua";
 }
 
@@ -18,7 +20,7 @@ export interface PostAnswerItem {
   en: string;
   ua: string;
   task: "en" | "ua";
-}
+ }
 
 export type PostAnswersRequest = PostAnswerItem[];
 

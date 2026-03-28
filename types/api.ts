@@ -1,3 +1,5 @@
+// components/types/api.ts
+
 import { User } from "./user";
 
 export interface CurrentUserResponse {

@@ -15,13 +15,19 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/recommend") ||
     pathname.startsWith("/training");
 
-  // Якщо немає токена → не пускаємо в приватні
+    if (pathname === "/") {
+    if (accessToken) {
+      return NextResponse.redirect(new URL("/dictionary", request.url));
+    } else {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
+
   if (!accessToken && isPrivateRoute) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Якщо є токен → не пускаємо на login/register
-  if (accessToken && isAuthRoute) {
+    if (accessToken && isAuthRoute) {
     return NextResponse.redirect(new URL("/dictionary", request.url));
   }
 
@@ -29,5 +35,12 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dictionary/:path*", "/recommend/:path*", "/training/:path*", "/login", "/register"],
+  matcher: [
+    "/",
+    "/dictionary/:path*",
+    "/recommend/:path*",
+    "/training/:path*",
+    "/login",
+    "/register",
+  ],
 };

@@ -1,0 +1,48 @@
+ /* app/(private routes)/recommend/Recommend.module.css */
+
+ .dashboardWrapper {
+     margin-top: 32px;
+ }
+
+ .paginationWrapper {
+     display: flex;
+     justify-content: center;
+     margin-top: 32px;
+ }
+
+ .studyText {
+     padding-block: 40px 8px;
+     font-family: var(--font-family);
+     font-weight: 500;
+     font-size: 14px;
+     color: rgba(18, 20, 23, 0.5);
+ }
+
+ .studyNumber {
+     font-family: var(--font-family);
+     font-weight: 500;
+     font-size: 16px;
+     line-height: 1.5;
+     color: var(--black);
+ }
+
+ .trainButton {
+     font-family: var(--font-family);
+     font-weight: 500;
+     font-size: 16px;
+     line-height: 1.5;
+     color: var(--black);
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     text-decoration: none;
+     cursor: pointer;
+     margin-bottom: 32px;
+ }
+
+ .trainArrow {
+     color: var(--green);
+     font-weight: 600;
+     font-size: 16px;
+     transition: transform 0.2s;
+ }

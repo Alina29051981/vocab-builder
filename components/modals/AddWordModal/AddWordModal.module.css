@@ -1,0 +1,195 @@
+/* AddWordModal.module.css */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(18, 20, 23, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    position: relative;
+    background: var(--green);
+    border-radius: 15px;
+    padding: 52.5px 16px 48px 16px;
+    width: 100%;
+    max-width: 342px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal .h1 {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.16667;
+    letter-spacing: -0.02em;
+    color: var(--white);
+}
+
+.modal .text {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--white);
+}
+
+.modal input,
+.modal select {
+    padding: 10px 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--white);
+    outline: none;
+    transition: border 0.2s;
+}
+
+.modal input:hover,
+.modal select:hover,
+.modal input:focus,
+.modal select:focus {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+
+.modal label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #121417;
+}
+
+
+
+.modal .buttons {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.modal .buttonSave {
+    background: var(--white);
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 30px;
+    padding-block: 12px;
+    padding-inline: 60px;
+    max-width: 158px;
+    height: 48px;
+    line-height: 1.5;
+    color: var(--black);
+    margin-right: 8px;
+}
+
+.modal .buttonSave:hover {
+    color: var(--green);
+}
+
+.modal .buttonCancel {
+    border: 1px solid rgba(252, 252, 252, 0.4);
+    border-radius: 30px;
+    padding-block: 12px;
+    padding-inline: 45px;
+    max-width: 145px;
+    height: 48px;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--white);
+}
+
+.modal .buttonCancel:hover {
+    background: var(--white);
+    color: var(--black);
+}
+
+.modal .flagWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4.5px;
+}
+
+.modal .flagWrapper p {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--white);
+    padding: 20.5px 0 12.5px 0;
+}
+
+.modal .closeBtn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    padding-bottom: 12.5px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.modal .closeBtn svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: var(--white);
+    transition: fill 0.2s;
+}
+
+.radioGroup {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    gap: 16px;
+}
+
+.radioInput {
+    display: none;
+}
+
+.customRadio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.icon {
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.radioInput:checked+.customRadio .icon {
+    opacity: 1;
+    fill: white;
+}
+
+.radioText {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+    color: var(--white);
+}

@@ -1,3 +1,4 @@
-export default function NotesLoading() {
-  return <p>Loading, please wait...</p>;
+// app/loading.tsx 
+export default function Loading() {
+  return <p>Loading...</p>;
 }

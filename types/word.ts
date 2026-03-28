@@ -1,3 +1,5 @@
+// components/types/word.ts
+
 export const CATEGORIES = [
   "verb",
   "participle",
@@ -20,8 +22,8 @@ export interface Word {
   ua: string;
   category: Category;
   isIrregular?: boolean;
-  owner?: string;
-  progress?: number;
+  owner: string;
+  progress: number;
 }
 
 export interface PaginatedWordsResponse {
@@ -31,7 +33,7 @@ export interface PaginatedWordsResponse {
   perPage: number;
 }
 
-export interface CreateWordRequest {
+export interface CreateNewWordRequest {
   en: string;
   ua: string;
   category: Category;
@@ -43,10 +45,33 @@ export interface EditWordRequest {
   ua: string;
   category: Category;
   isIrregular?: boolean;
+  progress?: number;
 }
 
 export interface DeleteWordResponse {
   message: string;
   id?: string;
-  _id?: string;
+ }
+
+export interface CreateNewWordResponse {
+  _id: string;
+  en: string;
+  ua: string;
+  category: string;
+  isIrregular: boolean;
+  owner: string;
+  progress: number;
+}
+
+export interface GetAllWordsResponse {
+  results: {
+    _id: string;
+    en: string;
+    ua: string;
+    category: string; 
+    isIrregular: boolean;
+  }[];
+  totalPages: number;
+  page: number;
+  perPage: number;
 }

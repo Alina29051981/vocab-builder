@@ -1,25 +1,15 @@
-// app/(private)/layout.tsx
-
-import Header from "@/components/Header/Header";
-
+// app/(private route)/layout.tsx
 import { ReactNode } from "react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function PrivateLayout({
-  children,
-}: {
-  children: ReactNode;
-  }) {
-   const token = cookies().get("accessToken")?.value;
+export default async function PrivateLayout({ children }: { children: ReactNode }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("accessToken")?.value;
 
-  // 🔥 якщо немає токена — редірект
   if (!token) {
-    redirect("/sign-in");
+    redirect("/login"); 
   }
 
-  return (
-    <>
-      <Header />
-      <main>{children}</main>
-    </>
-  );
+  return <>{children}</>; 
 }

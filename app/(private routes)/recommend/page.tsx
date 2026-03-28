@@ -1,15 +1,12 @@
-// app/(private)/recommend/page.tsx
+// app/(private routes)/recommend/page.tsx
+
+import RecommendClient from "./RecommendClient";
+import ProtectedRoute from "../../../components/ProtectedRoute/ProtectedRoute.client";
 
 export default function RecommendPage() {
   return (
-    <>
-      <Dashboard showAddWord={false} />
-    <WordsTable
-  data={data?.results ?? []}
-  loading={isLoading}
-  isRecommendPage={true}
-/>
-      <WordsPagination />
-    </>
+    <ProtectedRoute>
+      <RecommendClient />
+    </ProtectedRoute>
   );
 }

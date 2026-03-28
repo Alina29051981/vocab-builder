@@ -1,0 +1,137 @@
+/* components/words/WordTable.module.css */
+
+.state {
+    text-align: center;
+    padding: 20px;
+    color: #8a8d91;
+}
+
+
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table th {
+    text-align: left;
+    font-size: 14px;
+    color: #8a8d91;
+    padding: 12px 16px;
+    background-color: #f7f8fa;
+}
+
+.table td {
+    padding: 16px;
+    border-top: 1px solid rgba(18, 20, 23, 0.05);
+    font-size: 16px;
+}
+
+.row:hover {
+    background-color: #f1f1f1;
+}
+
+.category {
+    color: #85aa9f;
+    font-weight: 500;
+}
+
+.progressCell {
+    min-width: 120px;
+}
+
+.clickableCell {
+    cursor: pointer;
+    position: relative;
+}
+
+.popover {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(8px, -50%);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 4px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.popoverIcon {
+    width: 20px;
+    height: 20px;
+    margin: 4px 0;
+    cursor: pointer;
+    fill: #85aa9f;
+}
+
+.popoverIcon:hover {
+    fill: #6f9c91;
+}
+
+.table tr {
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+    border-radius: 8px 0 0 0;
+    padding-block: 16px;
+    padding-inline: 14px 27px;
+    width: 82px;
+    height: 54px;
+}
+
+.table th {
+    text-align: left;
+    padding-left: 14px;
+    padding-block: 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    background: rgba(133, 170, 159, 0.1);
+}
+
+.table td {
+    text-align: left;
+    padding-left: 14px;
+    padding-block: 16px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--black);
+    background: var(--white);
+}
+
+.table th,
+.table td {
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.table th:not(:last-child),
+.table td:not(:last-child) {
+    border-right: 1px solid #dbdbdb;
+}
+
+.categoryHeader,
+.categoryCell {
+    display: table-cell;
+}
+
+@media (max-width: 768px) {
+
+    .categoryHeader,
+    .categoryCell {
+        display: none;
+    }
+}

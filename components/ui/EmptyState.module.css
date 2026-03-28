@@ -1,0 +1,75 @@
+/* components/ui/EmptyState.module.css */
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: start;
+    background: var(--white-1);
+    margin-top: 75px;
+}
+
+.imageWrapper {
+    margin-bottom: 24px;
+}
+
+.image {
+    border-radius: 8px;
+}
+
+.title {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    margin-bottom: 16px;
+}
+
+.description {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--black);
+    margin-bottom: 132px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.addButton {
+    border-radius: 30px;
+    padding-block: 16px;
+    padding-inline: 100px;
+    width: 100%;
+    max-width: 343px;
+    height: 56px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background: var(--green);
+    border: none;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--white);
+}
+
+.addButton:hover {
+    background-color: var(--white);
+    color: var(--green);
+}
+
+.cancelButton {
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    color: rgba(18, 20, 23, 0.5);
+}
+
+.cancelButton:hover {
+    color: var(--black);
+}

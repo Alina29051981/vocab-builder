@@ -1,5 +1,34 @@
-import css from './Home.module.css'; 
+// app/page.tsx
+"use client";
 
-export default function Home() {
-  return <h1>TEST</h1>;
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../lib/auth/AuthContext";
+import css from "../app/Home.module.css";
+
+export default function HomePage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      if (user) {
+               router.replace("/dictionary");
+      } else {
+       
+        router.replace("/login"); 
+      }
+    }
+  }, [user, loading, router]);
+
+  return !loading && !user ? (
+  <div className={css.wrapper}>
+    <div className={css.logo}>
+      <svg width="36" height="36">
+        <use href="/sprite.svg#icon" />
+      </svg>
+      <h1 className={css.title}>VocabBuilder</h1>
+    </div>
+  </div>
+) : null;
 }

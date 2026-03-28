@@ -1,0 +1,64 @@
+/* components/words/Pagination.module.css */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(18, 20, 23, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.info {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--black);
+}
+
+.page {
+    border: 1px solid rgba(18, 20, 23, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    width: 32px;
+    height: 32px;
+    padding: 8px 12px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.button:hover,
+.page:hover {
+    color: var(--green);
+    background: #fff;
+    border-color: var(--green);
+}
+
+.active {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+    background: var(--green);
+}
