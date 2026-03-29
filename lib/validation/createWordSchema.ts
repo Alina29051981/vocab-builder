@@ -7,29 +7,23 @@ export type FormValues = {
   en: string;
   ua: string;
   category: Category;
-  isIrregular?: boolean;
+  isIrregular: boolean;
 };
 
-export const createWordSchema: ObjectSchema<FormValues, FormValues> = object({
+
+export const createWordSchema: ObjectSchema<FormValues> = object({
   en: string()
     .required("English is required")
-    .test(
-      "verb-format",
-            function (value) {
-        const { category, isIrregular } = this.parent;
-        if (category === "verb" && isIrregular) {
-          return validateVerbEn(value || "", true);
-        }
-        return true;
+    .test("verb-format", function (value) {
+      const { category, isIrregular } = this.parent as FormValues;
+      if (category === "verb" && isIrregular) {
+        return validateVerbEn(value || "", true);
       }
-    ),
+      return true;
+    }),
   ua: string().required("Ukrainian is required"),
   category: mixed<Category>()
     .oneOf(CATEGORIES, "Select a valid category")
     .required("Category is required"),
-  isIrregular: boolean().when("category", {
-    is: (val: Category) => val === "verb",
-    then: (schema) => schema.required(),
-    otherwise: (schema) => schema.strip(), 
-  }),
+  isIrregular: boolean().required(), 
 });

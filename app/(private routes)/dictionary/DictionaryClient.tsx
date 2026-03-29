@@ -22,8 +22,7 @@ export default function DictionaryClient() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  // Запит на отримання слів
-  const { data, isLoading } = useQuery<PaginatedWordsResponse>({
+   const { data, isLoading } = useQuery<PaginatedWordsResponse>({
     queryKey: ["ownWords", page, keyword, category, isIrregular],
     queryFn: () =>
       getOwnWords({
@@ -46,8 +45,7 @@ export default function DictionaryClient() {
       ? words.filter((w) => w.isIrregular === isIrregular)
       : words;
 
-  // Мутація для видалення слова
-  const deleteMutation = useMutation({
+   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteWord(id),
     onMutate: async (id: string) => {
       await queryClient.cancelQueries({ queryKey: ["ownWords", page, keyword, category, isIrregular] });
@@ -95,8 +93,7 @@ export default function DictionaryClient() {
     console.log("Edit word:", word);
   };
 
-  // Функція для оновлення списку після додавання слова
-  const handleAddWord = () => {
+    const handleAddWord = () => {
     queryClient.invalidateQueries({ queryKey: ["ownWords"], exact: false });
     setIsAddOpen(false);
   };
@@ -153,11 +150,10 @@ export default function DictionaryClient() {
         </div>
       </div>
 
-      {/* Модалка додавання слова */}
-      {isAddOpen && (
+           {isAddOpen && (
         <AddWordModal
-          onClose={() => setIsAddOpen(false)} // просто закриває модалку
-          onWordAdded={handleAddWord}        // оновлює список після додавання
+          onClose={() => setIsAddOpen(false)} 
+          onWordAdded={handleAddWord}      
         />
       )}
     </div>

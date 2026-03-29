@@ -1,5 +1,4 @@
 // components/AllWordsClient/AllWordsClient.tsx 
-
 "use client";
 
 import { useState } from "react";
@@ -49,18 +48,23 @@ export default function AllWordsClient() {
         <button onClick={() => setIsAddOpen(true)}>Add word</button>
       </div>
 
-      <Filters
-        onKeywordChange={(value) => {
-          setKeyword(value);
-          setPage(1);
-        }}
-        onCategoryChange={(value) => {
-          setCategory(value as Category | "");
-          setPage(1);
-        }}
-      />
+           <Filters
+  onChange={({ keyword, category }) => {
+    setKeyword(keyword);
+    setCategory(category);
+    setPage(1);
+  }}
+/>
 
-      {isAddOpen && <AddWordModal onClose={() => setIsAddOpen(false)} />}
+      {isAddOpen && (
+        <AddWordModal
+          onClose={() => setIsAddOpen(false)}
+          onWordAdded={() => {
+            toast.success("Word added!");
+            queryClient.invalidateQueries({ queryKey: ["allWords"] });
+          }}
+        />
+      )}
 
       {editingWord && (
         <EditWordModal

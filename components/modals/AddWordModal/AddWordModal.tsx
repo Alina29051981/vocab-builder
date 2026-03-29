@@ -1,4 +1,4 @@
-// components/modals/AddWordModal.tsx
+// components/modals/AddWordModal/AddWordModal.tsx
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -8,32 +8,35 @@ import toast from "react-hot-toast";
 import { createWord } from "../../../lib/api/words";
 import { createWordSchema, FormValues } from "../../../lib/validation/createWordSchema";
 import css from "./AddWordModal.module.css";
-import { CATEGORIES, CreateNewWordRequest } from "../../../types/word";
+import { CATEGORIES, CreateNewWordRequest, Word } from "../../../types/word";
 import { AxiosError } from "axios";
+import type { Resolver } from "react-hook-form"; 
 
 interface Props {
   onClose: () => void;
-  onWordAdded: () => void; 
+  onWordAdded: (newWord: Word) => void;
 }
 
 export default function AddWordModal({ onClose, onWordAdded }: Props) {
   const queryClient = useQueryClient();
 
+ 
+
   const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: yupResolver(createWordSchema),
-    defaultValues: {
-      en: "",
-      ua: "",
-      category: undefined,
-      isIrregular: false,
-    },
-  });
+  register,
+  handleSubmit,
+  watch,
+  setValue,
+  formState: { errors, isSubmitting },
+} = useForm<FormValues>({
+  resolver: yupResolver(createWordSchema) as Resolver<FormValues>, 
+  defaultValues: {
+    en: "",
+    ua: "",
+    category: "noun",
+    isIrregular: false,
+  },
+});
 
   const selectedCategory = watch("category");
   const isIrregularChecked = watch("isIrregular");
@@ -44,19 +47,19 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
         en: data.en.trim(),
         ua: data.ua.trim(),
         category: data.category,
+        isIrregular: data.category === "verb" ? data.isIrregular : false,
       };
-      if (data.category === "verb") {
-        payload.isIrregular = !!data.isIrregular;
-      }
 
-      await createWord(payload);
+      const createdWord = await createWord(payload);
+
+      const newWord: Word = {
+        ...createdWord,
+        category: createdWord.category as Word["category"],
+      };
 
       toast.success("Word added successfully");
-
-            await queryClient.invalidateQueries({ queryKey: ["ownWords"] });
-
-           onWordAdded();
-
+      await queryClient.invalidateQueries({ queryKey: ["ownWords"] });
+      onWordAdded(newWord);
       onClose();
     } catch (err) {
       let message = "Failed to create word";
@@ -74,7 +77,6 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
   return (
     <div className={css.backdrop}>
       <div className={css.modal}>
-        {/* Хрестик зверху */}
         <div className={css.closeBtn}>
           <button type="button" onClick={onClose} aria-label="Close">
             <svg className="icon icon-x">
@@ -85,11 +87,10 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
 
         <h2 className={css.h1}>Add word</h2>
         <p className={css.text}>
-          Adding a new word to the dictionary is an important step in enriching the language base and expanding the vocabulary.
+          Adding a new word to the dictionary enriches the language base.
         </p>
 
         <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
-          {/* Категорія */}
           <select {...register("category")}>
             <option value="">Categories</option>
             {CATEGORIES.map((cat) => (
@@ -100,7 +101,7 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
           </select>
           <p className={css.error}>{errors.category?.message}</p>
 
-                   {selectedCategory === "verb" && (
+          {selectedCategory === "verb" && (
             <div className={css.radioGroup}>
               <label className={css.radioLabel}>
                 <input
@@ -136,13 +137,13 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
 
               {isIrregularChecked && (
                 <p className={css.hint}>
-                  Such data must be entered in the format I form-II form-III form.
+                  Enter the verb in I-form-II-form-III-form format (e.g., go-went-gone).
                 </p>
               )}
             </div>
           )}
 
-                   <div className={css.flagWrapper}>
+          <div className={css.flagWrapper}>
             <svg width="28" height="28">
               <use xlinkHref="#flag-ukraine" />
             </svg>
@@ -151,7 +152,7 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
           <input {...register("ua")} placeholder="Ukrainian" />
           <p className={css.error}>{errors.ua?.message}</p>
 
-                   <div className={css.flagWrapper}>
+          <div className={css.flagWrapper}>
             <svg width="28" height="28">
               <use xlinkHref="#flag-england" />
             </svg>
@@ -161,13 +162,13 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
             {...register("en")}
             placeholder={
               isIrregularChecked
-                ? "English (I-form-II-form-III-form, e.g. go-went-gone)"
+                ? "English (I-form-II-form-III-form, e.g., go-went-gone)"
                 : "English"
             }
           />
           <p className={css.error}>{errors.en?.message}</p>
 
-                   <div className={css.buttons}>
+          <div className={css.buttons}>
             <button className={css.buttonSave} type="submit" disabled={isSubmitting}>
               Add
             </button>

@@ -3,18 +3,20 @@
 
 import { AxiosError } from "axios";
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../../lib/validation/registerSchema";
 import { useAuth } from "../../../lib/auth/AuthContext";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import { InferType } from "yup";
 import css from "../styles/AuthForm.module.css";
-import type { SignUpRequest } from "../../../types/auth";
+import { SignUpRequest } from "../../../types/auth";
 
-// Тип строго відповідає Swagger: всі поля обов'язкові
-type FormValues = SignUpRequest;
+type FormValues = Required<InferType<typeof registerSchema>>;
+
+const resolver: Resolver<FormValues> = yupResolver(registerSchema) as unknown as Resolver<FormValues>;
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -22,7 +24,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
-    resolver: yupResolver(registerSchema),
+    resolver,
     defaultValues: {
       name: "",
       email: "",
@@ -38,7 +40,7 @@ export default function RegisterPage() {
     };
 
     try {
-      await registerUser(payload); // ✅ відправка на backend
+      await registerUser(payload);
       toast.success("Successfully registered");
       router.push("/dictionary");
     } catch (err: unknown) {

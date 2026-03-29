@@ -1,6 +1,6 @@
 // components/types/api.ts
 
-import { User } from "./user";
+import { User } from "../types/user";
 
 export interface CurrentUserResponse {
   user: User | null;

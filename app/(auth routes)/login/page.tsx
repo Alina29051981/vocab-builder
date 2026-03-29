@@ -2,7 +2,7 @@
 "use client";
 
 import { AxiosError } from "axios";
-import { useForm, SubmitHandler, Resolver  } from "react-hook-form";
+import { useForm, SubmitHandler, Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../../lib/validation/loginSchema";
 import { useAuth } from "../../../lib/auth/AuthContext";
@@ -10,27 +10,29 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useState } from "react";
+import { InferType } from "yup";
 import css from "../styles/AuthForm.module.css";
-import type { SignInRequest } from "../../../types/auth";
+import { SignInRequest } from "../../../types/auth";
 
-// Для yup беремо InferType, але поля не опційні
-type FormValues = SignInRequest;
+type FormValues = Required<InferType<typeof loginSchema>>;
+
+const resolver: Resolver<FormValues> = yupResolver(loginSchema) as unknown as Resolver<FormValues>;
 
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-const resolver: Resolver<FormValues> = yupResolver(loginSchema);
+
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
-  resolver,
-  defaultValues: {
-    email: "",
-    password: "",
-  },
-});
+    resolver,
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    // payload повністю відповідає SignInRequest
+   
     const payload: SignInRequest = {
       email: data.email,
       password: data.password,
