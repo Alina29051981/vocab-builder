@@ -1,7 +1,6 @@
 // app/(private routes)/dictionary/DictionaryClient.tsx
 "use client";
 
-import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { getOwnWords, deleteWord } from "../../../lib/api/words"; 
@@ -11,6 +10,9 @@ import WordsPagination from "../../../components/words/WordsPagination";
 import AddWordModal from "../../../components/modals/AddWordModal/AddWordModal";
 import { Category, PaginatedWordsResponse, Word } from "../../../types/word";
 import css from "./Dictionary.module.css";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 
 export default function DictionaryClient() {
   const [page, setPage] = useState(1);
@@ -18,7 +20,14 @@ export default function DictionaryClient() {
   const [category, setCategory] = useState<Category | "">("");
   const [isIrregular, setIsIrregular] = useState<boolean | null>(null);
   const [isAddOpen, setIsAddOpen] = useState(false);
+const searchParams = useSearchParams();
 
+  useEffect(() => {
+  if (searchParams.get("addWord") === "true") {
+    setIsAddOpen(true);
+  }
+}, [searchParams]);
+  
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -99,13 +108,9 @@ export default function DictionaryClient() {
   };
 
   const handleTrain = () => {
-    if (words.length === 0) {
-      router.push("/empty");
-    } else {
-      router.push("/training");
-    }
+  router.push("/training");
   };
-
+  
   return (
     <div className={css.dictionaryPage}>
       <div className="container">

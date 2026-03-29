@@ -2,18 +2,40 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../lib/auth/AuthContext";
 import LogoutButton from "../LogoutButton/LogoutButton";
+import UserMenu from "./UserMenu";
+import MobileMenu from "../modals/MobiMenu/MobiMenu";
 import css from "./Header.module.css";
 
-export default function PrivateHeader() {
+export default function Header() {
   const { user, loading } = useAuth();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+
+useEffect(() => {
+  const checkScreen = () => {
+    const width = window.innerWidth;
+
+    setIsMobile(width < 768);
+    
+  };
+
+  checkScreen();
+
+  window.addEventListener("resize", checkScreen);
+  return () => window.removeEventListener("resize", checkScreen);
+}, []);
+  
+useEffect(() => {
+  setMenuOpen(false);
+}, [pathname]);
 
   if (loading) return null;
-
+  
   return (
     <header className={css.header}>
       <div className={css.left}>
@@ -25,53 +47,40 @@ export default function PrivateHeader() {
         </Link>
       </div>
 
-      {user && !menuOpen && (
-    <div className={css.userMobileWrapper}>
-      <svg className={css.avatarIcon}><use href="/sprite.svg#avatarIcon" /></svg>
-      <span className={css.userGreeting}>{user.name}</span>
-    </div>
-  )}
-      
-  <nav className={css.navigation}>
-    <Link href="/dictionary" className={`${css.navLink} ${pathname === "/dictionary" ? css.active : ""}`}>Dictionary</Link>
-    <Link href="/recommend" className={`${css.navLink} ${pathname === "/recommend" ? css.active : ""}`}>Recommend</Link>
-    <Link href="/training" className={`${css.navLink} ${pathname === "/training" ? css.active : ""}`}>Training</Link>
-
-    {user && !menuOpen && (
-      <div className={css.user}>
-        <svg className={css.avatarIcon}><use href="/sprite.svg#avatarIcon" /></svg>
-        <span className={css.userGreeting}>{user.name}</span>
-      </div>
-    )}
+           <nav className={css.navigation}>
+        <Link href="/dictionary" className={`${css.navLink} ${pathname === "/dictionary" ? css.active : ""}`}>Dictionary</Link>
+        <Link href="/recommend" className={`${css.navLink} ${pathname === "/recommend" ? css.active : ""}`}>Recommend</Link>
+        <Link href="/training" className={`${css.navLink} ${pathname === "/training" ? css.active : ""}`}>Training</Link>
+        {user && <UserMenu user={user} />}
         <LogoutButton />
       </nav>
-
-    <button
-    className={css.burger}
-    onClick={() => setMenuOpen(!menuOpen)}
-    aria-label="Toggle menu"
-  >
-    <svg width="36" height="24">
-      <use href={`/sprite.svg#${menuOpen ? "icon-x" : "burger"}`} />
+      
+      {user && isMobile && (
+  <div className={css.mobileUser}>
+          <span className={css.userName}>{user.name}</span>
+          <svg className={css.avatar}>
+      <use href="/sprite.svg#avatarIcon" />
     </svg>
-  </button>
+    
+  </div>
+)}
+      <button
+        className={css.burger}
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle menu"
+      >
+        <svg width="36" height="24">
+          <use href={`/sprite.svg#${menuOpen ? "icon-x" : "burger"}`} />
+        </svg>
+      </button>
 
-   {menuOpen && (
-    <div className={css.mobileMenuOverlay}>
-      <div className={css.mobileMenu}>
-        {user && (
-          <div className={css.mobileUser}>
-            <svg className={css.avatarIcon}><use href="/sprite.svg#avatarIcon" /></svg>
-            <span>{user.name}</span>
-          </div>
-        )}
-        <Link href="/dictionary" className={pathname === "/dictionary" ? css.active : ""}>Dictionary</Link>
-        <Link href="/recommend" className={pathname === "/recommend" ? css.active : ""}>Recommend</Link>
-        <Link href="/training" className={pathname === "/training" ? css.active : ""}>Training</Link>
-        <LogoutButton />
-      </div>
-    </div>
-  )}
+    {menuOpen && user && isMobile && (
+  <MobileMenu
+    user={user}
+    pathname={pathname}
+    onClose={() => setMenuOpen(false)}
+  />
+)}
     </header>
   );
 }

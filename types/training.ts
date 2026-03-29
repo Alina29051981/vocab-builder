@@ -11,6 +11,13 @@ export interface TaskWord {
   task: "en" | "ua";
 }
 
+
+export type OwnWord = {
+  _id: string;
+  en: string;
+  ua: string;
+};
+
 export interface GetUsersTasksResponse {
   words: TaskWord[];
 }

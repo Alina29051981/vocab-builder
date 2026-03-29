@@ -10,6 +10,7 @@ import EmptyState from "../../../components/ui/EmptyState";
 import toast from "react-hot-toast";
 import css from "./Training.module.css";
 import type { TaskWord } from "@/types/training";
+import { useRouter } from "next/navigation";
 
 export type UserAnswer = {
   wordId: string;
@@ -17,6 +18,7 @@ export type UserAnswer = {
 };
 
 export default function TrainingPageClient() {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
@@ -29,14 +31,15 @@ export default function TrainingPageClient() {
 
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
 
-    const mutation = useMutation({
+  // ✅ mutation
+  const mutation = useMutation({
     mutationFn: (answers: UserAnswer[]) =>
       postTrainingAnswers(
         answers.map(a => ({
           _id: a.wordId,
-          en: words.find(w => w._id === a.wordId)?.en || "",
-          ua: a.ua,
-          task: "en",
+    en: words.find(w => w._id === a.wordId)?.en || "", // <- тут обов’язково
+    ua: a.ua,
+    task: "en",
         }))
       ),
     onSuccess: () => {
@@ -44,54 +47,60 @@ export default function TrainingPageClient() {
       setUserAnswers([]);
       queryClient.invalidateQueries({ queryKey: ["trainingWords"] });
     },
-    onError: () => toast.error("Не вдалося зберегти відповіді. Спробуйте пізніше."),
+    onError: () => {
+      toast.error("Не вдалося зберегти відповіді. Спробуйте пізніше.");
+      router.push("/dictionary");
+    },
   });
 
+  // ✅ збереження відповіді
   const handleSaveAnswer = (wordId: string, uaAnswer: string) => {
     if (!uaAnswer.trim()) return;
 
     setUserAnswers(prev => {
       const exists = prev.find(a => a.wordId === wordId);
+
       if (exists) {
-        return prev.map(a => (a.wordId === wordId ? { wordId, ua: uaAnswer } : a));
+        return prev.map(a =>
+          a.wordId === wordId ? { wordId, ua: uaAnswer } : a
+        );
       }
+
       return [...prev, { wordId, ua: uaAnswer }];
     });
   };
 
+  // ✅ завершення тренування
   const handleFinishTraining = () => {
     if (userAnswers.length > 0) {
       mutation.mutate(userAnswers);
     }
   };
 
-  const handleWordAdded = () => {
-    queryClient.invalidateQueries({ queryKey: ["trainingWords"] });
-  };
-
-  if (isLoading)
+    if (isLoading) {
     return (
       <div className={css.wrapper}>
         <Loader />
       </div>
     );
+  }
 
-  if (isError)
+  if (isError) {
     return (
       <div className={css.wrapper}>
         <p className={css.error}>Щось пішло не так</p>
       </div>
     );
+  }
 
-  if (!words || words.length === 0)
+  // ✅ EmptyState
+  if (!words || words.length === 0) {
     return (
       <div className={css.wrapper}>
-        <EmptyState
-          onCancel={() => {}}
-          onWordAdded={handleWordAdded} 
-        />
+        <EmptyState onCancel={() => router.push("/dictionary")} />
       </div>
     );
+  }
 
   return (
     <div className={css.wrapper}>

@@ -1,31 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useQueryClient } from "@tanstack/react-query";
 import css from "./EmptyState.module.css";
-import AddWordModal from "../modals/AddWordModal/AddWordModal";
 
 interface Props {
   onCancel: () => void;
-  onWordAdded: () => void; 
 }
 
 export default function EmptyState({ onCancel }: Props) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const handleAddWordClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleWordAdded = () => {
-    
-    queryClient.invalidateQueries({ queryKey: ["trainingWords"] });
+    router.push("/dictionary?addWord=true");
   };
 
   return (
@@ -46,8 +33,7 @@ export default function EmptyState({ onCancel }: Props) {
       </h2>
 
       <p className={css.description}>
-        Please create or add a word to start the workout. We want to improve your vocabulary and
-        develop your knowledge, so please share the words you are interested in adding to your study.
+       Please create or add a word to start the workout. We want to improve your vocabulary and develop your knowledge, so please share the words you are interested in adding to your study.
       </p>
 
       <div className={css.buttons}>
@@ -59,13 +45,6 @@ export default function EmptyState({ onCancel }: Props) {
           Cancel
         </button>
       </div>
-
-            {isModalOpen && (
-        <AddWordModal
-          onClose={handleCloseModal}
-          onWordAdded={handleWordAdded}
-        />
-      )}
     </div>
   );
 }

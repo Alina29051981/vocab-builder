@@ -1,0 +1,93 @@
+/* MobileMenu.module.css - mobile first */
+
+.mobileMenuOverlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: transparent;
+}
+
+.mobileMenu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 16px 16px 166px 16px;
+    background-color: var(--green);
+    border-radius: 0 0 0 8px;
+    max-height: calc(100% - 64px);
+    min-width: 185px;
+    max-height: 812px;
+    overflow-y: auto;
+    animation: slideDown 0.3s ease-out;
+}
+
+.mobileMenu a,
+.mobileMenu button {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--white);
+    transition: background 0.7s;
+}
+
+.mobileUser {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+
+.mobileUser .avatarIcon {
+    border-radius: 30px;
+    width: 36px;
+    height: 36px;
+    background-color: var(--white);
+}
+
+.closeBtn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+}
+
+.menuBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 12px 20px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: var(--white);
+    background: transparent;
+    border: none;
+
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.menuBtn:hover {
+    background: var(--white);
+    color: var(--black);
+}

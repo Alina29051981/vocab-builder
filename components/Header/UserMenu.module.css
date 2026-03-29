@@ -1,0 +1,25 @@
+/* UserMenu.module.css - mobile first */
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.userGreeting {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+}
+
+
+.avatarIcon {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--green);
+}

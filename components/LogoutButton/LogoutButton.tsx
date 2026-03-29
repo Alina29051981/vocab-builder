@@ -4,20 +4,26 @@
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../lib/auth/AuthContext";
 
-export default function LogoutButton() {
+interface LogoutButtonProps {
+  onLogout?: () => void;
+   className?: string;
+}
+
+export default function LogoutButton({ onLogout, className }: LogoutButtonProps) {
   const router = useRouter();
   const { logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
+    onLogout?.();
     router.push("/login");
     router.refresh();
   };
 
-    return (
-    <button onClick={handleLogout}>
+  return (
+    <button onClick={handleLogout} className={className}>
       Log out
-      <svg width="16" height="16" >
+      <svg width="16" height="16">
         <use href="/sprite.svg#arrow" />
       </svg>
     </button>

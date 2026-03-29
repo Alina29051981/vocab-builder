@@ -63,7 +63,10 @@ export default function TrainingRoom({ words, onSaveAnswer, onFinish }: Training
       </div>
 
           <div className={css.card}>
-        <p className={css.label}>Введіть переклад</p>
+       <p className={css.label}>
+  {currentWord.task === "en"
+    ? "Enter translation"
+    : "Введіть переклад"}</p>
         <input
           className={css.input}
           value={userAnswer}
@@ -74,7 +77,9 @@ export default function TrainingRoom({ words, onSaveAnswer, onFinish }: Training
       </div>
 
           <div className={css.card}>
-        <p className={css.word}>{currentWord.en}</p>
+       <p className={css.word}>
+  {currentWord.task === "en" ? currentWord.ua : currentWord.en}
+</p>
       </div>
 
            <div className={css.actions}>
