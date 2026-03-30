@@ -1,11 +1,7 @@
 // app/(private routes)/training/page.tsx
-import TrainingPageClient from "./TrainingClient";
-import ProtectedRoute from "../../../components/ProtectedRoute/ProtectedRoute.client";
 
+// import ProtectedRoute from "../../../components/ProtectedRoute/ProtectedRoute.client";
+import TrainingRoom from "./TrainingRoom";
 export default function TrainingPage() {
-  return (
-    <ProtectedRoute>
-      <TrainingPageClient />
-    </ProtectedRoute>
-  );
+  return <TrainingRoom />;
 }

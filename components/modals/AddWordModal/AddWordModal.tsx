@@ -8,9 +8,9 @@ import toast from "react-hot-toast";
 import { createWord } from "../../../lib/api/words";
 import { createWordSchema, FormValues } from "../../../lib/validation/createWordSchema";
 import css from "./AddWordModal.module.css";
-import { CATEGORIES, CreateNewWordRequest, Word } from "../../../types/word";
+import { CATEGORIES, Word } from "../../../types/word";
 import { AxiosError } from "axios";
-import type { Resolver } from "react-hook-form"; 
+import type { Resolver } from "react-hook-form";
 
 interface Props {
   onClose: () => void;
@@ -20,41 +20,42 @@ interface Props {
 export default function AddWordModal({ onClose, onWordAdded }: Props) {
   const queryClient = useQueryClient();
 
- 
-
   const {
-  register,
-  handleSubmit,
-  watch,
-  setValue,
-  formState: { errors, isSubmitting },
-} = useForm<FormValues>({
-  resolver: yupResolver(createWordSchema) as Resolver<FormValues>, 
-  defaultValues: {
-    en: "",
-    ua: "",
-    category: "noun",
-    isIrregular: false,
-  },
-});
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: yupResolver(createWordSchema) as Resolver<FormValues>,
+    defaultValues: {
+      en: "",
+      ua: "",
+      category: "noun",
+      isIrregular: false,
+    },
+  });
 
   const selectedCategory = watch("category");
   const isIrregularChecked = watch("isIrregular");
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      const payload: CreateNewWordRequest = {
+      // Відправляємо тільки валідні поля бекенду
+      const payload = {
         en: data.en.trim(),
         ua: data.ua.trim(),
         category: data.category,
-        isIrregular: data.category === "verb" ? data.isIrregular : false,
+         ...(data.category === "verb" ? { isIrregular: data.isIrregular } : {}),
       };
 
       const createdWord = await createWord(payload);
 
+      // Додаємо локально поле isIrregular тільки для UI
       const newWord: Word = {
         ...createdWord,
         category: createdWord.category as Word["category"],
+        isIrregular: data.category === "verb" ? data.isIrregular : false,
       };
 
       toast.success("Word added successfully");

@@ -2,24 +2,23 @@
 import styles from "./ProgressBar.module.css";
 
 type Props = {
-  current: number;
-  total: number;
+  percent: number;
+  className?: string;
 };
 
-export default function ProgressBar({ current, total }: Props) {
-  const percent = total ? Math.round((current / total) * 100) : 0;
-
-  const radius = 12; 
+export default function ProgressBar({ percent }: Props) {
+  const radius = 12;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (circumference * percent) / 100;
+
+  // Захист від NaN
+  const safePercent = isNaN(percent) || percent < 0 ? 0 : percent > 100 ? 100 : percent;
+  const offset = circumference - (circumference * safePercent) / 100;
 
   return (
     <div className={styles.wrapper}>
-     
-      <span className={styles.percent}>{percent}%</span>
+      <span className={styles.percent}>{safePercent}%</span>
 
-           <svg width="26" height="26" viewBox="0 0 26 26" className={styles.circle}>
-       
+      <svg width="26" height="26" viewBox="0 0 26 26" className={styles.circle}>
         <circle
           cx="13"
           cy="13"
@@ -28,7 +27,7 @@ export default function ProgressBar({ current, total }: Props) {
           strokeWidth="2"
           fill="none"
         />
-        
+
         <circle
           cx="13"
           cy="13"
@@ -40,6 +39,7 @@ export default function ProgressBar({ current, total }: Props) {
           strokeDashoffset={offset}
           strokeLinecap="round"
           transform="rotate(-90 13 13)"
+          style={{ transition: "stroke-dashoffset 0.5s ease" }}
         />
       </svg>
     </div>

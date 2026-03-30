@@ -31,7 +31,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const token = localStorage.getItem("token");
+        // Спочатку беремо токен із localStorage
+        let token = localStorage.getItem("token");
+
+        // Якщо немає, можна спробувати з cookie
+        if (!token) {
+          const match = document.cookie.match(/accessToken=([^;]+)/);
+          token = match ? match[1] : null;
+        }
+
         if (!token) {
           setLoading(false);
           return;
@@ -41,9 +49,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         const { data } = await api.get<User>("/users/current");
         setUser(data);
-      } catch (err) {
+      } catch (err: unknown) {
         console.error("Failed to fetch current user", err);
         localStorage.removeItem("token");
+        document.cookie = "accessToken=; path=/; max-age=0";
         setUser(null);
       } finally {
         setLoading(false);
@@ -57,7 +66,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const res = await apiLogin(data);
 
       document.cookie = `accessToken=${res.token}; path=/`;
-
       localStorage.setItem("token", res.token);
       setAuthHeader(res.token);
 

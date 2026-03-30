@@ -1,12 +1,13 @@
+// WordsTable.tsx
 "use client";
 
-import { memo, useState } from "react";
+import { memo } from "react";
 import { AxiosError } from "axios";
 import css from "./WordsTable.module.css";
 import type { Word } from "@/types/word";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import WordActionsMenu from "../modals/WordActionsMenu/WordActionsMenu";
-import { addWordFromOtherUser } from "@/lib/api/words";
+import toast from "react-hot-toast";
 
 interface Props {
   data: Word[];
@@ -15,6 +16,8 @@ interface Props {
   onDelete?: (id: string) => void;
   onEdit?: (word: Word) => void;
   showArrow?: boolean;
+  addedWordIds?: Set<string>;
+  onAddWord?: (wordId: string) => Promise<void>;
 }
 
 function WordsTable({
@@ -23,32 +26,30 @@ function WordsTable({
   variant = "dictionary",
   onDelete,
   showArrow,
+  addedWordIds,
+  onAddWord,
 }: Props) {
- 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   if (loading) return <p className={css.state}>Loading...</p>;
   if (!data || data.length === 0)
     return <p className={css.state}>No words found.</p>;
 
   const handleAdd = async (id: string) => {
+    if (!onAddWord) return;
+
     try {
-      setErrorMessage(null);
-      await addWordFromOtherUser(id);
+      await onAddWord(id);
+      toast.success("Word added");
     } catch (err) {
       if (err instanceof AxiosError && err.response?.status === 409) {
-        setErrorMessage("This word is already in your dictionary");
+        toast("This word is already in your dictionary");
       } else {
-        setErrorMessage("Error adding word");
+        toast.error("Failed to add word");
       }
     }
   };
 
   return (
     <div className={css.tableWrapper}>
-     
-      {errorMessage && <p className={css.error}>{errorMessage}</p>}
-
       <table className={css.table}>
         <thead>
           <tr>
@@ -71,7 +72,7 @@ function WordsTable({
 
               {variant === "dictionary" && (
                 <td className={css.progressCell}>
-                  <ProgressBar current={word.progress ?? 0} total={100} />
+                  <ProgressBar percent={word.progress ?? 0} />
                 </td>
               )}
 
@@ -84,8 +85,9 @@ function WordsTable({
                   <button
                     className={css.arrowLink}
                     onClick={() => handleAdd(word._id)}
+                    disabled={addedWordIds?.has(word._id)}
                   >
-                    →
+                    {addedWordIds?.has(word._id) ? "✔" : "→"}
                   </button>
                 )}
               </td>

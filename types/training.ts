@@ -9,6 +9,7 @@ export interface TaskWord {
   en?: string;
   ua: string;
   task: "en" | "ua";
+  progress?: number;
 }
 
 

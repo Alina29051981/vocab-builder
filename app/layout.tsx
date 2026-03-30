@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "VocabBuilder",
   description:
     "Build your personal vocabulary, get smart recommendations, and train new words effectively.",
+  icons: {
+    icon: "/favicon.ico",
+  },
   openGraph: {
     title: "VocabBuilder",
     description:

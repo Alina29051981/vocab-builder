@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { editWord } from "../../../lib/api/words";
 import { createWordSchema, FormValues } from "../../../lib/validation/createWordSchema";
 import css from "./EditWordModal.module.css";
-import { Word, CATEGORIES } from "../../../types/word";
+import { EditWordRequest, Word, CATEGORIES } from "../../../types/word";
 
 interface Props {
   word: Word;
@@ -48,21 +48,26 @@ export default function EditWordModal({ word, onClose }: Props) {
   const selectedCategory = watch("category");
   const isIrregularChecked = watch("isIrregular");
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    try {
-      const payload = { ...data };
-      if (payload.category !== "verb") {
-        delete payload.isIrregular;
-      }
-      await editWord(word._id, payload);
-      toast.success("Word updated successfully");
-      await queryClient.invalidateQueries({ queryKey: ["ownWords"] });
-      onClose();
-    } catch (err: unknown) {
-      console.error(err);
-      toast.error("Failed to update word");
-    }
-  };
+ const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  try {
+    const payload: EditWordRequest = {
+      en: data.en.trim(),
+      ua: data.ua.trim(),
+      category: data.category,
+      // передаємо isIrregular тільки якщо verb
+      ...(data.category === "verb" ? { isIrregular: data.isIrregular } : {}),
+    };
+
+    await editWord(word._id, payload);
+
+    toast.success("Word updated successfully");
+    await queryClient.invalidateQueries({ queryKey: ["ownWords"] });
+    onClose();
+  } catch (err: unknown) {
+    console.error("editWord error:", err);
+    toast.error("Failed to update word");
+  }
+};
 
   return (
     <div className={css.backdrop}>

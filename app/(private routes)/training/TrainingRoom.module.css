@@ -1,0 +1,132 @@
+/* components/training/TrainingRoom.module.css */
+.wrapper {
+    background: var(--white-1);
+    max-width: 375px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: "Inter", sans-serif;
+}
+
+.cardsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 1px solid #dbdbdb;
+    border-radius: 8px 8px 0 0;
+    min-width: 343px;
+    height: 195px;
+    border-color: none;
+}
+
+.actionsUnderCards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+
+    align-items: center;
+}
+
+.card {
+    background: var(--white);
+    border-bottom: 1px solid #dbdbdb;
+    border-radius: 8px 8px 0 0;
+    padding: 22px;
+    width: 343px;
+    min-height: 195px;
+    box-sizing: border-box;
+}
+
+.input {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    margin-bottom: 106px;
+}
+
+.input::placeholder {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+}
+
+.next {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.nextButton {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(18, 20, 23, 0.5);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.nextArrow {
+    color: var(--green);
+}
+
+
+.flag {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--black);
+}
+
+.word {
+    display: flex;
+    flex-direction: row;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    margin-bottom: 103px;
+}
+
+.saveButton {
+    margin-bottom: 116px;
+    border-radius: 30px;
+    padding-block: 16px;
+    padding-inline: 153px;
+    width: 343px;
+    height: 56px;
+    background: var(--green);
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--white);
+    border: 2px solid var(--green);
+}
+
+.saveButton:hover,
+.saveButton:focus {
+    background: var(--white);
+    color: var(--green);
+}
+
+.cancelButton {
+
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 16px;
+    color: rgba(18, 20, 23, 0.5);
+}
+
+.error {
+    text-align: center;
+    color: #ef4444;
+}

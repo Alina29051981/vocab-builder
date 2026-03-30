@@ -1,0 +1,133 @@
+/* components/modals/WellDoneModal.module.css */
+/* components/modals/WellDoneModal.module.css */
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: var(--white-1, #fff);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+.summary {
+    font-size: 1rem;
+    text-align: center;
+    margin: 0;
+}
+
+.percent {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--green, #28a745);
+    margin: 0;
+}
+
+.answerColumns {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    justify-content: space-between;
+}
+
+.correctColumn,
+.incorrectColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.correctColumnTitle,
+.incorrectColumnTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.correctColumnList,
+.incorrectColumnList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: var(--white-2, #f9f9f9);
+}
+
+.correctColumnListItem,
+.incorrectColumnListItem {
+    font-size: 0.95rem;
+    padding: 4px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.correctColumnListItem:last-child,
+.incorrectColumnListItem:last-child {
+    border-bottom: none;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    gap: 8px;
+}
+
+.button,
+.buttonSecondary {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.button {
+    background-color: var(--green, #28a745);
+    color: #fff;
+}
+
+.button:hover {
+    background-color: #218838;
+}
+
+.buttonSecondary {
+    background-color: var(--white-1, #fff);
+    color: var(--green, #28a745);
+    border: 1px solid var(--green, #28a745);
+}
+
+.buttonSecondary:hover {
+    background-color: var(--green, #28a745);
+    color: #fff;
+}
