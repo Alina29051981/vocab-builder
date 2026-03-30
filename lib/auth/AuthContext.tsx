@@ -31,10 +31,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        
+        // Спочатку беремо токен із localStorage
         let token = localStorage.getItem("token");
 
-               if (!token) {
+        // Якщо немає, можна спробувати з cookie
+        if (!token) {
           const match = document.cookie.match(/accessToken=([^;]+)/);
           token = match ? match[1] : null;
         }

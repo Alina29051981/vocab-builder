@@ -41,7 +41,7 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      
+      // Відправляємо тільки валідні поля бекенду
       const payload = {
         en: data.en.trim(),
         ua: data.ua.trim(),
@@ -51,6 +51,7 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
 
       const createdWord = await createWord(payload);
 
+      // Додаємо локально поле isIrregular тільки для UI
       const newWord: Word = {
         ...createdWord,
         category: createdWord.category as Word["category"],

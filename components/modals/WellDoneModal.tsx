@@ -11,7 +11,7 @@ interface Answer {
 }
 
 interface Props {
-  answers: Answer[]; 
+  answers: Answer[]; // масив із результатами
   onClose: () => void;
 }
 

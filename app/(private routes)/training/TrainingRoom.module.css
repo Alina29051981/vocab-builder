@@ -26,6 +26,7 @@
     flex-direction: column;
     gap: 12px;
     margin-top: 16px;
+
     align-items: center;
 }
 
@@ -75,6 +76,7 @@
 .nextArrow {
     color: var(--green);
 }
+
 
 .flag {
     font-family: var(--font-family);

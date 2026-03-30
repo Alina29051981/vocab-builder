@@ -54,7 +54,7 @@ export default function EditWordModal({ word, onClose }: Props) {
       en: data.en.trim(),
       ua: data.ua.trim(),
       category: data.category,
-      
+      // передаємо isIrregular тільки якщо verb
       ...(data.category === "verb" ? { isIrregular: data.isIrregular } : {}),
     };
 

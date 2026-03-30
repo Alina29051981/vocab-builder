@@ -10,7 +10,8 @@ export default function ProgressBar({ percent }: Props) {
   const radius = 12;
   const circumference = 2 * Math.PI * radius;
 
-   const safePercent = isNaN(percent) || percent < 0 ? 0 : percent > 100 ? 100 : percent;
+  // Захист від NaN
+  const safePercent = isNaN(percent) || percent < 0 ? 0 : percent > 100 ? 100 : percent;
   const offset = circumference - (circumference * safePercent) / 100;
 
   return (
