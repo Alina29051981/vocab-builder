@@ -31,6 +31,7 @@ export default function AllWordsClient() {
         category: category || undefined,
       }),
     placeholderData: (prev) => prev as PaginatedWordsResponse,
+  retry: 1,
   });
 
   const deleteMutation = useMutation({

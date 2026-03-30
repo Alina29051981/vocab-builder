@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 
 export const myFonts = localFont({
   src: [
-    // MacPaw Fixel Display
+    
     { path: "../public/fonts/MacPawFixelDisplay-Thin.otf", weight: "100", style: "normal" },
     { path: "../public/fonts/MacPawFixelDisplay-Light.otf", weight: "300", style: "normal" },
     { path: "../public/fonts/MacPawFixelDisplay-Regular.otf", weight: "400", style: "normal" },
@@ -12,7 +12,7 @@ export const myFonts = localFont({
     { path: "../public/fonts/MacPawFixelDisplay-Bold.otf", weight: "700", style: "normal" },
     { path: "../public/fonts/MacPawFixelDisplay-ExtraBold.otf", weight: "800", style: "normal" },
 
-    // SF Pro Display
+    
     { path: "../public/fonts/SF-Pro-Display-Ultralight.otf", weight: "200", style: "normal" },
     { path: "../public/fonts/SF-Pro-Display-Thin.otf", weight: "100", style: "normal" },
     { path: "../public/fonts/SF-Pro-Display-Light.otf", weight: "300", style: "normal" },
@@ -23,7 +23,7 @@ export const myFonts = localFont({
     { path: "../public/fonts/SF-Pro-Display-Heavy.otf", weight: "800", style: "normal" },
     { path: "../public/fonts/SF-Pro-Display-Black.otf", weight: "900", style: "normal" },
 
-    // Italic варіанти
+   
     { path: "../public/fonts/SF-Pro-Display-RegularItalic.otf", weight: "400", style: "italic" },
     { path: "../public/fonts/SF-Pro-Display-MediumItalic.otf", weight: "500", style: "italic" },
     { path: "../public/fonts/SF-Pro-Display-SemiboldItalic.otf", weight: "600", style: "italic" },

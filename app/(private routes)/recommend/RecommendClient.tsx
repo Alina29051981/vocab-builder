@@ -18,8 +18,7 @@ export default function RecommendClient() {
   const [isIrregular, setIsIrregular] = useState<boolean | null>(null);
   const [addedWordIds, setAddedWordIds] = useState<Set<string>>(new Set());
 
-  // Запит рекомендацій
-  const { data, isLoading } = useQuery<PaginatedWordsResponse>({
+    const { data, isLoading } = useQuery<PaginatedWordsResponse>({
     queryKey: ["recommendWords", page, keyword, category, isIrregular],
     queryFn: () =>
       getRecommendedWords({
@@ -30,29 +29,28 @@ export default function RecommendClient() {
         isIrregular: category === "verb" ? isIrregular ?? undefined : undefined,
       }),
     placeholderData: (prev) => prev,
+    retry: 1,
   });
 
   const words: Word[] = data?.results ?? [];
   const totalPages = data?.totalPages ?? 1;
 
-  // Кількість слів для вивчення
-  const { data: statsData } = useQuery<{ totalCount: number }>({
+    const { data: statsData } = useQuery<{ totalCount: number }>({
     queryKey: ["recommendWordsCount"],
     queryFn: () => getUserStatistics(),
     placeholderData: { totalCount: 0 },
+    retry: 1,
   });
   const totalCount = statsData?.totalCount ?? 0;
 
-  // Додавання слова по ТЗ через Swagger
-  const handleAddWord = async (wordId: string) => {
+    const handleAddWord = async (wordId: string) => {
     if (addedWordIds.has(wordId)) return;
 
     try {
       await addWordFromOtherUser(wordId);
       toast.success("Word added successfully");
 
-      // Блокуємо стрілку
-      setAddedWordIds(new Set(addedWordIds).add(wordId));
+            setAddedWordIds(new Set(addedWordIds).add(wordId));
     } catch (err: unknown) {
       console.error("addWordFromOtherUser error:", err);
       toast.error("Failed to add word. Maybe it is already in your dictionary.");

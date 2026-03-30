@@ -31,18 +31,19 @@ const searchParams = useSearchParams();
   const router = useRouter();
   const queryClient = useQueryClient();
 
-   const { data, isLoading } = useQuery<PaginatedWordsResponse>({
-    queryKey: ["ownWords", page, keyword, category, isIrregular],
-    queryFn: () =>
-      getOwnWords({
-        page,
-        limit: 7,
-        keyword: keyword || undefined,
-        category: category || undefined,
-        isIrregular: isIrregular ?? undefined,
-      }),
-    placeholderData: (prev) => prev,
-  });
+ const { data, isLoading } = useQuery<PaginatedWordsResponse>({
+  queryKey: ["ownWords", page, keyword, category, isIrregular],
+  queryFn: () =>
+    getOwnWords({
+      page,
+      limit: 7,
+      keyword: keyword || undefined,
+      category: category || undefined,
+      isIrregular: isIrregular ?? undefined,
+    }),
+  placeholderData: (prev) => prev,
+  retry: 1, 
+});
 
   const words: Word[] = data?.results ?? [];
   const totalPages = data?.totalPages ?? 1;

@@ -7,7 +7,7 @@ import { getOwnWords } from "@/lib/api/words";
 import { postTrainingAnswers } from "@/lib/api/training";
 import { Word, PaginatedWordsResponse } from "@/types/word";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
-import WellDoneModal from "../../../components/modals/WellDoneModal";
+import WellDoneModal from "../../../components/modals/WellDoneModal/WellDoneModal";
 import css from "./TrainingRoom.module.css";
 
 type Answer = { word: Word; isCorrect: boolean };
@@ -22,14 +22,14 @@ export default function TrainingRoom() {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [showWellDone, setShowWellDone] = useState(false);
 
-  // 🔹 Завантаження слів (limit 25!)
-  const { data, isLoading, isError } = useQuery<PaginatedWordsResponse>({
-    queryKey: ["ownWords"],
-    queryFn: () => getOwnWords({ page: 1, limit: 25 }),
-  });
 
-  // 🔹 Вибір слова (тільки progress < 100)
-  const nextWord = useCallback(() => {
+  const { data, isLoading, isError } = useQuery<PaginatedWordsResponse>({
+  queryKey: ["ownWords"],
+  queryFn: () => getOwnWords({ page: 1, limit: 25 }),
+  retry: 1, 
+});
+
+    const nextWord = useCallback(() => {
     if (!data?.results || data.results.length === 0) return;
 
     const remaining = data.results.filter(w => !w.progress || w.progress < 100);
@@ -48,8 +48,7 @@ export default function TrainingRoom() {
     if (data?.results) nextWord();
   }, [data, nextWord]);
 
-  // 🔹 Відправка відповіді
-  const submitAnswer = useMutation({
+    const submitAnswer = useMutation({
     mutationFn: (word: Word) =>
       postTrainingAnswers([
         {
@@ -66,8 +65,7 @@ export default function TrainingRoom() {
       if (isCorrect) toast.success("Correct!");
       else toast.error("Incorrect!");
 
-      // 🔹 Оновлення локального прогресу
-      if (currentWord && data?.results) {
+            if (currentWord && data?.results) {
         const updatedResults = data.results.map(w =>
           w._id !== currentWord._id
             ? w
@@ -76,41 +74,35 @@ export default function TrainingRoom() {
         queryClient.setQueryData(["ownWords"], { ...data, results: updatedResults });
       }
 
-      // 🔹 Додаємо до списку відповідей
-      if (currentWord) {
+            if (currentWord) {
         setAnswers(prev => [...prev, { word: currentWord, isCorrect }]);
       }
 
       setShowTranslation(true);
 
-      // 🔹 Перевірка завершення сесії або 25 слів
-      if (answers.length + 1 >= Math.min(25, data?.results.length ?? 25)) {
+            if (answers.length + 1 >= Math.min(25, data?.results.length ?? 25)) {
         setShowWellDone(true);
       }
     },
     onError: () => toast.error("Failed to check answer"),
   });
 
-  // 🔹 Save
-  const handleSave = () => {
+    const handleSave = () => {
     if (!currentWord || !userAnswer.trim()) return;
     submitAnswer.mutate(currentWord);
   };
 
-  // 🔹 Cancel
   const handleCancel = () => {
     setUserAnswer("");
     setShowTranslation(false);
   };
 
-  // 🔹 Плавний прогрес
-  const percent =
+    const percent =
     data?.results && data.results.length > 0
       ? Math.round(data.results.reduce((acc, w) => acc + (w.progress ?? 0), 0) / data.results.length)
       : 0;
 
-  // 🔹 Loader / Error
-  if (isLoading) return <p className={css.info}>Loading words...</p>;
+   if (isLoading) return <p className={css.info}>Loading words...</p>;
   if (isError) return <p className={css.error}>Failed to load words</p>;
   if (!currentWord) return <p className={css.info}>All words learned! 🎉</p>;
 
@@ -119,8 +111,8 @@ export default function TrainingRoom() {
       <ProgressBar percent={percent} className={css.progressBar} />
 
       <div className={css.cardsWrapper}>
-        {/* UA Card */}
-        <div className={css.cardUa}>
+        
+        <div className={css.card}>
           <input
             type="text"
             value={userAnswer}
@@ -142,15 +134,13 @@ export default function TrainingRoom() {
           </div>
         </div>
 
-        {/* EN Card */}
-        <div className={css.cardEn}>
+               <div className={css.card}>
           <p className={css.word}>{currentWord.en}</p>
           <p className={css.flag}>English</p>
         </div>
       </div>
 
-      {/* Показ перекладу */}
-      {showTranslation && <p className={css.translation}>Correct: {currentWord.ua}</p>}
+            {showTranslation && <p className={css.translation}>Correct: {currentWord.ua}</p>}
 
       <button
         className={css.saveButton}
@@ -168,8 +158,7 @@ export default function TrainingRoom() {
         Cancel
       </button>
 
-      {/* WellDoneModal */}
-      {showWellDone && (
+          {showWellDone && (
         <WellDoneModal
           answers={answers}
           onClose={() => {
