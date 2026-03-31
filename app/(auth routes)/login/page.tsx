@@ -85,7 +85,7 @@ export default function LoginPage() {
           >
             <svg width="20" height="20">
               <use
-                href={`/sprite.svg#${showPassword ? "icon-eye-off-2" : "icon-eye-2"}`}
+                href={`#${showPassword ? "icon-eye-off-2" : "icon-eye-2"}`}
               />
             </svg>
           </button>

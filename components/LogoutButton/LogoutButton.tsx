@@ -3,10 +3,11 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../lib/auth/AuthContext";
+import css from "./LogoutButton.module.css";
 
 interface LogoutButtonProps {
   onLogout?: () => void;
-   className?: string;
+  className?: string;
 }
 
 export default function LogoutButton({ onLogout, className }: LogoutButtonProps) {
@@ -21,10 +22,13 @@ export default function LogoutButton({ onLogout, className }: LogoutButtonProps)
   };
 
   return (
-    <button onClick={handleLogout} className={className}>
+    <button
+      onClick={handleLogout}
+      className={`${css.logoutButton} ${className || ""}`}
+    >
       Log out
       <svg width="16" height="16">
-        <use href="/sprite.svg#arrow" />
+        <use href="#arrow" />
       </svg>
     </button>
   );

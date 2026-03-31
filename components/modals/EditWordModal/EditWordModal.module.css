@@ -1,3 +1,5 @@
+/* EditWordModal.module.css */
+
 .backdrop {
     position: fixed;
     inset: 0;
@@ -23,6 +25,7 @@
 .modal form {
     display: flex;
     flex-direction: column;
+    gap: 8px;
 }
 
 .modal input,
@@ -44,20 +47,11 @@
     color: var(--black);
 }
 
-
-.modal label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #121417;
-}
-
 .modal .buttons {
     margin-top: 32px;
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    gap: 8px;
 }
 
 .modal .buttonSave {
@@ -72,7 +66,6 @@
     height: 48px;
     line-height: 1.5;
     color: var(--black);
-    margin-right: 8px;
 }
 
 .modal .buttonSave:hover {
@@ -98,30 +91,13 @@
     color: var(--black);
 }
 
-.modal .flagWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 4.5px;
-}
-
-.modal .flagWrapper p {
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--white);
-    padding: 20.5px 0 12.5px 0;
-}
-
 .modal .closeBtn {
     position: absolute;
     top: 16px;
     right: 16px;
     background: none;
-    padding-bottom: 12.5px;
-    cursor: pointer;
     padding: 4px;
+    cursor: pointer;
 }
 
 .modal .closeBtn svg {
@@ -130,4 +106,74 @@
     height: 24px;
     fill: var(--white);
     transition: fill 0.2s;
+}
+
+.inputWithFlag {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.flagWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flagWrapper p {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--white);
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .modal {
+        padding: 48px 64px;
+        max-width: 622px;
+    }
+
+    .modal input {
+        height: 56px;
+    }
+
+    .modal select {
+        width: 204px;
+        height: 48px;
+    }
+
+    .inputWithFlag {
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .inputWithFlag input {
+        flex: 1;
+        min-width: 0;
+        height: 56px;
+    }
+
+    .flagWrapper {
+        order: 2;
+        min-width: 140px;
+    }
+
+    .modal .buttons {
+        gap: 10px;
+        width: 100%;
+    }
+
+    .modal .buttonSave,
+    .modal .buttonCancel {
+        width: 100%;
+        max-width: 245px;
+        height: 56px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

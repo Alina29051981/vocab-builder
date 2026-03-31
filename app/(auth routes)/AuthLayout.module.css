@@ -1,26 +1,26 @@
-/* app/(auth routes)/AuthLayout.module.css */
-
+/* Загальні стилі */
 .wrapper {
+    position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
     flex-direction: column;
+    background-color: #fff;
     width: 375px;
-    height: 796px;
+    min-height: 812px;
     padding-bottom: 41px;
 }
 
 .container {
     width: 100%;
-    max-width: 420px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 72px;
 }
 
 .logo {
-    margin-bottom: 24px;
+    position: absolute;
+    top: 16px;
+    left: 16px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -54,13 +54,23 @@
 
 .illustration.mobile {
     display: block;
+    margin-bottom: 16px;
+}
+
+.mobileText {
+    margin-bottom: 43px;
 }
 
 .desktopText {
-    margin-top: 16px;
-    font-size: 16px;
-    color: #000;
-    text-align: center;
+    display: none;
+}
+
+.wrapper.register .mobileText {
+    display: none;
+}
+
+.wrapper.register .desktopText {
+    display: none;
 }
 
 .bgGradient {
@@ -90,6 +100,22 @@
         height: 1024px;
     }
 
+    .container {
+        padding-top: 204px;
+    }
+
+    .mobileText {
+        display: none;
+    }
+
+    .desktopText {
+        display: flex;
+        margin-top: 16px;
+        font-size: 16px;
+        color: #000;
+        text-align: center;
+    }
+
     .illustration.mobile {
         display: none;
     }
@@ -105,12 +131,15 @@
         align-items: center;
         width: 1440px;
         height: 800px;
-        position: relative;
+    }
+
+    .logo {
+        top: 24px;
+        left: 100px;
     }
 
     .container {
-        grid-column: 1;
-        grid-row: 1 / span 2;
+        padding-top: 128px;
     }
 
     .illustration.desktop {
@@ -119,17 +148,21 @@
         grid-row: 1;
     }
 
-    .mobileText {
-        display: none;
+    .logo svg {
+        fill: var(--white);
     }
 
-    .desktopText {
+    .tabletText {
         grid-column: 2;
         grid-row: 2;
         margin-top: 16px;
         text-align: center;
         position: relative;
         z-index: 3;
+    }
+
+    .desktopText {
+        display: none;
     }
 
     .illustration.mobile {

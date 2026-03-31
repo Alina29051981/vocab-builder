@@ -1,18 +1,17 @@
 // app/not-found.tsx
-
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { AuthProvider } from "../lib/auth/AuthContext";
 
 export const metadata: Metadata = {
-  title: "Page not found - NoteHub",
+  title: "Page not found - VocabBuilder",
   description: "The page you are looking for does not exist.",
   openGraph: {
-    title: "Page not found - NoteHub",
+    title: "Page not found - VocabBuilder",
     description: "The page you are looking for does not exist.",
-    url: "https://08-zustand-seven-iota.vercel.app/not-found",
-    images: ["https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"],
+    url: "https://vocab-builder-delta.vercel.app/not-found",
+    images: ["https://vocab-builder.vercel.app/blood-report.webp"],
   },
 };
 
@@ -21,7 +20,10 @@ export default function NotFoundPage() {
     <AuthProvider>
       <div className="not-found-container">
         <h1>404 - Page not found</h1>
-        <Link href="/">Go back home</Link>
+        <p>Oops! The page you’re looking for does not exist.</p>
+        <Link href="/" className="btn-primary">
+          Go back home
+        </Link>
       </div>
     </AuthProvider>
   );

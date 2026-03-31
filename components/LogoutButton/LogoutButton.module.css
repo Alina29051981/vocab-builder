@@ -1,0 +1,21 @@
+.logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--black);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.logoutButton svg {
+    display: inline-block;
+}
+
+.logoutButton:hover,
+.logoutButton svg:hover {
+    color: var(--green);
+}

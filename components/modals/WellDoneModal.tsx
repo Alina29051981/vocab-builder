@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import css from "./WellDoneModal.module.css";
 import type { Word } from "@/types/word";
+import Image from "next/image";
 
 interface Answer {
   word: Word;
@@ -11,13 +11,12 @@ interface Answer {
 }
 
 interface Props {
-  answers: Answer[]; // масив із результатами
+  answers: Answer[]; 
   onClose: () => void;
 }
 
-export default function WellDoneModal({ answers, onClose }: Props) {
-  const router = useRouter();
-
+export default function WellDoneModal({ answers = [], onClose }: Props) {
+  
   const correctAnswers = answers.filter(a => a.isCorrect);
   const incorrectAnswers = answers.filter(a => !a.isCorrect);
   const total = answers.length;
@@ -28,19 +27,27 @@ export default function WellDoneModal({ answers, onClose }: Props) {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
+
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
-  const handleStartAgain = () => {
-    onClose();
-    router.push("/dictionary");
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
   };
 
   return (
-    <div className={css.backdrop} onClick={onClose}>
-      <div className={css.modal} onClick={e => e.stopPropagation()}>
-        <h2 className={css.title}>Well done!</h2>
+    <div className={css.backdrop} onClick={handleBackdropClick}>
+      <div className={css.modal} onClick={(e) => e.stopPropagation()}> <button className={css.closeBtn} onClick={onClose} aria-label="Close menu">
+          <svg viewBox="0 0 24 24">
+            <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" strokeWidth="2" />
+            <line x1="20" y1="4" x2="4" y2="20" stroke="currentColor" strokeWidth="2" />
+          </svg>
+        </button>
+        
+        <h2 className={css.title}>Well done</h2>
 
         <p className={css.summary}>
           You answered <strong>{correctCount}</strong> of <strong>{total}</strong> words
@@ -50,7 +57,7 @@ export default function WellDoneModal({ answers, onClose }: Props) {
 
         <div className={css.answerColumns}>
           <div className={css.correctColumn}>
-            <h3 className={css.correctColumnTitle}>Correct</h3>
+            <h3 className={css.correctColumnTitle}>Сorrect answers: </h3>
             <ul className={css.correctColumnList}>
               {correctAnswers.map((a, index) => (
                 <li key={`${a.word._id}-c-${index}`} className={css.correctColumnListItem}>
@@ -61,7 +68,7 @@ export default function WellDoneModal({ answers, onClose }: Props) {
           </div>
 
           <div className={css.incorrectColumn}>
-            <h3 className={css.incorrectColumnTitle}>Incorrect</h3>
+            <h3 className={css.incorrectColumnTitle}>Mistakes:</h3>
             <ul className={css.incorrectColumnList}>
               {incorrectAnswers.map((a, index) => (
                 <li key={`${a.word._id}-i-${index}`} className={css.incorrectColumnListItem}>
@@ -69,17 +76,19 @@ export default function WellDoneModal({ answers, onClose }: Props) {
                 </li>
               ))}
             </ul>
+         
+
+           <div className={css.imageWellDone}>
+        <Image
+          src="/open orange book floating.webp"
+          alt="Well done modal illustration"
+          className={css.image}
+          width={152}
+          height={121}
+          priority
+        />
+            </div>
           </div>
-        </div>
-
-        <div className={css.actions}>
-          <button onClick={onClose} className={css.button}>
-            Close
-          </button>
-
-          <button onClick={handleStartAgain} className={css.buttonSecondary}>
-            Start again
-          </button>
         </div>
       </div>
     </div>

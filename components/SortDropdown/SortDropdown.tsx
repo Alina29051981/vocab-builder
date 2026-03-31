@@ -1,4 +1,6 @@
 // components/SortDropdown/SortDropdown.tsx
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import styles from "./SortDropdown.module.css";
 
@@ -11,14 +13,16 @@ interface SortDropdownProps {
   value: string;
   onChange: (value: string) => void;
   options: Option[];
+  theme?: "dark" | "light"; 
 }
 
 export default function SortDropdown({
   value,
   onChange,
   options,
+  theme = "dark",
 }: SortDropdownProps) {
-      const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -32,26 +36,21 @@ export default function SortDropdown({
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selectedOption =
-    options.find((opt) => opt.value === value) || null;
+  const selectedOption = options.find((opt) => opt.value === value) || null;
 
   return (
-    <div
-      className={styles.wrapper}
-      ref={dropdownRef}
-    >
+    <div className={`${styles.wrapper} ${theme === "light" ? styles.light : ""}`} ref={dropdownRef}>
       <div
         className={styles.selected}
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        {selectedOption?.label}
+        {selectedOption?.label || "Select..."}
 
         <svg className={styles.arrow} width="20" height="20">
-          <use href="/sprite.svg#icon-search" />
+          <use href="#tick" />
         </svg>
       </div>
 

@@ -1,4 +1,3 @@
-// components/modals/AddWordModal/AddWordModal.tsx
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -8,9 +7,11 @@ import toast from "react-hot-toast";
 import { createWord } from "../../../lib/api/words";
 import { createWordSchema, FormValues } from "../../../lib/validation/createWordSchema";
 import css from "./AddWordModal.module.css";
-import { CATEGORIES, Word } from "../../../types/word";
+import { Word } from "../../../types/word";
 import { AxiosError } from "axios";
 import type { Resolver } from "react-hook-form";
+
+import WordFormFields from "../WordFormFields/WordFormFields"; 
 
 interface Props {
   onClose: () => void;
@@ -36,22 +37,19 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
     },
   });
 
-  const selectedCategory = watch("category");
-  const isIrregularChecked = watch("isIrregular");
-
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      // Відправляємо тільки валідні поля бекенду
       const payload = {
         en: data.en.trim(),
         ua: data.ua.trim(),
         category: data.category,
-         ...(data.category === "verb" ? { isIrregular: data.isIrregular } : {}),
+        ...(data.category === "verb"
+          ? { isIrregular: data.isIrregular }
+          : {}),
       };
 
       const createdWord = await createWord(payload);
 
-      // Додаємо локально поле isIrregular тільки для UI
       const newWord: Word = {
         ...createdWord,
         category: createdWord.category as Word["category"],
@@ -64,13 +62,13 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
       onClose();
     } catch (err) {
       let message = "Failed to create word";
+
       if (err instanceof AxiosError) {
         message = err.response?.data?.message ?? err.message;
-        console.error("createWord AxiosError:", err.response?.data);
       } else if (err instanceof Error) {
         message = err.message;
-        console.error("createWord unknown error:", err);
       }
+
       toast.error(message);
     }
   };
@@ -92,88 +90,27 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
         </p>
 
         <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
-          <select {...register("category")}>
-            <option value="">Categories</option>
-            {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-          <p className={css.error}>{errors.category?.message}</p>
-
-          {selectedCategory === "verb" && (
-            <div className={css.radioGroup}>
-              <label className={css.radioLabel}>
-                <input
-                  type="radio"
-                  value="false"
-                  checked={isIrregularChecked === false}
-                  onChange={() => setValue("isIrregular", false)}
-                  className={css.radioInput}
-                />
-                <span className={css.customRadio}>
-                  <svg className={css.icon}>
-                    <use href="/sprite.svg#icon-check" />
-                  </svg>
-                </span>
-                <span className={css.radioText}>Regular</span>
-              </label>
-
-              <label className={css.radioLabel}>
-                <input
-                  type="radio"
-                  value="true"
-                  checked={isIrregularChecked === true}
-                  onChange={() => setValue("isIrregular", true)}
-                  className={css.radioInput}
-                />
-                <span className={css.customRadio}>
-                  <svg className={css.icon}>
-                    <use href="/sprite.svg#icon-check" />
-                  </svg>
-                </span>
-                <span className={css.radioText}>Irregular</span>
-              </label>
-
-              {isIrregularChecked && (
-                <p className={css.hint}>
-                  Enter the verb in I-form-II-form-III-form format (e.g., go-went-gone).
-                </p>
-              )}
-            </div>
-          )}
-
-          <div className={css.flagWrapper}>
-            <svg width="28" height="28">
-              <use xlinkHref="#flag-ukraine" />
-            </svg>
-            <p className={css.text}>Ukrainian</p>
-          </div>
-          <input {...register("ua")} placeholder="Ukrainian" />
-          <p className={css.error}>{errors.ua?.message}</p>
-
-          <div className={css.flagWrapper}>
-            <svg width="28" height="28">
-              <use xlinkHref="#flag-england" />
-            </svg>
-            <p className={css.text}>English</p>
-          </div>
-          <input
-            {...register("en")}
-            placeholder={
-              isIrregularChecked
-                ? "English (I-form-II-form-III-form, e.g., go-went-gone)"
-                : "English"
-            }
+          
+          <WordFormFields
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
           />
-          <p className={css.error}>{errors.en?.message}</p>
 
-          <div className={css.buttons}>
-            <button className={css.buttonSave} type="submit" disabled={isSubmitting}>
+                    <div className={css.buttons}>
+            <button
+              className={css.buttonSave}
+              type="submit"
+              disabled={isSubmitting}
+            >
               Add
             </button>
-            <button className={css.buttonCancel} type="button" onClick={onClose}>
+            <button
+              className={css.buttonCancel}
+              type="button"
+              onClick={onClose}
+            >
               Cancel
             </button>
           </div>

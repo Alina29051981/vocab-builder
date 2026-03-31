@@ -128,6 +128,18 @@
     display: table-cell;
 }
 
+.arrowLink {
+    color: #85aa9f;
+}
+
+.addText {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--black);
+    padding-right: 8px;
+}
+
 @media (max-width: 768px) {
 
     .categoryHeader,

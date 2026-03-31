@@ -12,9 +12,7 @@
     height: 48px;
     border: 1px solid rgba(18, 20, 23, 0.1);
     border-radius: 15px;
-    padding-block: 12px;
-    padding-inline-start: 24px;
-    padding-inline-end: 48px;
+    padding: 24px;
     font-family: var(--font-family);
     font-weight: 500;
     font-size: 16px;
@@ -29,6 +27,10 @@
     border: 1px solid var(--green);
     outline: none;
 
+}
+
+.arrow svg {
+    color: var(--black);
 }
 
 .dropdown {
@@ -73,4 +75,107 @@
     stroke: #11101c;
     fill: none;
     flex-shrink: 0;
+}
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    font-family: var(--font-family);
+}
+
+/* Світла тема */
+.light .selected {
+    background: var(--green);
+    border: 1px solid rgba(252, 252, 252, 0.3);
+    border-radius: 15px;
+    color: var(--white);
+}
+
+.light .selected:hover,
+.light .selected:focus {
+    background: var(--white);
+    color: var(--black);
+    outline: none;
+}
+
+.light .arrow svg {
+    color: var(--white);
+}
+
+.light .arrow svg:hover,
+.light .arrow svg:focus {
+    color: var(--black);
+}
+
+.light .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-radius: 15px;
+    margin-top: 8px;
+    padding: 4px 0;
+    z-index: 10;
+}
+
+.light .option {
+    padding: 12px 16px;
+    cursor: pointer;
+    color: rgba(17, 16, 28, 0.3);
+    font-size: 14px;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 12px;
+}
+
+.light .option:hover {
+    color: var(--black);
+}
+
+.selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 48px;
+    border: 1px solid rgba(18, 20, 23, 0.1);
+    border-radius: 15px;
+    padding: 12px 16px;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--black);
+    cursor: pointer;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 14px;
+    margin-top: 8px;
+    padding: 8px 0;
+    list-style: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.option {
+    padding: 12px 18px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.11111;
+    color: rgba(17, 16, 28, 0.3);
+    transition: background 0.2s ease;
+}
+
+.option:hover {
+    background: #fff;
+    color: #11101c;
+}
+
+.arrow svg {
+    color: var(--black);
 }

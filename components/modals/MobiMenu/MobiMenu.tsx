@@ -4,6 +4,7 @@ import Link from "next/link";
 import LogoutButton from "../../../components/LogoutButton/LogoutButton";
 import css from "./MobiMenu.module.css";
 import type { User } from "../../../lib/auth/AuthContext";
+import Image from "next/image";
 
 interface MobileMenuProps {
   user: User;
@@ -18,17 +19,15 @@ export default function MobileMenu({ user, pathname, onClose }: MobileMenuProps)
       <div className={css.mobileMenu} onClick={(e) => e.stopPropagation()}>
         <button className={css.closeBtn} onClick={onClose} aria-label="Close menu">
           <svg viewBox="0 0 24 24">
-            <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" strokeWidth="2" />
-            <line x1="20" y1="4" x2="4" y2="20" stroke="currentColor" strokeWidth="2" />
-          </svg>
+           <use href="#icon-x" /></svg>
         </button>
 
          <div className={css.mobileUser}>
            <span>{user.name}</span>
-          <svg className={css.avatarIcon}><use href="/sprite.svg#avatarIcon" /></svg>
+          <svg className={css.avatarIcon}><use href="#avatarIcons" /></svg>
          
         </div>
-
+<div className={css.menuGroup}>
        <Link
   href="/dictionary"
   onClick={onClose}
@@ -51,8 +50,21 @@ export default function MobileMenu({ user, pathname, onClose }: MobileMenuProps)
 >
   Training
 </Link>
-                      <LogoutButton className={css.menuBtn} onLogout={onClose} />
-      </div>
+           <LogoutButton className={css.menuBtn} onLogout={onClose} />
+           </div>
+
+     <div className={css.bottomImageWrapper}>
+  <div className={css.bottomImageWrapper}>
+  <Image
+    src="/illustration.webp"
+    alt="Decorative"
+    fill
+    className={css.bottomImage}
+    priority
+  />
+</div>
+  </div>
+       </div>
     </div>
   );
 }

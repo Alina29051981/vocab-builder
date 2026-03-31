@@ -18,19 +18,19 @@ export default function TrainingRoom() {
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [userAnswer, setUserAnswer] = useState("");
   const [showTranslation, setShowTranslation] = useState(false);
-
+  const [hint, setHint] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [showWellDone, setShowWellDone] = useState(false);
 
-  // 🔹 Завантаження слів (limit 25!)
+  // 🔹 Завантаження слів
   const { data, isLoading, isError } = useQuery<PaginatedWordsResponse>({
     queryKey: ["ownWords"],
     queryFn: () => getOwnWords({ page: 1, limit: 25 }),
   });
 
-  // 🔹 Вибір слова (тільки progress < 100)
+  // 🔹 Вибір наступного слова
   const nextWord = useCallback(() => {
-    if (!data?.results || data.results.length === 0) return;
+    if (!data?.results) return;
 
     const remaining = data.results.filter(w => !w.progress || w.progress < 100);
     if (remaining.length === 0) {
@@ -42,6 +42,7 @@ export default function TrainingRoom() {
     setCurrentWord(remaining[randomIndex]);
     setUserAnswer("");
     setShowTranslation(false);
+    setHint(null);
   }, [data]);
 
   useEffect(() => {
@@ -63,8 +64,14 @@ export default function TrainingRoom() {
       const result = res[0];
       const isCorrect = !!result.isDone;
 
-      if (isCorrect) toast.success("Correct!");
-      else toast.error("Incorrect!");
+      // 🔹 Показ підказки
+      if (isCorrect) {
+        toast.success("Correct!");
+        setHint(null);
+      } else {
+        setHint(currentWord?.ua || "");
+        toast.error("Incorrect!");
+      }
 
       // 🔹 Оновлення локального прогресу
       if (currentWord && data?.results) {
@@ -77,13 +84,11 @@ export default function TrainingRoom() {
       }
 
       // 🔹 Додаємо до списку відповідей
-      if (currentWord) {
-        setAnswers(prev => [...prev, { word: currentWord, isCorrect }]);
-      }
+      if (currentWord) setAnswers(prev => [...prev, { word: currentWord, isCorrect }]);
 
       setShowTranslation(true);
 
-      // 🔹 Перевірка завершення сесії або 25 слів
+      // 🔹 Перевірка завершення сесії
       if (answers.length + 1 >= Math.min(25, data?.results.length ?? 25)) {
         setShowWellDone(true);
       }
@@ -101,6 +106,7 @@ export default function TrainingRoom() {
   const handleCancel = () => {
     setUserAnswer("");
     setShowTranslation(false);
+    setHint(null);
   };
 
   // 🔹 Плавний прогрес
@@ -116,21 +122,38 @@ export default function TrainingRoom() {
 
   return (
     <div className={css.wrapper}>
-      <ProgressBar percent={percent} className={css.progressBar} />
+      <div className={css.progressWrapper}>
+        <ProgressBar percent={percent} variant="training" />
+      </div>
+
+      {/* 🔹 Підкладка */}
+      <div className={css.bock}></div>
 
       <div className={css.cardsWrapper}>
-        {/* UA Card */}
-        <div className={css.cardUa}>
-          <input
-            type="text"
-            value={userAnswer}
-            onChange={e => setUserAnswer(e.target.value)}
-            placeholder="Введіть переклад"
-            className={css.input}
-            disabled={showTranslation}
-          />
+        {/* UA */}
+        <div className={css.card}>
+          <div className={css.cardTopRow}>
+            <input
+              type="text"
+              value={userAnswer}
+              onChange={e => setUserAnswer(e.target.value)}
+              placeholder="Введіть переклад"
+              className={css.input}
+              disabled={showTranslation}
+            />
 
-          <div className={css.next}>
+            {/* 🔹 Підказка праворуч від інпуту */}
+            {hint && <div className={css.hint}>{hint}</div>}
+
+            <div className={css.langDesktop}>
+              <svg className={css.flagIcon}>
+                <use href="#flag-ukraine" />
+              </svg>
+              <span>Ukrainian</span>
+            </div>
+          </div>
+
+          <div className={css.cardFooter}>
             <button
               className={css.nextButton}
               onClick={nextWord}
@@ -138,37 +161,60 @@ export default function TrainingRoom() {
             >
               Next<span className={css.nextArrow}>→</span>
             </button>
-            <p className={css.flag}>Ukrainian</p>
+
+            <div className={css.langMobile}>
+              <svg className={css.flagIcon}>
+                <use href="#flag-ukraine" />
+              </svg>
+              <span>Ukrainian</span>
+            </div>
           </div>
         </div>
 
-        {/* EN Card */}
-        <div className={css.cardEn}>
-          <p className={css.word}>{currentWord.en}</p>
-          <p className={css.flag}>English</p>
+        {/* EN */}
+        <div className={css.card}>
+          <div className={css.cardTopRow}>
+            <p className={css.word}>{currentWord.en}</p>
+
+            <div className={css.langDesktop}>
+              <svg className={css.flagIcon}>
+                <use href="#flag-england" />
+              </svg>
+              <span>English</span>
+            </div>
+          </div>
+
+          <div className={css.cardFooterRight}>
+            <div className={css.langMobile}>
+              <svg className={css.flagIcon}>
+                <use href="#flag-england" />
+              </svg>
+              <span>English</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Показ перекладу */}
       {showTranslation && <p className={css.translation}>Correct: {currentWord.ua}</p>}
 
-      <button
-        className={css.saveButton}
-        onClick={handleSave}
-        disabled={!userAnswer.trim() || showTranslation}
-      >
-        Save
-      </button>
+      <div className={css.actionsUnderCards}>
+        <button
+          className={css.saveButton}
+          onClick={handleSave}
+          disabled={!userAnswer.trim() || showTranslation}
+        >
+          Save
+        </button>
 
-      <button
-        className={css.cancelButton}
-        onClick={handleCancel}
-        disabled={showTranslation}
-      >
-        Cancel
-      </button>
+        <button
+          className={css.cancelButton}
+          onClick={handleCancel}
+          disabled={showTranslation}
+        >
+          Cancel
+        </button>
+      </div>
 
-      {/* WellDoneModal */}
       {showWellDone && (
         <WellDoneModal
           answers={answers}

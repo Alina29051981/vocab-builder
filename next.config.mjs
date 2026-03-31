@@ -1,4 +1,5 @@
-/** @type {import('next').NextConfig} */ const nextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -9,5 +10,15 @@
       },
     ],
   },
+
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      resourceQuery: /raw/,
+      type: "asset/source",
+    });
+    return config;
+  },
 };
+
 export default nextConfig;

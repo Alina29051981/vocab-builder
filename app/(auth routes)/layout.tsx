@@ -15,7 +15,7 @@ export default function AuthLayout({
        
         <div className={css.logo}>
           <svg width="36" height="36">
-            <use href="/sprite.svg#icon" />
+            <use href="#icon" />
           </svg>
           <p className={css.text}>VocabBuilder</p>
         </div>
@@ -28,10 +28,13 @@ export default function AuthLayout({
             height={191}
             priority
           />
+        
         </div>
-
+  <p className={css.mobileText}>
+  Word · Translation · Grammar · Progress
+</p>
                {children}
-        <p className={css.mobileText}>
+        <p className={css.desktopText}>
   Word · Translation · Grammar · Progress
 </p>
       </div>
@@ -46,7 +49,7 @@ export default function AuthLayout({
             priority
           />
         </div>
-         <p className={css.desktopText}>
+         <p className={css.tabletText}>
         Word · Translation · Grammar · Progress
       </p>
       </div>

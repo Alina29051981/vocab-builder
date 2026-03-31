@@ -81,15 +81,25 @@ function WordsTable({
                   <WordActionsMenu word={word} onDelete={onDelete} />
                 )}
 
-                {variant === "recommend" && showArrow && (
-                  <button
-                    className={css.arrowLink}
-                    onClick={() => handleAdd(word._id)}
-                    disabled={addedWordIds?.has(word._id)}
-                  >
-                    {addedWordIds?.has(word._id) ? "✔" : "→"}
-                  </button>
-                )}
+              {variant === "recommend" && showArrow && (
+  <button
+    className={css.arrowLink}
+    onClick={() => handleAdd(word._id)}
+    disabled={addedWordIds?.has(word._id)}
+  >
+    {addedWordIds?.has(word._id) ? (
+      <>
+        <span className={css.addText}>Added to dictionary</span>
+        <span className={css.tick}>✔</span>
+      </>
+    ) : (
+      <>
+        <span className={css.addText}>Add to dictionary</span>
+        <span className={css.arrow}>→</span>
+      </>
+    )}
+  </button>
+)}
               </td>
             </tr>
           ))}

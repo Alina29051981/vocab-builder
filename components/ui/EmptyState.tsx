@@ -19,7 +19,7 @@ export default function EmptyState({ onCancel }: Props) {
     <div className={css.wrapper}>
       <div className={css.imageWrapper}>
         <Image
-          src="/image-blood-report.webp"
+          src="/blood-report.webp"
           alt="Empty state illustration"
           className={css.image}
           width={144}
@@ -27,14 +27,16 @@ export default function EmptyState({ onCancel }: Props) {
           priority
         />
       </div>
-
+      <div className={css.wrapperDt}>
+<div className={css.text}>
       <h2 className={css.title}>
         You don&apos;t have a single word to learn right now.
       </h2>
 
       <p className={css.description}>
        Please create or add a word to start the workout. We want to improve your vocabulary and develop your knowledge, so please share the words you are interested in adding to your study.
-      </p>
+        </p>
+       
 
       <div className={css.buttons}>
         <button onClick={handleAddWordClick} className={css.addButton}>
@@ -43,7 +45,19 @@ export default function EmptyState({ onCancel }: Props) {
 
         <button onClick={onCancel} className={css.cancelButton}>
           Cancel
-        </button>
+          </button>
+          </div> </div>
+
+        <div className={css.imageWrapperDt}>
+        <Image
+          src="/blood-report.webp"
+          alt="Empty state illustration"
+          className={css.image}
+          width={144}
+          height={166}
+          priority
+        />
+      </div>
       </div>
     </div>
   );

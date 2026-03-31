@@ -152,28 +152,41 @@
     stroke: var(--white);
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    padding: 0 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e3e7;
+    position: relative;
+    z-index: 1000;
+}
+
+.mobileRight {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
 .mobileUser {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
-    color: #fff;
-    margin-right: 8px;
+    gap: 16px;
+    white-space: nowrap;
 }
 
 .avatar {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: var(--green);
 }
 
-.userName {
+.mobileUser .userName {
     font-size: 14px;
     color: var(--black);
-    white-space: nowrap;
 }
 
 @keyframes slideDown {

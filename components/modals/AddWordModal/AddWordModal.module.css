@@ -1,4 +1,5 @@
-/* AddWordModal.module.css */
+/* EditWordModal.module.css */
+
 .backdrop {
     position: fixed;
     inset: 0;
@@ -13,7 +14,7 @@
     position: relative;
     background: var(--green);
     border-radius: 15px;
-    padding: 52.5px 16px 48px 16px;
+    padding: 48px 16px;
     width: 100%;
     max-width: 342px;
     display: flex;
@@ -21,26 +22,22 @@
     gap: 16px;
 }
 
-.modal form {
-    display: flex;
-    flex-direction: column;
-}
-
 .modal .h1 {
-    font-family: var(--font-family);
     font-weight: 600;
     font-size: 24px;
-    line-height: 1.16667;
-    letter-spacing: -0.02em;
     color: var(--white);
 }
 
 .modal .text {
-    font-family: var(--font-family);
-    font-weight: 400;
     font-size: 16px;
-    line-height: 1.5;
     color: var(--white);
+    margin-bottom: 16px;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .modal input,
@@ -51,7 +48,7 @@
     font-size: 16px;
     color: var(--white);
     outline: none;
-    transition: border 0.2s;
+    transition: all 0.2s;
 }
 
 .modal input:hover,
@@ -62,134 +59,132 @@
     color: var(--black);
 }
 
-
-.modal label {
+.inputWithFlag {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
-    color: #121417;
 }
 
+.inputWithFlag input {
+    flex: 1;
+}
 
+.flagWrapper {
+    display: flex;
+    align-items: center;
+    gap: 4.5px;
+}
+
+.flagWrapper p {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--white);
+    margin: 0;
+}
 
 .modal .buttons {
     margin-top: 32px;
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    gap: 8px;
 }
 
 .modal .buttonSave {
     background: var(--white);
-    font-family: var(--font-family);
-    font-weight: 700;
-    font-size: 16px;
     border-radius: 30px;
-    padding-block: 12px;
-    padding-inline: 60px;
-    max-width: 158px;
     height: 48px;
-    line-height: 1.5;
+    padding: 12px 60px;
     color: var(--black);
-    margin-right: 8px;
-}
-
-.modal .buttonSave:hover {
-    color: var(--green);
+    font-weight: 700;
 }
 
 .modal .buttonCancel {
     border: 1px solid rgba(252, 252, 252, 0.4);
     border-radius: 30px;
-    padding-block: 12px;
-    padding-inline: 45px;
-    max-width: 145px;
     height: 48px;
-    font-family: var(--font-family);
+    padding: 12px 45px;
+    color: var(--white);
+    background: none;
     font-weight: 700;
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--white);
-}
-
-.modal .buttonCancel:hover {
-    background: var(--white);
-    color: var(--black);
-}
-
-.modal .flagWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 4.5px;
-}
-
-.modal .flagWrapper p {
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--white);
-    padding: 20.5px 0 12.5px 0;
 }
 
 .modal .closeBtn {
     position: absolute;
     top: 16px;
     right: 16px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
-    padding-bottom: 12.5px;
+    border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 0;
 }
 
 .modal .closeBtn svg {
-    display: block;
     width: 24px;
     height: 24px;
     fill: var(--white);
     transition: fill 0.2s;
 }
 
-.radioGroup {
-    display: flex;
-    flex-direction: row;
-    margin-top: 8px;
-    gap: 16px;
+.modal .closeBtn:hover svg {
+    fill: var(--black);
 }
 
-.radioInput {
-    display: none;
-}
-
-.customRadio {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-
-.icon {
-    width: 12px;
-    height: 12px;
-    opacity: 0;
-    transition: 0.2s;
-}
-
-.radioInput:checked+.customRadio .icon {
-    opacity: 1;
-    fill: white;
-}
-
-.radioText {
-    font-family: var(--font-family);
-    font-weight: 400;
+.error {
     font-size: 12px;
-    text-align: center;
-    color: var(--white);
+    color: #ff6b6b;
+    margin-top: -4px;
+    margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+    .modal {
+        padding: 48px 64px;
+        max-width: 622px;
+    }
+
+    .modal .h1 {
+        font-size: 40px;
+    }
+
+    .modal .text {
+        font-size: 20px;
+        padding: 20px 0 32px;
+    }
+
+    .modal input {
+        height: 56px;
+    }
+
+    .modal select {
+        width: 204px;
+        height: 48px;
+    }
+
+    .modal .buttons {
+        gap: 10px;
+        width: 100%;
+    }
+
+    .modal .buttonSave,
+    .modal .buttonCancel {
+        width: 100%;
+        max-width: 245px;
+        height: 56px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal .closeBtn {
+        top: 24px;
+        right: 24px;
+    }
 }

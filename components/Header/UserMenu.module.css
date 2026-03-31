@@ -17,8 +17,8 @@
 
 
 .avatarIcon {
-    height: 36px;
-    width: 36px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
     object-fit: cover;
     background: var(--green);

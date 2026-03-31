@@ -1,132 +1,267 @@
-/* components/training/TrainingRoom.module.css */
 .wrapper {
-    background: var(--white-1);
-    max-width: 375px;
-    margin: 0 auto;
+    width: 100%;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    font-family: "Inter", sans-serif;
+    position: relative;
+    background: var(--white-1);
 }
 
 .cardsWrapper {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    border-bottom: 1px solid #dbdbdb;
-    border-radius: 8px 8px 0 0;
-    min-width: 343px;
-    height: 195px;
-    border-color: none;
+    position: relative;
+    z-index: 2;
+    align-items: center;
+    margin-top: 8px;
 }
 
-.actionsUnderCards {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 16px;
-
-    align-items: center;
+.bock {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 15px;
+    padding: 18px;
+    z-index: 1;
 }
 
 .card {
-    background: var(--white);
-    border-bottom: 1px solid #dbdbdb;
-    border-radius: 8px 8px 0 0;
-    padding: 22px;
-    width: 343px;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-height: 195px;
-    box-sizing: border-box;
+    background: var(--white);
+    width: 100%;
+    max-width: 343px;
+}
+
+.cardTopRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .input {
-    font-family: var(--font-family);
-    font-weight: 500;
+    flex: 1;
+    min-width: 0;
     font-size: 16px;
-    line-height: 1.5;
-    color: var(--black);
-    margin-bottom: 106px;
 }
 
-.input::placeholder {
-    font-family: var(--font-family);
-    font-weight: 500;
+.word {
+    flex: 1;
     font-size: 16px;
-    line-height: 1.5;
-    color: var(--black);
 }
 
-.next {
+.cardFooter {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+}
+
+.cardFooterRight {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.langDesktop {
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.langMobile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flagIcon {
+    width: 20px;
+    height: 20px;
 }
 
 .nextButton {
-    font-family: var(--font-family);
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 500;
     font-size: 16px;
-    line-height: 1.5;
     color: rgba(18, 20, 23, 0.5);
-    cursor: pointer;
-    transition: background 0.2s;
 }
 
 .nextArrow {
     color: var(--green);
 }
 
-
-.flag {
-    font-family: var(--font-family);
-    font-weight: 500;
+.translation {
     font-size: 14px;
-    color: var(--black);
 }
 
-.word {
+.actionsUnderCards {
     display: flex;
-    flex-direction: row;
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--black);
-    margin-bottom: 103px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    margin-top: 116px;
 }
 
 .saveButton {
-    margin-bottom: 116px;
-    border-radius: 30px;
-    padding-block: 16px;
-    padding-inline: 153px;
     width: 343px;
     height: 56px;
+    border-radius: 30px;
     background: var(--green);
-    font-family: var(--font-family);
+    color: var(--white);
     font-weight: 700;
     font-size: 16px;
-    line-height: 1.5;
-    color: var(--white);
     border: 2px solid var(--green);
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.saveButton:hover,
-.saveButton:focus {
+.saveButton:hover {
     background: var(--white);
     color: var(--green);
 }
 
 .cancelButton {
-
-    font-family: var(--font-family);
     font-weight: 700;
     font-size: 16px;
     color: rgba(18, 20, 23, 0.5);
+    cursor: pointer;
 }
 
-.error {
-    text-align: center;
-    color: #ef4444;
+.cancelButton:hover {
+    color: var(--black);
+}
+
+/* TrainingRoom.module.css */
+.progressWrapper {
+    display: flex;
+    justify-content: flex-end;
+    /* завжди праворуч */
+    width: 100%;
+    margin-bottom: 8px;
+    /* або як треба зверху */
+}
+
+.progressWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    /* завжди праворуч */
+    margin-bottom: 8px;
+}
+
+/* Підказка праворуч від англійського слова */
+.hint {
+    margin-left: 12px;
+    /* відступ від інпута */
+    padding: 4px 8px;
+    background: #fff3f3;
+    /* світлий червоний фон */
+    border: 1px solid #ff4d4f;
+    border-radius: 6px;
+    color: #ff4d4f;
+    font-size: 14px;
+    white-space: nowrap;
+    /* не переносити текст */
+    align-self: center;
+    /* по центру по вертикалі */
+}
+
+/* ================= */
+/* TABLET */
+@media (min-width: 768px) {
+    .wrapper {
+        max-width: 704px;
+        margin: 0 auto;
+    }
+
+    .cardsWrapper {
+
+        margin-top: 34px;
+    }
+
+    .card {
+        min-height: 282px;
+        max-width: 100%;
+    }
+
+    .langDesktop {
+        display: flex;
+    }
+
+    .langMobile {
+        display: none;
+    }
+
+    .actionsUnderCards {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 58px;
+    }
+
+    .saveButton,
+    .cancelButton {
+        width: 203px;
+        height: 56px;
+        border-radius: 30px;
+    }
+
+    .cancelButton {
+        border: 2px solid var(--green);
+        color: var(--green);
+    }
+
+    .cancelButton:hover {
+        background: var(--green);
+        color: var(--white);
+    }
+
+    .bock {
+        display: block;
+        width: 704px;
+        height: 600px;
+        top: 48.5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (min-width: 1440px) {
+    .wrapper {
+        max-width: 1240px;
+    }
+
+    .cardsWrapper {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .card {
+        min-height: 302px;
+        max-width: 602px;
+    }
+
+    .actionsUnderCards {
+        margin-top: 98px;
+    }
+
+    .bock {
+        display: block;
+        width: 1240px;
+        height: 338px;
+        top: 44.5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }

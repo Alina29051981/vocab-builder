@@ -1,5 +1,4 @@
 /* components/modals/WellDoneModal.module.css */
-/* components/modals/WellDoneModal.module.css */
 
 .backdrop {
     position: fixed;
@@ -7,49 +6,76 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: var(--green);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    background: rgba(18, 20, 23, 0.2);
 }
 
 .modal {
-    background-color: var(--white-1, #fff);
-    border-radius: 12px;
-    padding: 24px;
-    max-width: 480px;
-    width: 90%;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 166px;
+    width: 342px;
+    min-height: 459px;
+    background: var(--green);
+    border-radius: 15px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
+.closeBtn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    color: var(--white);
+}
+
+.closeBtn:hover {
+    color: var(--black);
+}
+
 .title {
-    font-size: 1.5rem;
+    font-family: var(--font-family);
     font-weight: 600;
-    margin: 0;
+    font-size: 24px;
+    line-height: 1.16667;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-top: 48px;
     text-align: center;
 }
 
 .summary {
-    font-size: 1rem;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--white);
     text-align: center;
-    margin: 0;
 }
 
 .percent {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
     text-align: center;
-    color: var(--green, #28a745);
-    margin: 0;
+    color: var(--white);
 }
 
 .answerColumns {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     margin-top: 16px;
     justify-content: space-between;
 }
@@ -59,75 +85,59 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
 .correctColumnTitle,
 .incorrectColumnTitle {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 8px 0;
-    text-align: center;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(252, 252, 252, 0.5);
+    text-align: left;
 }
 
 .correctColumnList,
 .incorrectColumnList {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 200px;
+    max-height: 303px;
     overflow-y: auto;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 8px;
-    background-color: var(--white-2, #f9f9f9);
 }
 
 .correctColumnListItem,
 .incorrectColumnListItem {
-    font-size: 0.95rem;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--white);
     padding: 4px 0;
-    border-bottom: 1px solid #e0e0e0;
 }
 
-.correctColumnListItem:last-child,
-.incorrectColumnListItem:last-child {
-    border-bottom: none;
+.imageWellDone {
+    margin: 8px 0;
 }
 
-.actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-    gap: 8px;
+@media (min-width: 768px) {
+    .modal {
+        top: 264px;
+        width: 528px;
+        min-height: 520px;
+        padding: 48px 64px;
+    }
+
+    .closeBtn {
+        position: absolute;
+        top: 28px;
+        right: 28px;
+        width: 32px;
+        height: 32px;
+    }
 }
 
-.button,
-.buttonSecondary {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
+@media (min-width: 1439px) {
+    .modal {
+        top: 176px;
 
-.button {
-    background-color: var(--green, #28a745);
-    color: #fff;
-}
-
-.button:hover {
-    background-color: #218838;
-}
-
-.buttonSecondary {
-    background-color: var(--white-1, #fff);
-    color: var(--green, #28a745);
-    border: 1px solid var(--green, #28a745);
-}
-
-.buttonSecondary:hover {
-    background-color: var(--green, #28a745);
-    color: #fff;
+    }
 }

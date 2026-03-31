@@ -38,6 +38,10 @@ export default function Filters({ onChange, className }: Props) {
     ...CATEGORIES.map((cat) => ({ value: cat, label: cat })),
   ];
 
+  const toggleVerbType = (value: boolean) => {
+    setIsIrregular(value);
+  };
+
   return (
     <div className={`${css.filters} ${className || ""}`}>
       {/* 🔍 Search */}
@@ -49,48 +53,45 @@ export default function Filters({ onChange, className }: Props) {
           placeholder="Find the word"
           className={css.input}
         />
-        <svg className={css.searchIcon} width="20" height="20">
-          <use href="/sprite.svg#icon-search" />
+        <svg className={css.searchIcon} width="24" height="24">
+          <use href="#icon-search" />
         </svg>
       </div>
 
-      {/* 📂 Category */}
-      <SortDropdown
+            <SortDropdown
         value={category}
         onChange={(value) => {
           const newCategory = value as Category | "";
           setCategory(newCategory);
 
-          // 🔥 скидаємо стан при зміні категорії
-          if (newCategory !== "verb") {
+                    if (newCategory !== "verb") {
             setIsIrregular(null);
           }
         }}
         options={categoryOptions}
       />
 
-      {/* 🔥 Radios тільки для verb */}
-      {category === "verb" && (
+           {category === "verb" && (
         <div className={css.radioGroup}>
-          <label className={css.radioLabel}>
-            <input
-              type="radio"
-              name="verbType"
-              checked={isIrregular === false}
-              onChange={() => setIsIrregular(false)}
-            />
-            Regular
-          </label>
-
-          <label className={css.radioLabel}>
-            <input
-              type="radio"
-              name="verbType"
-              checked={isIrregular === true}
-              onChange={() => setIsIrregular(true)}
-            />
-            Irregular
-          </label>
+          {[
+            { label: "Regular", value: false },
+            { label: "Irregular", value: true },
+          ].map((opt) => (
+            <div
+              key={String(opt.value)}
+              className={`${css.radioCustom} ${isIrregular === opt.value ? css.active : ""}`}
+              onClick={() => toggleVerbType(opt.value)}
+            >
+              <div className={css.radioCircle}>
+                {isIrregular === opt.value && (
+                  <svg width="18" height="18" >
+                    <use href="#dropdown" />
+                  </svg>
+                )}
+              </div>
+              <span>{opt.label}</span>
+            </div>
+          ))}
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-/* components/Dashboard/Filters.module.css */
+/* Filters.module.css */
 
 .filters {
     display: flex;
@@ -12,7 +12,6 @@
 }
 
 .input {
-    padding-bottom: 40px;
     width: 100%;
     height: 48px;
     border: 1px solid rgba(18, 20, 23, 0.1);
@@ -24,11 +23,7 @@
     font-size: 16px;
     line-height: 1.5;
     color: var(--black);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     box-sizing: border-box;
-    cursor: pointer;
 }
 
 .input::placeholder {
@@ -40,7 +35,6 @@
 .input:focus {
     border: 1px solid var(--green);
     outline: none;
-
 }
 
 .searchIcon {
@@ -57,88 +51,35 @@
 .radioGroup {
     display: flex;
     gap: 12px;
-    margin-top: 4px;
+    margin-top: 12px;
 }
 
-.radioGroup label {
+.radioCustom {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
-    color: #121417;
-}
-
-.radioGroup input[type="radio"] {
-    accent-color: #85aa9f;
-}
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.search {
-    height: 44px;
-    padding: 0 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.select {
-    height: 44px;
-    padding: 0 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.radioGroup {
-    display: flex;
-    gap: 16px;
-}
-
-.radioLabel {
-    display: flex;
-    align-items: center;
-    gap: 8px;
     cursor: pointer;
 }
 
-.radioInput {
-    display: none;
-}
-
-.customRadio {
-    width: 20px;
-    height: 20px;
+.radioCircle {
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(18, 20, 23, 0.2);
     border-radius: 50%;
-    border: 2px solid #ccc;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    transition: 0.2s;
+    background-color: var(--white-1);
+    transition: background 0.2s, border-color 0.2s;
 }
 
-.icon {
-    width: 12px;
-    height: 12px;
-    opacity: 0;
-    transition: 0.2s;
+.radioCustom.active .radioCircle {
+    border-color: var(--white-1);
+    background-color: var(--white-1);
 }
 
-.radioInput:checked+.customRadio .icon {
-    opacity: 1;
-    fill: white;
-}
-
-.radioText {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 12px;
-    text-align: center;
-    color: var(--black);
+.radioCircle svg {
+    display: block;
 }
 
 @media (min-width: 768px) {
@@ -146,9 +87,5 @@
         flex-direction: row;
         align-items: center;
         gap: 16px;
-    }
-
-    .select {
-        width: 200px;
     }
 }

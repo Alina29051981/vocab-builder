@@ -54,14 +54,14 @@ export default function WordActionsMenu({ word, onDelete }: Props) {
             }}
           >
             <svg className={css.icon} width="16" height="16">
-  <use href="/sprite.svg#icon-edit" />
+  <use href="#icon-edit" />
 </svg>
 
             Edit
           </button>
 
           <button onClick={handleDelete}> <svg className={css.icon} width="16" height="16">
-        <use href="/sprite.svg#icon-delete" />
+        <use href="#icon-delete" />
       </svg>Delete</button>
         </div>
       )}

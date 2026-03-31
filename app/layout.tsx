@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { myFonts } from "./fonts";
 import "./globals.css";
 import ClientProviders from "./ClientProviders";
+import sprite from "../assets/sprite.svg?raw";
 
 export const metadata: Metadata = {
   title: "VocabBuilder",
@@ -26,6 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={myFonts.variable}>
       <body>
+        <div
+          dangerouslySetInnerHTML={{ __html: sprite }}
+          style={{ display: "none" }}
+        />
                 <ClientProviders>{children}</ClientProviders>
       </body>
     </html>

@@ -1,0 +1,91 @@
+.error {
+    font-size: 12px;
+    color: red;
+}
+
+.radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.radioOptionsRow {
+    display: flex;
+    gap: 16px;
+}
+
+.radioCustomWrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.radioCircle {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radioCustomWrapper.active .radioCircle {
+    background-color: var(--white);
+}
+
+.radioCircle svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--green);
+}
+
+.radioText {
+    font-size: 14px;
+    color: var(--white);
+}
+
+.radioHint {
+    font-size: 10px;
+    color: var(--white);
+}
+
+.inputWithFlag {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.flagWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flagWrapper p {
+    font-size: 14px;
+    color: var(--white);
+}
+
+@media (min-width: 768px) {
+    .inputWithFlag {
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .inputWithFlag input {
+        order: 1;
+        flex: 1;
+        min-width: 0;
+        height: 56px;
+    }
+
+    .flagWrapper {
+        order: 2;
+        min-width: 140px;
+    }
+}

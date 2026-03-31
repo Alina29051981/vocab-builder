@@ -41,7 +41,7 @@ useEffect(() => {
       <div className={css.left}>
         <Link href="/dictionary" className={css.logo}>
           <svg className={css.logoIcon}>
-            <use href="/sprite.svg#icon" />
+            <use href="#icon" />
           </svg>
           <span className={css.title}>VocabBuilder</span>
         </Link>
@@ -55,24 +55,26 @@ useEffect(() => {
         <LogoutButton />
       </nav>
       
-      {user && isMobile && (
-  <div className={css.mobileUser}>
-          <span className={css.userName}>{user.name}</span>
-          <svg className={css.avatar}>
-      <use href="/sprite.svg#avatarIcon" />
-    </svg>
-    
+  {user && isMobile && (
+  <div className={css.mobileRight}>
+    <div className={css.mobileUser}>
+      <span className={css.userName}>{user.name}</span>
+      <svg className={css.avatar}>
+        <use href="#avatarIcon" />
+      </svg>
+    </div>
+
+    <button
+      className={css.burger}
+      onClick={() => setMenuOpen(!menuOpen)}
+      aria-label="Toggle menu"
+    >
+      <svg width="36" height="24">
+        <use href={`#${menuOpen ? "icon-x" : "burger"}`} />
+      </svg>
+    </button>
   </div>
 )}
-      <button
-        className={css.burger}
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle menu"
-      >
-        <svg width="36" height="24">
-          <use href={`/sprite.svg#${menuOpen ? "icon-x" : "burger"}`} />
-        </svg>
-      </button>
 
     {menuOpen && user && isMobile && (
   <MobileMenu
