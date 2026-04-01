@@ -10,8 +10,8 @@ interface Props {
   data: Word[];
   loading?: boolean;
   variant?: "dictionary" | "recommend";
-  onDelete?: (id: string) => void;
   onEdit?: (word: Word) => void;
+  onDelete?: (id: string) => void;
   showArrow?: boolean;
   initialAddedWordIds?: Set<string>;
   onAddWord?: (wordId: string) => Promise<void>;
@@ -21,13 +21,13 @@ function WordsTable({
   data,
   loading = false,
   variant = "dictionary",
-  onDelete,
   onEdit,
   showArrow,
   initialAddedWordIds,
   onAddWord,
 }: Props) {
   const [addedWordIds, setAddedWordIds] = useState<Set<string>>(new Set());
+  const [localWords, setLocalWords] = useState<Word[]>(data);
 
   useEffect(() => {
     if (initialAddedWordIds) {
@@ -35,25 +35,35 @@ function WordsTable({
     }
   }, [initialAddedWordIds]);
 
+  // Синхронізуємо локальний стан при зміні data
+  useEffect(() => {
+    setLocalWords(data);
+  }, [data]);
+
   if (loading) return <p className={css.state}>Loading...</p>;
-  if (!data || data.length === 0) return <p className={css.state}>No words found.</p>;
+  if (!localWords || localWords.length === 0) return <p className={css.state}>No words found.</p>;
 
-    const handleAdd = async (id: string) => {
-    if (addedWordIds.has(id) || !onAddWord) return;
+  const handleAdd = async (id: string) => {
+  if (addedWordIds.has(id) || !onAddWord) return;
 
-    setAddedWordIds((prev) => new Set(prev).add(id)); 
+  // Спочатку локально додаємо
+  setAddedWordIds((prev) => new Set(prev).add(id));
 
-    try {
-      await onAddWord(id); 
-    } catch  {
-      
-      setAddedWordIds((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(id);
-        return newSet;
-      });
+  try {
+    await onAddWord(id); // запит до бекенду
+  } catch {
+    // Якщо помилка — відкат локально
+    setAddedWordIds((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(id);
+      return newSet;
+    });
+  }
+};
 
-    }
+  // Локальне видалення слова
+  const handleDelete = (id: string) => {
+    setLocalWords((prev) => prev.filter((word) => word._id !== id));
   };
 
   return (
@@ -80,7 +90,7 @@ function WordsTable({
         </thead>
 
         <tbody>
-          {data.map((word) => {
+          {localWords.map((word) => {
             const isAdded = addedWordIds.has(word._id);
 
             return (
@@ -97,7 +107,11 @@ function WordsTable({
 
                 <td className={css.actions}>
                   {variant === "dictionary" && (
-                    <WordActionsMenu word={word} onDelete={onDelete} onEdit={onEdit} />
+                    <WordActionsMenu
+                      word={word}
+                      onDelete={handleDelete} // локальне видалення
+                      onEdit={onEdit}
+                    />
                   )}
 
                   {variant === "recommend" && showArrow && (

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { getOwnWords } from "@/lib/api/words";
 import { postTrainingAnswers } from "@/lib/api/training";
@@ -14,6 +15,7 @@ type Answer = { word: Word; isCorrect: boolean };
 
 export default function TrainingRoom() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [userAnswer, setUserAnswer] = useState("");
@@ -22,12 +24,12 @@ export default function TrainingRoom() {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [showWellDone, setShowWellDone] = useState(false);
 
-    const { data, isLoading, isError } = useQuery<PaginatedWordsResponse>({
+  const { data, isLoading, isError } = useQuery<PaginatedWordsResponse>({
     queryKey: ["ownWords"],
     queryFn: () => getOwnWords({ page: 1, limit: 25 }),
   });
 
-    const nextWord = useCallback(() => {
+  const nextWord = useCallback(() => {
     if (!data?.results) return;
 
     const remaining = data.results.filter(w => !w.progress || w.progress < 100);
@@ -61,7 +63,7 @@ export default function TrainingRoom() {
       const result = res[0];
       const isCorrect = !!result.isDone;
 
-           if (isCorrect) {
+      if (isCorrect) {
         toast.success("Correct!");
         setHint(null);
       } else {
@@ -69,7 +71,7 @@ export default function TrainingRoom() {
         toast.error("Incorrect!");
       }
 
-            if (currentWord && data?.results) {
+      if (currentWord && data?.results) {
         const updatedResults = data.results.map(w =>
           w._id !== currentWord._id
             ? w
@@ -78,34 +80,33 @@ export default function TrainingRoom() {
         queryClient.setQueryData(["ownWords"], { ...data, results: updatedResults });
       }
 
-            if (currentWord) setAnswers(prev => [...prev, { word: currentWord, isCorrect }]);
+      if (currentWord) setAnswers(prev => [...prev, { word: currentWord, isCorrect }]);
 
       setShowTranslation(true);
 
-            if (answers.length + 1 >= Math.min(25, data?.results.length ?? 25)) {
+      if (answers.length + 1 >= Math.min(25, data?.results.length ?? 25)) {
         setShowWellDone(true);
       }
     },
     onError: () => toast.error("Failed to check answer"),
   });
 
-    const handleSave = () => {
+  const handleSave = () => {
     if (!currentWord || !userAnswer.trim()) return;
     submitAnswer.mutate(currentWord);
   };
 
-    const handleCancel = () => {
-    setUserAnswer("");
-    setShowTranslation(false);
-    setHint(null);
+  // Змінено: Cancel тепер веде на сторінку Dictionary
+  const handleCancel = () => {
+    router.push("/dictionary");
   };
 
-    const percent =
+  const percent =
     data?.results && data.results.length > 0
       ? Math.round(data.results.reduce((acc, w) => acc + (w.progress ?? 0), 0) / data.results.length)
       : 0;
 
-    if (isLoading) return <p className={css.info}>Loading words...</p>;
+  if (isLoading) return <p className={css.info}>Loading words...</p>;
   if (isError) return <p className={css.error}>Failed to load words</p>;
   if (!currentWord) return <p className={css.info}>All words learned! 🎉</p>;
 
@@ -115,10 +116,10 @@ export default function TrainingRoom() {
         <ProgressBar percent={percent} variant="training" />
       </div>
 
-         <div className={css.bock}></div>
+      <div className={css.bock}></div>
 
       <div className={css.cardsWrapper}>
-               <div className={css.card}>
+        <div className={css.card}>
           <div className={css.cardTopRow}>
             <input
               type="text"
@@ -128,9 +129,7 @@ export default function TrainingRoom() {
               className={css.input}
               disabled={showTranslation}
             />
-
-                      {hint && <div className={css.hint}>{hint}</div>}
-
+            {hint && <div className={css.hint}>{hint}</div>}
             <div className={css.langDesktop}>
               <svg className={css.flagIcon}>
                 <use href="/sprite.svg#flag-ukraine" />
@@ -157,10 +156,9 @@ export default function TrainingRoom() {
           </div>
         </div>
 
-                <div className={css.card}>
+        <div className={css.card}>
           <div className={css.cardTopRow}>
             <p className={css.word}>{currentWord.en}</p>
-
             <div className={css.langDesktop}>
               <svg className={css.flagIcon}>
                 <use href="/sprite.svg#flag-england" />
@@ -194,7 +192,6 @@ export default function TrainingRoom() {
         <button
           className={css.cancelButton}
           onClick={handleCancel}
-          disabled={showTranslation}
         >
           Cancel
         </button>

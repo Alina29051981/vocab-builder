@@ -60,3 +60,52 @@
  .wordsTableWrapper button:disabled .addText {
      color: rgba(18, 20, 23, 0.5);
  }
+
+ @media (min-width: 768px) {
+
+
+     .counterWrapper {
+         display: flex;
+         flex-direction: row;
+         padding: 28px;
+     }
+
+     .studyText,
+     .studyNumber {
+         padding: 0 16px 0 0;
+     }
+
+     .trainButton {
+         margin: 0;
+     }
+
+     .dashboardWrapper {
+         padding-top: 80px;
+     }
+
+ }
+
+ @media (min-width: 1440px) {
+
+
+     .dashboardWrapper {
+         margin-bottom: 24px;
+     }
+
+     .wordsTableWrapper {
+         margin-bottom: 24px;
+     }
+
+     .counterFunctionWrapper {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+
+     }
+
+     .counterWrapper {
+         display: flex;
+         align-items: end;
+     }
+
+ }

@@ -54,22 +54,22 @@ export default function SortDropdown({
         </svg>
       </div>
 
-      {isOpen && (
-        <div className={styles.dropdown}>
-          {options.map((option) => (
-            <div
-              key={option.value}
-              className={styles.option}
-              onClick={() => {
-                onChange(option.value);
-                setIsOpen(false);
-              }}
-            >
-              {option.label}
-            </div>
-          ))}
-        </div>
-      )}
+     {isOpen && (
+  <div className={styles.dropdown}>
+    {options.map((option, idx) => (          // ← додав idx
+      <div
+        key={`${option.value}-${idx}`}       // ← змінив ключ, щоб був унікальний
+        className={styles.option}
+        onClick={() => {
+          onChange(option.value);
+          setIsOpen(false);
+        }}
+      >
+        {option.label}
+      </div>
+    ))}
+  </div>
+)}
     </div>
   );
 }

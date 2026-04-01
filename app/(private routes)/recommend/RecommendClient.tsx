@@ -22,20 +22,25 @@ export default function RecommendClient() {
   const [category, setCategory] = useState<Category | "">("");
   const [isIrregular, setIsIrregular] = useState<boolean | null>(null);
   const [addedWordIds, setAddedWordIds] = useState<Set<string>>(new Set());
+  const [isLoaded, setIsLoaded] = useState(false);
 
-   useEffect(() => {
+  // Завантажуємо всі слова користувача
+  useEffect(() => {
     const fetchAddedWords = async () => {
       try {
-        const ownWords = await getUserWords(); 
-        setAddedWordIds(new Set(ownWords.map((word) => word._id)));
-      } catch {
-              }
+        const ownWords = await getUserWords();
+        setAddedWordIds(new Set(ownWords.map((w) => w._id)));
+      } catch (err) {
+        console.error("Failed to load user words", err);
+      } finally {
+        setIsLoaded(true);
+      }
     };
-
     fetchAddedWords();
   }, []);
 
-   const { data, isLoading } = useQuery<PaginatedWordsResponse>({
+  // Рекомендовані слова
+  const { data, isLoading } = useQuery<PaginatedWordsResponse>({
     queryKey: ["recommendWords", page, keyword, category, isIrregular],
     queryFn: () =>
       getRecommendedWords({
@@ -51,37 +56,37 @@ export default function RecommendClient() {
   const words: Word[] = data?.results ?? [];
   const totalPages = data?.totalPages ?? 1;
 
-    const { data: statsData } = useQuery<{ totalCount: number }>({
+  // Статистика
+  const { data: statsData } = useQuery<{ totalCount: number }>({
     queryKey: ["recommendWordsCount"],
     queryFn: () => getUserStatistics(),
     placeholderData: { totalCount: 0 },
   });
   const totalCount = statsData?.totalCount ?? 0;
 
-    const handleAddWord = async (wordId: string) => {
-    if (addedWordIds.has(wordId)) {
-      alert("This word is already in your dictionary!");
-      return;
-    }
+  // Додавання слова
+  const handleAddWord = async (wordId: string) => {
+    if (!isLoaded) return; // ще не завантажено
+    if (addedWordIds.has(wordId)) return; // вже додано
 
     try {
-      
-      const addedWord = await addWordFromOtherUser(wordId);
-      if (addedWord) {
-        setAddedWordIds((prev) => new Set(prev).add(wordId));
-        alert("Word successfully added to your dictionary!");
-      } else {
-      
-        alert("This word is already in your dictionary!");
-      }
+      await addWordFromOtherUser(wordId); // POST
+      setAddedWordIds((prev) => new Set(prev).add(wordId));
     } catch (err) {
       const error = err as ApiError;
-      alert(error.message || "Failed to add the word. Please try again later.");
+
+      if (error.message.includes("Conflict")) {
+        // Слово вже є на бекенді — додаємо локально, щоб UI відобразив
+        setAddedWordIds((prev) => new Set(prev).add(wordId));
+      } else {
+        alert(error.message || "Failed to add word.");
+      }
     }
   };
 
   return (
     <div className={`container ${css.recommendPage}`}>
+       <div className={css.counterFunctionWrapper}>
       <div className={css.dashboardWrapper}>
         <Filters
           className={css.Wrapper}
@@ -97,15 +102,17 @@ export default function RecommendClient() {
         <p className={css.studyText}>
           To study: <span className={css.studyNumber}>{totalCount}</span>
         </p>
+
         <a href="/training" className={css.trainButton}>
           Train oneself <span className={css.trainArrow}>→</span>
         </a>
-      </div>
+        </div>
+        </div>
 
       <div className={css.wordsTableWrapper}>
         <WordsTable
           data={words}
-          loading={isLoading}
+          loading={isLoading || !isLoaded} // блокування поки словник не завантажено
           variant="recommend"
           showArrow
           initialAddedWordIds={addedWordIds}
