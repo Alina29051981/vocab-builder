@@ -142,43 +142,32 @@
     color: var(--black);
 }
 
-/* TrainingRoom.module.css */
 .progressWrapper {
     display: flex;
     justify-content: flex-end;
-    /* завжди праворуч */
     width: 100%;
     margin-bottom: 8px;
-    /* або як треба зверху */
 }
 
 .progressWrapper {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    /* завжди праворуч */
     margin-bottom: 8px;
 }
 
-/* Підказка праворуч від англійського слова */
 .hint {
     margin-left: 12px;
-    /* відступ від інпута */
     padding: 4px 8px;
     background: #fff3f3;
-    /* світлий червоний фон */
     border: 1px solid #ff4d4f;
     border-radius: 6px;
     color: #ff4d4f;
     font-size: 14px;
     white-space: nowrap;
-    /* не переносити текст */
     align-self: center;
-    /* по центру по вертикалі */
 }
 
-/* ================= */
-/* TABLET */
 @media (min-width: 768px) {
     .wrapper {
         max-width: 704px;

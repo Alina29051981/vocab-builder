@@ -24,8 +24,7 @@ export default function RecommendClient() {
   const [addedWordIds, setAddedWordIds] = useState<Set<string>>(new Set());
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Завантажуємо всі слова користувача
-  useEffect(() => {
+    useEffect(() => {
     const fetchAddedWords = async () => {
       try {
         const ownWords = await getUserWords();
@@ -39,8 +38,7 @@ export default function RecommendClient() {
     fetchAddedWords();
   }, []);
 
-  // Рекомендовані слова
-  const { data, isLoading } = useQuery<PaginatedWordsResponse>({
+   const { data, isLoading } = useQuery<PaginatedWordsResponse>({
     queryKey: ["recommendWords", page, keyword, category, isIrregular],
     queryFn: () =>
       getRecommendedWords({
@@ -56,27 +54,25 @@ export default function RecommendClient() {
   const words: Word[] = data?.results ?? [];
   const totalPages = data?.totalPages ?? 1;
 
-  // Статистика
-  const { data: statsData } = useQuery<{ totalCount: number }>({
+   const { data: statsData } = useQuery<{ totalCount: number }>({
     queryKey: ["recommendWordsCount"],
     queryFn: () => getUserStatistics(),
     placeholderData: { totalCount: 0 },
   });
   const totalCount = statsData?.totalCount ?? 0;
 
-  // Додавання слова
-  const handleAddWord = async (wordId: string) => {
-    if (!isLoaded) return; // ще не завантажено
-    if (addedWordIds.has(wordId)) return; // вже додано
+    const handleAddWord = async (wordId: string) => {
+    if (!isLoaded) return; 
+    if (addedWordIds.has(wordId)) return; 
 
     try {
-      await addWordFromOtherUser(wordId); // POST
+      await addWordFromOtherUser(wordId);
       setAddedWordIds((prev) => new Set(prev).add(wordId));
     } catch (err) {
       const error = err as ApiError;
 
       if (error.message.includes("Conflict")) {
-        // Слово вже є на бекенді — додаємо локально, щоб UI відобразив
+       
         setAddedWordIds((prev) => new Set(prev).add(wordId));
       } else {
         alert(error.message || "Failed to add word.");
@@ -112,7 +108,7 @@ export default function RecommendClient() {
       <div className={css.wordsTableWrapper}>
         <WordsTable
           data={words}
-          loading={isLoading || !isLoaded} // блокування поки словник не завантажено
+          loading={isLoading || !isLoaded} 
           variant="recommend"
           showArrow
           initialAddedWordIds={addedWordIds}

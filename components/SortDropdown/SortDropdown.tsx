@@ -56,9 +56,9 @@ export default function SortDropdown({
 
      {isOpen && (
   <div className={styles.dropdown}>
-    {options.map((option, idx) => (          // ← додав idx
+    {options.map((option, idx) => (         
       <div
-        key={`${option.value}-${idx}`}       // ← змінив ключ, щоб був унікальний
+        key={`${option.value}-${idx}`}       
         className={styles.option}
         onClick={() => {
           onChange(option.value);

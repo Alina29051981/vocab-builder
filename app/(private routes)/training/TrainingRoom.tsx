@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { getOwnWords } from "@/lib/api/words";
 import { postTrainingAnswers } from "@/lib/api/training";
@@ -10,12 +9,13 @@ import { Word, PaginatedWordsResponse } from "@/types/word";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import WellDoneModal from "../../../components/modals/WellDoneModal";
 import css from "./TrainingRoom.module.css";
+import { useRouter } from "next/navigation";
 
 type Answer = { word: Word; isCorrect: boolean };
 
 export default function TrainingRoom() {
   const queryClient = useQueryClient();
-  const router = useRouter();
+  const router = useRouter(); 
 
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
   const [userAnswer, setUserAnswer] = useState("");
@@ -96,10 +96,9 @@ export default function TrainingRoom() {
     submitAnswer.mutate(currentWord);
   };
 
-  // Змінено: Cancel тепер веде на сторінку Dictionary
   const handleCancel = () => {
     router.push("/dictionary");
-  };
+};
 
   const percent =
     data?.results && data.results.length > 0
@@ -192,6 +191,7 @@ export default function TrainingRoom() {
         <button
           className={css.cancelButton}
           onClick={handleCancel}
+          disabled={showTranslation}
         >
           Cancel
         </button>

@@ -35,8 +35,7 @@ function WordsTable({
     }
   }, [initialAddedWordIds]);
 
-  // Синхронізуємо локальний стан при зміні data
-  useEffect(() => {
+    useEffect(() => {
     setLocalWords(data);
   }, [data]);
 
@@ -46,13 +45,12 @@ function WordsTable({
   const handleAdd = async (id: string) => {
   if (addedWordIds.has(id) || !onAddWord) return;
 
-  // Спочатку локально додаємо
-  setAddedWordIds((prev) => new Set(prev).add(id));
+    setAddedWordIds((prev) => new Set(prev).add(id));
 
   try {
-    await onAddWord(id); // запит до бекенду
+    await onAddWord(id); 
   } catch {
-    // Якщо помилка — відкат локально
+    
     setAddedWordIds((prev) => {
       const newSet = new Set(prev);
       newSet.delete(id);
@@ -61,8 +59,7 @@ function WordsTable({
   }
 };
 
-  // Локальне видалення слова
-  const handleDelete = (id: string) => {
+    const handleDelete = (id: string) => {
     setLocalWords((prev) => prev.filter((word) => word._id !== id));
   };
 
@@ -109,7 +106,7 @@ function WordsTable({
                   {variant === "dictionary" && (
                     <WordActionsMenu
                       word={word}
-                      onDelete={handleDelete} // локальне видалення
+                      onDelete={handleDelete} 
                       onEdit={onEdit}
                     />
                   )}

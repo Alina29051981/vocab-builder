@@ -240,14 +240,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
         font-size: 16px;
         color: var(--black);
-
         padding: 15px;
         width: 110px;
         height: 43px;
-
         border-radius: 15px;
         transition: 0.2s;
     }
@@ -255,17 +252,12 @@
     .navLink:hover {
         color: var(--green);
         background: var(--white);
-
         border: 1px solid var(--green);
-
     }
 
     .active {
-
         color: var(--white);
         background: var(--green);
-
-
     }
 
     .userMobileWrapper {
@@ -305,18 +297,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
         font-size: 16px;
-
-
         padding: 15px;
         width: 110px;
         height: 43px;
-
         border-radius: 15px;
         transition: 0.2s;
     }
-
 
     .center {
         display: flex;

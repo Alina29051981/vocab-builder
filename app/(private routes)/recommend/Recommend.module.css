@@ -63,7 +63,6 @@
 
  @media (min-width: 768px) {
 
-
      .counterWrapper {
          display: flex;
          flex-direction: row;
@@ -87,7 +86,6 @@
 
  @media (min-width: 1440px) {
 
-
      .dashboardWrapper {
          margin-bottom: 24px;
      }
@@ -100,7 +98,6 @@
          display: flex;
          flex-direction: row;
          justify-content: space-between;
-
      }
 
      .counterWrapper {
