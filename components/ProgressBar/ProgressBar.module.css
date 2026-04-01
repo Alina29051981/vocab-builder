@@ -1,10 +1,12 @@
-/* ProgressBar.module.css */
-
 .wrapper {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     gap: 6px;
+    justify-content: flex-end;
+}
+
+.wrapper.table {
+    justify-content: flex-start;
 }
 
 .percent {
@@ -27,6 +29,15 @@
 
 .circle circle:nth-child(2) {
     transition: stroke-dashoffset 0.5s ease;
+}
+
+.tableWrapper {
+    justify-content: flex-start;
+}
+
+.progressCell {
+    text-align: left;
+    min-width: 120px;
 }
 
 @media (min-width: 768px) {

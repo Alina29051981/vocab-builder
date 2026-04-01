@@ -132,6 +132,7 @@
     color: var(--black);
 }
 
+
 .selected {
     display: flex;
     align-items: center;

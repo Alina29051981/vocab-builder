@@ -44,7 +44,7 @@ export default function Filters({ onChange, className }: Props) {
 
   return (
     <div className={`${css.filters} ${className || ""}`}>
-      {/* 🔍 Search */}
+      
       <div className={css.searchWrapper}>
         <input
           type="text"
@@ -54,7 +54,7 @@ export default function Filters({ onChange, className }: Props) {
           className={css.input}
         />
         <svg className={css.searchIcon} width="24" height="24">
-          <use href="#icon-search" />
+          <use href="/sprite.svg#icon-search" />
         </svg>
       </div>
 
@@ -85,7 +85,7 @@ export default function Filters({ onChange, className }: Props) {
               <div className={css.radioCircle}>
                 {isIrregular === opt.value && (
                   <svg width="18" height="18" >
-                    <use href="#dropdown" />
+                    <use href="/sprite.svg#dropdown" />
                   </svg>
                 )}
               </div>

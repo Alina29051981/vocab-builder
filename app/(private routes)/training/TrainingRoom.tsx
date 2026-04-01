@@ -22,14 +22,12 @@ export default function TrainingRoom() {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [showWellDone, setShowWellDone] = useState(false);
 
-  // 🔹 Завантаження слів
-  const { data, isLoading, isError } = useQuery<PaginatedWordsResponse>({
+    const { data, isLoading, isError } = useQuery<PaginatedWordsResponse>({
     queryKey: ["ownWords"],
     queryFn: () => getOwnWords({ page: 1, limit: 25 }),
   });
 
-  // 🔹 Вибір наступного слова
-  const nextWord = useCallback(() => {
+    const nextWord = useCallback(() => {
     if (!data?.results) return;
 
     const remaining = data.results.filter(w => !w.progress || w.progress < 100);
@@ -49,7 +47,6 @@ export default function TrainingRoom() {
     if (data?.results) nextWord();
   }, [data, nextWord]);
 
-  // 🔹 Відправка відповіді
   const submitAnswer = useMutation({
     mutationFn: (word: Word) =>
       postTrainingAnswers([
@@ -64,8 +61,7 @@ export default function TrainingRoom() {
       const result = res[0];
       const isCorrect = !!result.isDone;
 
-      // 🔹 Показ підказки
-      if (isCorrect) {
+           if (isCorrect) {
         toast.success("Correct!");
         setHint(null);
       } else {
@@ -73,8 +69,7 @@ export default function TrainingRoom() {
         toast.error("Incorrect!");
       }
 
-      // 🔹 Оновлення локального прогресу
-      if (currentWord && data?.results) {
+            if (currentWord && data?.results) {
         const updatedResults = data.results.map(w =>
           w._id !== currentWord._id
             ? w
@@ -83,40 +78,34 @@ export default function TrainingRoom() {
         queryClient.setQueryData(["ownWords"], { ...data, results: updatedResults });
       }
 
-      // 🔹 Додаємо до списку відповідей
-      if (currentWord) setAnswers(prev => [...prev, { word: currentWord, isCorrect }]);
+            if (currentWord) setAnswers(prev => [...prev, { word: currentWord, isCorrect }]);
 
       setShowTranslation(true);
 
-      // 🔹 Перевірка завершення сесії
-      if (answers.length + 1 >= Math.min(25, data?.results.length ?? 25)) {
+            if (answers.length + 1 >= Math.min(25, data?.results.length ?? 25)) {
         setShowWellDone(true);
       }
     },
     onError: () => toast.error("Failed to check answer"),
   });
 
-  // 🔹 Save
-  const handleSave = () => {
+    const handleSave = () => {
     if (!currentWord || !userAnswer.trim()) return;
     submitAnswer.mutate(currentWord);
   };
 
-  // 🔹 Cancel
-  const handleCancel = () => {
+    const handleCancel = () => {
     setUserAnswer("");
     setShowTranslation(false);
     setHint(null);
   };
 
-  // 🔹 Плавний прогрес
-  const percent =
+    const percent =
     data?.results && data.results.length > 0
       ? Math.round(data.results.reduce((acc, w) => acc + (w.progress ?? 0), 0) / data.results.length)
       : 0;
 
-  // 🔹 Loader / Error
-  if (isLoading) return <p className={css.info}>Loading words...</p>;
+    if (isLoading) return <p className={css.info}>Loading words...</p>;
   if (isError) return <p className={css.error}>Failed to load words</p>;
   if (!currentWord) return <p className={css.info}>All words learned! 🎉</p>;
 
@@ -126,12 +115,10 @@ export default function TrainingRoom() {
         <ProgressBar percent={percent} variant="training" />
       </div>
 
-      {/* 🔹 Підкладка */}
-      <div className={css.bock}></div>
+         <div className={css.bock}></div>
 
       <div className={css.cardsWrapper}>
-        {/* UA */}
-        <div className={css.card}>
+               <div className={css.card}>
           <div className={css.cardTopRow}>
             <input
               type="text"
@@ -142,12 +129,11 @@ export default function TrainingRoom() {
               disabled={showTranslation}
             />
 
-            {/* 🔹 Підказка праворуч від інпуту */}
-            {hint && <div className={css.hint}>{hint}</div>}
+                      {hint && <div className={css.hint}>{hint}</div>}
 
             <div className={css.langDesktop}>
               <svg className={css.flagIcon}>
-                <use href="#flag-ukraine" />
+                <use href="/sprite.svg#flag-ukraine" />
               </svg>
               <span>Ukrainian</span>
             </div>
@@ -164,21 +150,20 @@ export default function TrainingRoom() {
 
             <div className={css.langMobile}>
               <svg className={css.flagIcon}>
-                <use href="#flag-ukraine" />
+                <use href="/sprite.svg#flag-ukraine" />
               </svg>
               <span>Ukrainian</span>
             </div>
           </div>
         </div>
 
-        {/* EN */}
-        <div className={css.card}>
+                <div className={css.card}>
           <div className={css.cardTopRow}>
             <p className={css.word}>{currentWord.en}</p>
 
             <div className={css.langDesktop}>
               <svg className={css.flagIcon}>
-                <use href="#flag-england" />
+                <use href="/sprite.svg#flag-england" />
               </svg>
               <span>English</span>
             </div>
@@ -187,7 +172,7 @@ export default function TrainingRoom() {
           <div className={css.cardFooterRight}>
             <div className={css.langMobile}>
               <svg className={css.flagIcon}>
-                <use href="#flag-england" />
+                <use href="/sprite.svg#flag-england" />
               </svg>
               <span>English</span>
             </div>

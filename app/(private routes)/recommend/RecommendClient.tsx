@@ -1,15 +1,20 @@
-// app/(private routes)/recommend/RecommendClient.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getRecommendedWords, getUserStatistics, addWordFromOtherUser } from "@/lib/api/words";
+import {
+  getRecommendedWords,
+  getUserStatistics,
+  addWordFromOtherUser,
+  getUserWords,
+} from "@/lib/api/words";
 import WordsTable from "@/components/words/WordsTable";
 import WordsPagination from "@/components/words/WordsPagination";
 import Filters from "@/components/Dashboard/Filters";
 import { PaginatedWordsResponse, Category, Word } from "@/types/word";
-import toast from "react-hot-toast";
 import css from "./Recommend.module.css";
+
+type ApiError = { message: string };
 
 export default function RecommendClient() {
   const [page, setPage] = useState(1);
@@ -18,8 +23,19 @@ export default function RecommendClient() {
   const [isIrregular, setIsIrregular] = useState<boolean | null>(null);
   const [addedWordIds, setAddedWordIds] = useState<Set<string>>(new Set());
 
-  // Запит рекомендацій
-  const { data, isLoading } = useQuery<PaginatedWordsResponse>({
+   useEffect(() => {
+    const fetchAddedWords = async () => {
+      try {
+        const ownWords = await getUserWords(); 
+        setAddedWordIds(new Set(ownWords.map((word) => word._id)));
+      } catch {
+              }
+    };
+
+    fetchAddedWords();
+  }, []);
+
+   const { data, isLoading } = useQuery<PaginatedWordsResponse>({
     queryKey: ["recommendWords", page, keyword, category, isIrregular],
     queryFn: () =>
       getRecommendedWords({
@@ -35,27 +51,32 @@ export default function RecommendClient() {
   const words: Word[] = data?.results ?? [];
   const totalPages = data?.totalPages ?? 1;
 
-  // Кількість слів для вивчення
-  const { data: statsData } = useQuery<{ totalCount: number }>({
+    const { data: statsData } = useQuery<{ totalCount: number }>({
     queryKey: ["recommendWordsCount"],
     queryFn: () => getUserStatistics(),
     placeholderData: { totalCount: 0 },
   });
   const totalCount = statsData?.totalCount ?? 0;
 
-  // Додавання слова по ТЗ через Swagger
-  const handleAddWord = async (wordId: string) => {
-    if (addedWordIds.has(wordId)) return;
+    const handleAddWord = async (wordId: string) => {
+    if (addedWordIds.has(wordId)) {
+      alert("This word is already in your dictionary!");
+      return;
+    }
 
     try {
-      await addWordFromOtherUser(wordId);
-      toast.success("Word added successfully");
-
-      // Блокуємо стрілку
-      setAddedWordIds(new Set(addedWordIds).add(wordId));
-    } catch (err: unknown) {
-      console.error("addWordFromOtherUser error:", err);
-      toast.error("Failed to add word. Maybe it is already in your dictionary.");
+      
+      const addedWord = await addWordFromOtherUser(wordId);
+      if (addedWord) {
+        setAddedWordIds((prev) => new Set(prev).add(wordId));
+        alert("Word successfully added to your dictionary!");
+      } else {
+      
+        alert("This word is already in your dictionary!");
+      }
+    } catch (err) {
+      const error = err as ApiError;
+      alert(error.message || "Failed to add the word. Please try again later.");
     }
   };
 
@@ -87,7 +108,7 @@ export default function RecommendClient() {
           loading={isLoading}
           variant="recommend"
           showArrow
-          addedWordIds={addedWordIds}
+          initialAddedWordIds={addedWordIds}
           onAddWord={handleAddWord}
         />
       </div>

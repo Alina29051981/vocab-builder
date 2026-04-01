@@ -5,6 +5,7 @@ import LogoutButton from "../../../components/LogoutButton/LogoutButton";
 import css from "./MobiMenu.module.css";
 import type { User } from "../../../lib/auth/AuthContext";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface MobileMenuProps {
   user: User;
@@ -14,12 +15,26 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ user, pathname, onClose }: MobileMenuProps) {
  
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  };
+
+  document.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+}, [onClose]);
+
    return (
     <div className={css.mobileMenuOverlay} onClick={onClose}>
       <div className={css.mobileMenu} onClick={(e) => e.stopPropagation()}>
         <button className={css.closeBtn} onClick={onClose} aria-label="Close menu">
           <svg viewBox="0 0 24 24">
-           <use href="#icon-x" /></svg>
+           <use href="/sprite.svg#icon-x" /></svg>
         </button>
 
          <div className={css.mobileUser}>
@@ -56,7 +71,7 @@ export default function MobileMenu({ user, pathname, onClose }: MobileMenuProps)
      <div className={css.bottomImageWrapper}>
   <div className={css.bottomImageWrapper}>
   <Image
-    src="/illustration.webp"
+    src="/images/illustration.webp"
     alt="Decorative"
     fill
     className={css.bottomImage}

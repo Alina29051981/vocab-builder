@@ -12,7 +12,7 @@ export default function UserMenu({ user }: UserMenuProps) {
     <div className={css.user}>
       <span className={css.userGreeting}>{user.name}</span>
       <svg className={css.avatarIcon}>
-        <use href="#avatarIcon" />
+        <use href="/sprite.svg#avatarIcon" />
       </svg>
          </div>
   );

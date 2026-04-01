@@ -25,7 +25,7 @@ export default function HomePage() {
   <div className={css.wrapper}>
     <div className={css.logo}>
       <svg width="36" height="36">
-        <use href="#icon" />
+        <use href="/sprite.svg#icon" />
       </svg>
       <h1 className={css.title}>VocabBuilder</h1>
     </div>

@@ -1,5 +1,4 @@
 // lib/api/words.ts
-import { isAxiosError } from "axios";
 import { api } from "./api";
 import type {
   Word,
@@ -7,7 +6,7 @@ import type {
   CreateNewWordRequest,
   EditWordRequest,
   Category,
-  CreateNewWordResponse
+  CreateNewWordResponse,
 } from "@/types/word";
 
 export async function getOwnWords(params: {
@@ -17,10 +16,7 @@ export async function getOwnWords(params: {
   category?: Category;
   isIrregular?: boolean;
 }): Promise<PaginatedWordsResponse> {
-  const { page, limit, keyword, category, isIrregular } = params;
-  const res = await api.get<PaginatedWordsResponse>("/words/own", {
-    params: { page, limit, ...(keyword && { keyword }), ...(category && { category }), ...(isIrregular !== undefined && { isIrregular }) },
-  });
+  const res = await api.get<PaginatedWordsResponse>("/words/own", { params });
   return res.data;
 }
 
@@ -39,17 +35,20 @@ export async function createWord(data: CreateNewWordRequest): Promise<CreateNewW
   if (data.category === "verb" && data.isIrregular === undefined) {
     throw new Error("isIrregular field is required for verbs");
   }
+
   const token = localStorage.getItem("token");
   if (!token) throw new Error("User not authenticated");
+
   const res = await api.post<CreateNewWordResponse>("/words/create", data, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
   return res.data;
 }
 
-export async function addWordFromOtherUser(id: string): Promise<Word> {
-  const res = await api.post<Word>(`/words/add/${id}`);
-  return res.data;
+export async function addWordFromOtherUser(wordId: string): Promise<Word | null> {
+  const res = await api.post<Word>(`/words/add/${wordId}`);
+  return res.data || null;
 }
 
 export async function editWord(id: string, data: EditWordRequest): Promise<Word> {
@@ -61,23 +60,10 @@ export async function deleteWord(id: string): Promise<{ message: string }> {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("User not authenticated");
 
-  try {
-    const res = await api.delete<{ message: string }>(`/words/delete/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return res.data;
-  } catch (error) {
-    if (isAxiosError(error)) {
-      
-      if (error.response?.status === 404) {
-        return { message: "Word already deleted" };
-      }
-
-      throw new Error(error.response?.data?.message || "Failed to delete word");
-    }
-
-    throw new Error("Failed to delete word");
-  }
+  const res = await api.delete<{ message: string }>(`/words/delete/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
 }
 
 export async function getCategories(): Promise<Category[]> {
@@ -90,7 +76,18 @@ export async function getUserStatistics(): Promise<{ totalCount: number }> {
   return res.data;
 }
 
-export async function getRecommendedWords(params: { page: number; limit: number; keyword?: string; category?: string; isIrregular?: boolean; }) {
+export async function getRecommendedWords(params: {
+  page: number;
+  limit: number;
+  keyword?: string;
+  category?: string;
+  isIrregular?: boolean;
+}): Promise<PaginatedWordsResponse> {
   const res = await api.get<PaginatedWordsResponse>("/words/all", { params });
   return res.data;
 }
+
+export const getUserWords = async (): Promise<Word[]> => {
+  const { data } = await api.get<PaginatedWordsResponse>("/words/own");
+  return data.results;
+};

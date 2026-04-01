@@ -113,6 +113,8 @@
     justify-content: center;
 }
 
+
+
 @media (min-width: 768px) {
     .dictionaryPage {
         padding: 24px;
@@ -131,6 +133,17 @@
         width: auto;
         padding: 0 24px;
     }
+
+    .counterWrapper {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .studyText,
+    .studyNumber {
+        padding: 0 16px 0 0;
+    }
+
 }
 
 @media (min-width: 1440px) {
@@ -154,4 +167,17 @@
     .wordsTableWrapper {
         margin-bottom: 24px;
     }
+
+    .counterFunctionWrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+    }
+
+    .counterWrapper {
+        display: flex;
+        align-items: center;
+    }
+
 }

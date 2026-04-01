@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Page not found - VocabBuilder",
     description: "The page you are looking for does not exist.",
     url: "https://vocab-builder-delta.vercel.app/not-found",
-    images: ["https://vocab-builder.vercel.app/blood-report.webp"],
+    images: ["https://vocab-builder-delta.vercel.app/blood-report.webp"],
   },
 };
 

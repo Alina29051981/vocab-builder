@@ -28,7 +28,7 @@ export default function LogoutButton({ onLogout, className }: LogoutButtonProps)
     >
       Log out
       <svg width="16" height="16">
-        <use href="#arrow" />
+        <use href="/sprite.svg#arrow" />
       </svg>
     </button>
   );

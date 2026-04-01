@@ -11,6 +11,8 @@ interface Props {
 export default function EmptyState({ onCancel }: Props) {
   const router = useRouter();
 
+  
+
   const handleAddWordClick = () => {
     router.push("/dictionary?addWord=true");
   };
@@ -19,7 +21,7 @@ export default function EmptyState({ onCancel }: Props) {
     <div className={css.wrapper}>
       <div className={css.imageWrapper}>
         <Image
-          src="/blood-report.webp"
+          src="/images/blood-report.webp"
           alt="Empty state illustration"
           className={css.image}
           width={144}
@@ -50,7 +52,7 @@ export default function EmptyState({ onCancel }: Props) {
 
         <div className={css.imageWrapperDt}>
         <Image
-          src="/blood-report.webp"
+          src="/images/blood-report.webp"
           alt="Empty state illustration"
           className={css.image}
           width={144}

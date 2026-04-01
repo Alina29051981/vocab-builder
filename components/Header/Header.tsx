@@ -41,17 +41,18 @@ useEffect(() => {
       <div className={css.left}>
         <Link href="/dictionary" className={css.logo}>
           <svg className={css.logoIcon}>
-            <use href="#icon" />
+            <use href="/sprite.svg#icon" />
           </svg>
           <span className={css.title}>VocabBuilder</span>
         </Link>
       </div>
-
+ <nav className={css.center}>
            <nav className={css.navigation}>
         <Link href="/dictionary" className={`${css.navLink} ${pathname === "/dictionary" ? css.active : ""}`}>Dictionary</Link>
         <Link href="/recommend" className={`${css.navLink} ${pathname === "/recommend" ? css.active : ""}`}>Recommend</Link>
         <Link href="/training" className={`${css.navLink} ${pathname === "/training" ? css.active : ""}`}>Training</Link>
-        {user && <UserMenu user={user} />}
+        </nav>
+          {user && <UserMenu user={user} />}
         <LogoutButton />
       </nav>
       
@@ -60,7 +61,7 @@ useEffect(() => {
     <div className={css.mobileUser}>
       <span className={css.userName}>{user.name}</span>
       <svg className={css.avatar}>
-        <use href="#avatarIcon" />
+        <use href="/sprite.svg#avatarIcon" />
       </svg>
     </div>
 
@@ -70,7 +71,7 @@ useEffect(() => {
       aria-label="Toggle menu"
     >
       <svg width="36" height="24">
-        <use href={`#${menuOpen ? "icon-x" : "burger"}`} />
+        <use href={`/sprite.svg#${menuOpen ? "icon-x" : "burger"}`} />
       </svg>
     </button>
   </div>

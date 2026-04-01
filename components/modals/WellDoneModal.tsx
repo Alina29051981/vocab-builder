@@ -17,6 +17,20 @@ interface Props {
 
 export default function WellDoneModal({ answers = [], onClose }: Props) {
   
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  };
+
+  document.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+}, [onClose]);
+
   const correctAnswers = answers.filter(a => a.isCorrect);
   const incorrectAnswers = answers.filter(a => !a.isCorrect);
   const total = answers.length;
@@ -80,7 +94,7 @@ export default function WellDoneModal({ answers = [], onClose }: Props) {
 
            <div className={css.imageWellDone}>
         <Image
-          src="/open orange book floating.webp"
+          src="/images/open orange book floating.webp"
           alt="Well done modal illustration"
           className={css.image}
           width={152}

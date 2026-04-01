@@ -10,8 +10,8 @@ import css from "./AddWordModal.module.css";
 import { Word } from "../../../types/word";
 import { AxiosError } from "axios";
 import type { Resolver } from "react-hook-form";
-
 import WordFormFields from "../WordFormFields/WordFormFields"; 
+import { useEffect } from "react";
 
 interface Props {
   onClose: () => void;
@@ -20,6 +20,20 @@ interface Props {
 
 export default function AddWordModal({ onClose, onWordAdded }: Props) {
   const queryClient = useQueryClient();
+
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  };
+
+  document.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+}, [onClose]);
 
   const {
     register,
@@ -79,7 +93,7 @@ export default function AddWordModal({ onClose, onWordAdded }: Props) {
         <div className={css.closeBtn}>
           <button type="button" onClick={onClose} aria-label="Close">
             <svg className="icon icon-x">
-              <use href="#icon-x" width="24" height="24" />
+              <use href="/sprite.svg#icon-x" width="24" height="24" />
             </svg>
           </button>
         </div>

@@ -59,7 +59,7 @@ export default function WordFormFields({ register, errors, watch, setValue }: Pr
                 <div className={css.radioCircle}>
                   {isIrregularChecked === opt.value && (
                     <svg width="18" height="18">
-                      <use href="#dropdown" />
+                      <use href="/sprite.svg#dropdown" />
                     </svg>
                   )}
                 </div>

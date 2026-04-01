@@ -1,5 +1,5 @@
 <!-- /public/sprite.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 564 466">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" style="display:none">
   <symbol id="avatarIcon" viewBox="0 0 36 36" fill="none">
     <circle cx="18" cy="18" r="18" fill="var(--green)" />
     <g transform="translate(6,6)">
@@ -79,9 +79,10 @@
       fill="url(#gradient-shape-fill)"
     />
 </symbol>
+<!-- Search -->
 <symbol id="icon-search" viewBox="0 0 20 20" fill="none">
-  <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-  <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2"/>
+  <circle cx="11" cy="11" r="8" stroke="#121417" stroke-width="2"/>
+  <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="#121417" stroke-width="2"/>
 </symbol>
 <symbol id="flag-ukraine" viewBox="0 0 28 28" >
   <circle cx="14" cy="14" r="14" fill="#FFDA44" />

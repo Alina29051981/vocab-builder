@@ -15,14 +15,15 @@ export default function AuthLayout({
        
         <div className={css.logo}>
           <svg width="36" height="36">
-            <use href="#icon" />
+            <use href="/sprite.svg#icon" />         
           </svg>
+           
           <p className={css.text}>VocabBuilder</p>
         </div>
 
                 <div className={`${css.illustration} ${css.mobile}`}>
           <Image
-            src="/image.webp"
+            src="/images/illustration-auth.webp"
             alt="Learning illustration mobile"
             width={247}
             height={191}
@@ -42,7 +43,7 @@ export default function AuthLayout({
             <div className={`${css.illustration} ${css.desktop}`}>
         <div className={css.imageWrapper}>
           <Image
-            src="/image.webp"
+            src="/images/illustration-auth.webp"
             alt="Learning illustration desktop"
             width={498}
             height={435}

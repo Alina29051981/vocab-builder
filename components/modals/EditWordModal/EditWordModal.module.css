@@ -7,7 +7,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 10000;
+    animation: fadeIn 0.2s ease-in-out;
 }
 
 .modal {
@@ -20,6 +21,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    animation: slideUp 0.25s ease-out;
 }
 
 .modal form {
@@ -36,7 +38,7 @@
     font-size: 16px;
     color: var(--white);
     outline: none;
-    transition: border 0.2s;
+    transition: border 0.2s, background-color 0.2s, color 0.2s;
 }
 
 .modal input:hover,
@@ -66,6 +68,7 @@
     height: 48px;
     line-height: 1.5;
     color: var(--black);
+    transition: color 0.2s;
 }
 
 .modal .buttonSave:hover {
@@ -84,6 +87,7 @@
     font-size: 16px;
     line-height: 1.5;
     color: var(--white);
+    transition: background 0.2s, color 0.2s;
 }
 
 .modal .buttonCancel:hover {
@@ -175,5 +179,27 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }

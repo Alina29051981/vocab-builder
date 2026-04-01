@@ -1,7 +1,7 @@
-// components/modals/EditWordModal.tsx
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
@@ -20,23 +20,24 @@ interface Props {
 export default function EditWordModal({ word, onClose }: Props) {
   const queryClient = useQueryClient();
 
- const {
-  register,
-  handleSubmit,
-  reset,
-  formState: { errors, isSubmitting },
-} = useForm<FormValues>({
- 
-  resolver: yupResolver(createWordSchema) as Resolver<FormValues>,
-  defaultValues: {
-   en: "",
-      ua: "",
-      category: "noun",
-      isIrregular: false,
-  },
-});
-  
-  
+  useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  };
+
+  document.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+}, [onClose]);
+
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormValues>({
+    resolver: yupResolver(createWordSchema) as Resolver<FormValues>,
+    defaultValues: { en: "", ua: "", category: "noun", isIrregular: false },
+  });
 
   useEffect(() => {
     reset({
@@ -57,23 +58,22 @@ export default function EditWordModal({ word, onClose }: Props) {
       };
 
       await editWord(word._id, payload);
-
       toast.success("Word updated successfully");
       await queryClient.invalidateQueries({ queryKey: ["ownWords"] });
       onClose();
-    } catch (err: unknown) {
+    } catch (err) {
       console.error("editWord error:", err);
       toast.error("Failed to update word");
     }
   };
 
-  return (
-    <div className={css.backdrop}>
-      <div className={css.modal}>
+  return createPortal(
+    <div className={css.backdrop} onClick={onClose}>
+      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
         <div className={css.closeBtn}>
           <button type="button" onClick={onClose} aria-label="Close">
-            <svg className="icon icon-x">
-              <use href="#icon-x" width="24" height="24"></use>
+            <svg className="icon icon-x" width="24" height="24">
+              <use href="/sprite.svg#icon-x" />
             </svg>
           </button>
         </div>
@@ -81,14 +81,11 @@ export default function EditWordModal({ word, onClose }: Props) {
         <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
           <select {...register("category")}>
             {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
+              <option key={cat} value={cat}>{cat}</option>
             ))}
           </select>
           <p className={css.error}>{errors.category?.message}</p>
 
-          {/* UA Input with flag */}
           <div className={css.inputWithFlag}>
             <input {...register("ua")} placeholder="Ukrainian" />
             <div className={css.flagWrapper}>
@@ -100,7 +97,6 @@ export default function EditWordModal({ word, onClose }: Props) {
           </div>
           <p className={css.error}>{errors.ua?.message}</p>
 
-          {/* EN Input with flag */}
           <div className={css.inputWithFlag}>
             <input {...register("en")} placeholder="English" />
             <div className={css.flagWrapper}>
@@ -113,15 +109,12 @@ export default function EditWordModal({ word, onClose }: Props) {
           <p className={css.error}>{errors.en?.message}</p>
 
           <div className={css.buttons}>
-            <button className={css.buttonSave} type="submit" disabled={isSubmitting}>
-              Save
-            </button>
-            <button className={css.buttonCancel} type="button" onClick={onClose}>
-              Cancel
-            </button>
+            <button className={css.buttonSave} type="submit" disabled={isSubmitting}>Save</button>
+            <button className={css.buttonCancel} type="button" onClick={onClose}>Cancel</button>
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
