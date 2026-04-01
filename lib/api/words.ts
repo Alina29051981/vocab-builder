@@ -36,13 +36,7 @@ export async function createWord(data: CreateNewWordRequest): Promise<CreateNewW
     throw new Error("isIrregular field is required for verbs");
   }
 
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("User not authenticated");
-
-  const res = await api.post<CreateNewWordResponse>("/words/create", data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
+  const res = await api.post<CreateNewWordResponse>("/words/create", data);
   return res.data;
 }
 
@@ -57,12 +51,7 @@ export async function editWord(id: string, data: EditWordRequest): Promise<Word>
 }
 
 export async function deleteWord(id: string): Promise<{ message: string }> {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("User not authenticated");
-
-  const res = await api.delete<{ message: string }>(`/words/delete/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await api.delete<{ message: string }>(`/words/delete/${id}`);
   return res.data;
 }
 
