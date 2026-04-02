@@ -44,16 +44,33 @@
     font-size: 14px;
     text-align: left;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: color 0.2s;
+    color: var(--black);
+}
+
+.menuDropdown button .icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    stroke-width: 1.3px;
+    stroke: rgba(18, 20, 23, 0.5);
+    transition: stroke 0.2s;
 }
 
 .menuDropdown button:hover {
     color: var(--green);
+}
 
+.menuDropdown button:hover .icon {
+    stroke: var(--green);
 }
 
 .menuDropdown button:active {
     color: var(--green);
+}
+
+.menuDropdown button:active .icon {
+    stroke: var(--green);
 }
 
 .menuItem {
@@ -68,18 +85,4 @@
     font-size: 14px;
     color: var(--black);
     transition: 0.2s;
-}
-
-.icon {
-    width: 16px;
-    height: 16px;
-    display: block;
-    flex-shrink: 0;
-    stroke-width: 1.3px;
-    stroke: rgba(18, 20, 23, 0.5);
-}
-
-.icon:hover {
-
-    stroke: var(--green);
 }

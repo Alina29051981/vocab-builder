@@ -1,6 +1,15 @@
+input.inputError {
+    border: 1px solid #d80027;
+}
+
 .error {
+    font-family: var(--font-family);
+    font-weight: 400;
     font-size: 12px;
-    color: red;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: #d80027;
+    margin-top: 4px;
 }
 
 .radioGroup {
@@ -63,6 +72,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 8px;
 }
 
 .flagWrapper p {
@@ -70,11 +80,19 @@
     color: var(--white);
 }
 
+.fieldSpacing {
+    margin-top: 16px;
+}
+
 @media (min-width: 768px) {
     .inputWithFlag {
         flex-direction: row;
         align-items: center;
         gap: 32px;
+    }
+
+    .fieldSpacing {
+        margin-top: 18px;
     }
 
     .inputWithFlag input {

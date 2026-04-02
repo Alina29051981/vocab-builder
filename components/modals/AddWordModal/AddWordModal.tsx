@@ -9,31 +9,39 @@ import { createWordSchema, FormValues } from "../../../lib/validation/createWord
 import css from "./AddWordModal.module.css";
 import { Word } from "../../../types/word";
 import { AxiosError } from "axios";
-import type { Resolver } from "react-hook-form";
+import type { Resolver, FieldError, FieldErrors } from "react-hook-form";
 import WordFormFields from "../WordFormFields/WordFormFields"; 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   onClose: () => void;
   onWordAdded: (newWord: Word) => void;
 }
 
+function mapServerErrorsToFieldErrors(
+  serverErrors: Partial<Record<keyof FormValues, string>>
+): FieldErrors<FormValues> {
+  const result: FieldErrors<FormValues> = {};
+  for (const key in serverErrors) {
+    const msg = serverErrors[key as keyof FormValues];
+    if (msg) {
+      result[key as keyof FormValues] = { type: "server", message: msg } as FieldError;
+    }
+  }
+  return result;
+}
+
 export default function AddWordModal({ onClose, onWordAdded }: Props) {
   const queryClient = useQueryClient();
+  const [serverErrors, setServerErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
 
-useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      onClose();
-    }
-  };
-
-  document.addEventListener("keydown", handleKeyDown);
-
-  return () => {
-    document.removeEventListener("keydown", handleKeyDown);
-  };
-}, [onClose]);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   const {
     register,
@@ -52,14 +60,13 @@ useEffect(() => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setServerErrors({});
     try {
       const payload = {
         en: data.en.trim(),
         ua: data.ua.trim(),
         category: data.category,
-        ...(data.category === "verb"
-          ? { isIrregular: data.isIrregular }
-          : {}),
+        ...(data.category === "verb" ? { isIrregular: data.isIrregular } : {}),
       };
 
       const createdWord = await createWord(payload);
@@ -74,7 +81,7 @@ useEffect(() => {
       await queryClient.invalidateQueries({ queryKey: ["ownWords"] });
       onWordAdded(newWord);
       onClose();
-    } catch (err) {
+    } catch (err: unknown) {
       let message = "Failed to create word";
 
       if (err instanceof AxiosError) {
@@ -83,7 +90,12 @@ useEffect(() => {
         message = err.message;
       }
 
-      toast.error(message);
+      const fieldErrors: Partial<Record<keyof FormValues, string>> = {};
+      if (/en field/i.test(message) || /English letters/i.test(message)) fieldErrors.en = message;
+      if (/ua field/i.test(message) || /Ukrainian letters/i.test(message)) fieldErrors.ua = message;
+
+      if (Object.keys(fieldErrors).length === 0) toast.error(message);
+      setServerErrors(fieldErrors);
     }
   };
 
@@ -104,15 +116,14 @@ useEffect(() => {
         </p>
 
         <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
-          
-          <WordFormFields
+          <div className="modal"><WordFormFields
             register={register}
-            errors={errors}
+            errors={{ ...errors, ...mapServerErrorsToFieldErrors(serverErrors) }}
             watch={watch}
             setValue={setValue}
           />
-
-                    <div className={css.buttons}>
+</div>
+          <div className={css.buttons}>
             <button
               className={css.buttonSave}
               type="submit"

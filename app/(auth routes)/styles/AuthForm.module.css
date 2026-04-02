@@ -82,9 +82,17 @@
     color: #121417;
 }
 
+input.inputError {
+    border: 1px solid #d80027;
+}
+
 .error {
+    font-family: var(--font-family);
+    font-weight: 400;
     font-size: 12px;
-    color: red;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: #d80027;
     margin-top: 4px;
 }
 

@@ -27,7 +27,7 @@
 .modal form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+
 }
 
 .modal input,
@@ -130,10 +130,44 @@
     font-weight: 500;
     font-size: 14px;
     color: var(--white);
-    padding: 0;
+    margin: 16px 0 8px;
+}
+
+.inputError {
+    border-radius: 8px;
+    padding: 10px 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal input.inputError {
+    border: 1px solid #d80027;
+}
+
+.error {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: #d80027;
+    margin-top: 4px;
+}
+
+.inputWithFlag input.inputError {
+    flex: 1;
+    min-width: 0;
 }
 
 @media (min-width: 768px) {
+    .inputWithFlag {
+        margin-bottom: 18px;
+    }
+
+    .inputWithFlag:last-child {
+        margin-bottom: 0;
+    }
+
     .modal {
         padding: 48px 64px;
         max-width: 622px;
@@ -143,10 +177,6 @@
         height: 56px;
     }
 
-    .modal select {
-        width: 204px;
-        height: 48px;
-    }
 
     .inputWithFlag {
         flex-direction: row;

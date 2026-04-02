@@ -83,7 +83,6 @@
     font-family: var(--font-family);
 }
 
-/* Світла тема */
 .light .selected {
     background: var(--green);
     border: 1px solid rgba(252, 252, 252, 0.3);
@@ -131,7 +130,6 @@
 .light .option:hover {
     color: var(--black);
 }
-
 
 .selected {
     display: flex;

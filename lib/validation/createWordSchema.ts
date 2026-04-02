@@ -1,5 +1,5 @@
 // components/lib/validation/createWordSchema.ts
-import { object, string, boolean, mixed, ObjectSchema } from "yup";
+import * as yup from "yup"; 
 import { CATEGORIES, Category } from "../../types/word";
 import { validateVerbEn } from "./utils"; 
 
@@ -10,10 +10,14 @@ export type FormValues = {
   isIrregular: boolean;
 };
 
-
-export const createWordSchema: ObjectSchema<FormValues> = object({
-  en: string()
-    .required("English is required")
+export const createWordSchema: yup.ObjectSchema<FormValues> = yup.object({
+  en: yup
+    .string()
+    .required("English word is required")
+    .matches(
+      /^[A-Za-z\s'-]+$/,
+      "The en field can include only English letters, spaces, apostrophes, and hyphens"
+    )
     .test("verb-format", function (value) {
       const { category, isIrregular } = this.parent as FormValues;
       if (category === "verb" && isIrregular) {
@@ -21,9 +25,16 @@ export const createWordSchema: ObjectSchema<FormValues> = object({
       }
       return true;
     }),
-  ua: string().required("Ukrainian is required"),
-  category: mixed<Category>()
+  ua: yup
+    .string()
+    .required("Ukrainian translation is required")
+    .matches(
+      /^[А-ЯІЄЇҐа-яієїґʼ\s-]+$/u,
+      "The ua field can include only Ukrainian letters, spaces, apostrophes, and hyphens"
+    ),
+  category: yup
+    .mixed<Category>()
     .oneOf(CATEGORIES, "Select a valid category")
     .required("Category is required"),
-  isIrregular: boolean().required(), 
+  isIrregular: yup.boolean().required(), 
 });

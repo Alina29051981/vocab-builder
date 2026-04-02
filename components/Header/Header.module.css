@@ -26,6 +26,7 @@
 }
 
 .logoIcon {
+    flex-shrink: 0;
     height: 36px;
     width: 36px;
 }
@@ -179,6 +180,7 @@
 }
 
 .avatar {
+    flex-shrink: 0;
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -282,9 +284,13 @@
         line-height: 1.45455;
     }
 
+    .avatar,
     .avatarIcon {
-        height: 48px;
         width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--green);
+        flex-shrink: 0;
     }
 }
 

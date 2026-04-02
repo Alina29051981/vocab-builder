@@ -6,17 +6,6 @@
       <path d="M12 4C13.0609 4 14.0783 4.42143 14.8284 5.17157C15.5786 5.92172 16 6.93914 16 8C16 9.06087 15.5786 10.0783 14.8284 10.8284C14.0783 11.5786 13.0609 12 12 12C10.9391 12 9.92172 11.5786 9.17158 10.8284C8.42143 10.0783 8 9.06087 8 8C8 6.93914 8.42143 5.92172 9.17158 5.17157C9.92172 4.42143 10.9391 4 12 4ZM12 20C12 20 20 20 20 18C20 15.6 16.1 13 12 13C7.9 13 4 15.6 4 18C4 20 12 20 12 20Z" fill="#FCFCFC" fill-opacity="0.7" />
     </g>
   </symbol>
-  <symbol id="avatarIcons" viewBox="0 0 36 36" fill="none">
-    <circle cx="18" cy="18" r="18" fill="currentColor" />
-    <g transform="translate(6,6)">
-      <path d="M12 4C13.0609 4 14.0783 4.42143 14.8284 5.17157C15.5786 5.92172 16 6.93914 16 8C16 9.06087 15.5786 10.0783 14.8284 10.8284C14.0783 11.5786 13.0609 12 12 12C10.9391 12 9.92172 11.5786 9.17158 10.8284C8.42143 10.0783 8 9.06087 8 8C8 6.93914 8.42143 5.92172 9.17158 5.17157C9.92172 4.42143 10.9391 4 12 4ZM12 20C12 20 20 20 20 18C20 15.6 16.1 13 12 13C7.9 13 4 15.6 4 18C4 20 12 20 12 20Z"
-        fill="var(--green)" fill-opacity="0.7" />
-    </g>
-  </symbol>
-  <symbol id="dropdown" viewBox="0 0 18 18" fill="none">
-    <rect x="1" y="1" width="16" height="16" rx="8" stroke="#85AA9F" stroke-width="2"/>
-    <rect x="4" y="4" width="10" height="10" rx="5" fill="#85AA9F"/>
-  </symbol>
   <symbol id="arrow" viewBox="0 0 16 16" fill="none">
     <path d="M1 8H14" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M10 4L14 8L10 12" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
@@ -39,19 +28,12 @@
     <path fill="none" stroke="#fcfcfc" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.5" d="M24 8l-16 16"/>
     <path fill="none" stroke="#fcfcfc" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.5" d="M8 8l16 16"/>
   </symbol>
-  <symbol id="icon" viewBox="0 0 36 36" fill="none">
-    <circle cx="18" cy="18" r="18" fill="var(--green)" />
-    <g transform="translate(6,6)">
-      <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M11.9504 10.6667C17.2339 6.68175 17.4672 4.26667 11.9504 0C6.3284 4.35771 7.05304 6.66752 11.9504 10.6667ZM10.6667 12.0504C6.68175 6.76691 4.26667 6.53366 0 12.0504C4.35771 17.6724 6.66752 16.9478 10.6667 12.0504ZM23.9998 12.0504C20.0149 6.76691 17.5998 6.53366 13.3331 12.0504C17.6908 17.6724 20.0006 16.9478 23.9998 12.0504ZM11.9504 23.9997C17.2339 20.0148 17.4672 17.5997 11.9504 13.333C6.3284 17.6907 7.05304 20.0005 11.9504 23.9997Z"
-            fill="#FCFCFC"
-        />
-    </g>
-  </symbol>
-</symbol>
-<symbol id="icon-eye-2" viewBox="0 0 20 20" fill="none">
+</svg>
+<!-- <symbol id="dropdown" viewBox="0 0 18 18" fill="none">
+    <rect x="1" y="1" width="16" height="16" rx="8" stroke="#85AA9F" stroke-width="2"/>
+    <rect x="4" y="4" width="10" height="10" rx="5" fill="#85AA9F"/>
+  </symbol> -->
+<!-- <symbol id="icon-eye-2" viewBox="0 0 20 20" fill="none">
   <g clip-path="url(#clip0_83_22633)">
     <path d="M0.833252 10C0.833252 10 4.16659 3.33333 9.99992 3.33333C15.8333 3.33333 19.1666 10 19.1666 10C19.1666 10 15.8333 16.6667 9.99992 16.6667C4.16659 16.6667 0.833252 10 0.833252 10Z" stroke="#121417" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z" stroke="#121417" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -72,19 +54,13 @@
       <rect width="20" height="20" fill="white" />
     </clipPath>
   </defs>
-</symbol>
-<symbol id="icon-gradient-shape" viewBox="0 0 564 466">
-  <path
-      d="M58.7119 2.23114e-05L754.006 75.8887L508.059 629.844L2.1427e-05 235.481L58.7119 2.23114e-05Z"
-      fill="url(#gradient-shape-fill)"
-    />
-</symbol>
+</symbol> -->
 <!-- Search -->
-<symbol id="icon-search" viewBox="0 0 20 20" fill="none">
+<!-- <symbol id="icon-search" viewBox="0 0 20 20" fill="none">
   <circle cx="11" cy="11" r="8" stroke="#121417" stroke-width="2"/>
   <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="#121417" stroke-width="2"/>
-</symbol>
-<symbol id="flag-ukraine" viewBox="0 0 28 28" >
+</symbol> -->
+<!-- <symbol id="flag-ukraine" viewBox="0 0 28 28" >
   <circle cx="14" cy="14" r="14" fill="#FFDA44" />
   <path d="M0 14C0 6.26806 6.26806 0 14 0C21.7319 0 28 6.26806 28 14H0Z" fill="#338AF3" />
 </symbol>
@@ -103,8 +79,8 @@
   <path d="M10.3469 17.6522H10.3468L4.09961 23.8994C4.38683 24.1868 4.68712 24.4609 4.9984 24.7224L10.3469 19.3737V17.6522Z" fill="#D80027" />
   <path d="M10.3476 10.3479V10.3478L4.10028 4.10046C3.81295 4.38768 3.53886 4.68797 3.27734 4.99925L8.62594 10.3479H10.3476V10.3479Z" fill="#D80027" />
   <path d="M17.6523 10.3479L23.8997 4.10053C23.6125 3.8132 23.3122 3.53911 23.0009 3.27765L17.6523 8.62625V10.3479Z" fill="#D80027" />
-</symbol>
-<symbol id="icon-edit" viewBox="0 0 16 16" fill="none" >
+</symbol> -->
+<!-- <symbol id="icon-edit" viewBox="0 0 16 16" fill="none" >
   <path d="M11.334 1.99998C11.5091 1.82488 11.7169 1.68599 11.9457 1.59123C12.1745 1.49647 12.4197 1.44769 12.6673 1.44769C12.9149 1.44769 13.1601 1.49647 13.3889 1.59123C13.6177 1.68599 13.8256 1.82488 14.0007 1.99998C14.1757 2.17507 14.3146 2.38294 14.4094 2.61172C14.5042 2.84049 14.5529 3.08569 14.5529 3.33331C14.5529 3.58093 14.5042 3.82613 14.4094 4.05491C14.3146 4.28368 14.1757 4.49155 14.0007 4.66664L5.00065 13.6666L1.33398 14.6666L2.33398 11L11.334 1.99998Z" stroke="#85AA9F" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
 </symbol>
 <symbol id="icon-delete" viewBox="0 0 16 16" fill="none" >
@@ -112,26 +88,14 @@
   <path d="M12.6673 3.99998V13.3333C12.6673 13.6869 12.5268 14.0261 12.2768 14.2761C12.0267 14.5262 11.6876 14.6666 11.334 14.6666H4.66732C4.3137 14.6666 3.97456 14.5262 3.72451 14.2761C3.47446 14.0261 3.33398 13.6869 3.33398 13.3333V3.99998M5.33398 3.99998V2.66665C5.33398 2.31302 5.47446 1.97389 5.72451 1.72384C5.97456 1.47379 6.3137 1.33331 6.66732 1.33331H9.33398C9.68761 1.33331 10.0267 1.47379 10.2768 1.72384C10.5268 1.97389 10.6673 2.31302 10.6673 2.66665V3.99998" stroke="#85AA9F" stroke-opacity="0.94" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
   <path d="M6.66602 7.33331V11.3333" stroke="#85AA9F" stroke-opacity="0.94" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
   <path d="M9.33398 7.33331V11.3333" stroke="#85AA9F" stroke-opacity="0.94" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-</symbol>
-<symbol id="icon-close" viewBox="0 0 24 24">
-  <path d="M18 6L6 18" stroke="#FCFCFC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M6 6L18 18" stroke="#FCFCFC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-</symbol>
-<symbol id="icon-btn" viewBox="0 0 32 32">
-  <path fill="none" stroke="#85aa9f" style="stroke: var(--color4, #85aa9f)" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="2.6667" d="M16 4c6.627 0 12 5.373 12 12s-5.373 12-12 12c-6.627 0-12-5.373-12-12s5.373-12 12-12z"></path>
-  <path fill="#85aa9f" style="fill: var(--color4, #85aa9f)" d="M16 9.333c3.682 0 6.667 2.985 6.667 6.667s-2.985 6.667-6.667 6.667c-3.682 0-6.667-2.985-6.667-6.667s2.985-6.667 6.667-6.667z"></path>
-</symbol>
-<symbol id="tick" viewBox="0 0 20 20" fill="none">
+</symbol> -->
+<!-- <symbol id="tick" viewBox="0 0 20 20" fill="none">
   <path d="M5 10L10 15L15 10" stroke="#121417" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-</symbol>
-<symbol id="icon-status-dot" viewBox="0 0 14 14">
-  <circle
-    cx="7"
-    cy="7"
-    r="5"
-    fill="#38CD3E"
-    stroke="#FFFFFF"
-    stroke-width="2"
-  />
-</symbol>
-</svg>
+</symbol> -->
+<!-- <symbol id="avatarIcons" viewBox="0 0 36 36" fill="none">
+    <circle cx="18" cy="18" r="18" fill="currentColor" />
+    <g transform="translate(6,6)">
+      <path d="M12 4C13.0609 4 14.0783 4.42143 14.8284 5.17157C15.5786 5.92172 16 6.93914 16 8C16 9.06087 15.5786 10.0783 14.8284 10.8284C14.0783 11.5786 13.0609 12 12 12C10.9391 12 9.92172 11.5786 9.17158 10.8284C8.42143 10.0783 8 9.06087 8 8C8 6.93914 8.42143 5.92172 9.17158 5.17157C9.92172 4.42143 10.9391 4 12 4ZM12 20C12 20 20 20 20 18C20 15.6 16.1 13 12 13C7.9 13 4 15.6 4 18C4 20 12 20 12 20Z"
+        fill="var(--green)" fill-opacity="0.7" />
+    </g>
+  </symbol> -->

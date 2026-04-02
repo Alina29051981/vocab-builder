@@ -1,4 +1,3 @@
-// components/SortDropdown/SortDropdown.tsx
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -42,34 +41,49 @@ export default function SortDropdown({
   const selectedOption = options.find((opt) => opt.value === value) || null;
 
   return (
-    <div className={`${styles.wrapper} ${theme === "light" ? styles.light : ""}`} ref={dropdownRef}>
+    <div
+      className={`${styles.wrapper} ${theme === "light" ? styles.light : ""}`}
+      ref={dropdownRef}
+    >
       <div
         className={styles.selected}
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {selectedOption?.label || "Select..."}
 
-        <svg className={styles.arrow} width="20" height="20">
-          <use href="#tick" />
+        <svg
+          className={styles.arrow}
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <path
+            d="M5 10L10 15L15 10"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </div>
 
-     {isOpen && (
-  <div className={styles.dropdown}>
-    {options.map((option, idx) => (         
-      <div
-        key={`${option.value}-${idx}`}       
-        className={styles.option}
-        onClick={() => {
-          onChange(option.value);
-          setIsOpen(false);
-        }}
-      >
-        {option.label}
-      </div>
-    ))}
-  </div>
-)}
+      {isOpen && (
+        <div className={styles.dropdown}>
+          {options.map((option, idx) => (
+            <div
+              key={`${option.value}-${idx}`}
+              className={styles.option}
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+              }}
+            >
+              {option.label}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
