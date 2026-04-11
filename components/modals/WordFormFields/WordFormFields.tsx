@@ -9,7 +9,7 @@ import {
   UseFormWatch,
 } from "react-hook-form";
 import { FormValues } from "../../../lib/validation/createWordSchema";
-import SortDropdown from "../../SortDropdown/SortDropdown";
+import SortDropdown from "../../Dashboard/Filters/SortDropdown/SortDropdown";
 
 interface Props {
   register: UseFormRegister<FormValues>;

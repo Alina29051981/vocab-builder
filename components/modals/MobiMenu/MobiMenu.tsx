@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import LogoutButton from "../../../components/LogoutButton/LogoutButton";
+import LogoutButton from "../../Header/LogoutButton/LogoutButton";
 import css from "./MobiMenu.module.css";
 import type { User } from "../../../lib/auth/AuthContext";
 import Image from "next/image";

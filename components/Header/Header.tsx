@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../lib/auth/AuthContext";
-import LogoutButton from "../LogoutButton/LogoutButton";
+import LogoutButton from "./LogoutButton/LogoutButton";
 import UserMenu from "./UserMenu";
 import MobileMenu from "../modals/MobiMenu/MobiMenu";
 import css from "./Header.module.css";

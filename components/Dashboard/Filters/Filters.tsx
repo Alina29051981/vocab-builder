@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import css from "./Filters.module.css";
-import { Category, CATEGORIES } from "../../types/word";
-import SortDropdown from "../SortDropdown/SortDropdown";
+import { Category, CATEGORIES } from "../../../types/word";
+import SortDropdown from "./SortDropdown/SortDropdown";
 
 interface Props {
   onChange?: (params: {

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { getAllWords, deleteWord } from "@/lib/api/words";
-import Filters from "@/components/Dashboard/Filters";
+import Filters from "@/components/Dashboard/Filters/Filters";
 import WordsTable from "@/components/words/WordsTable";
 import WordsPagination from "@/components/words/WordsPagination";
 import AddWordModal from "@/components/modals/AddWordModal/AddWordModal";

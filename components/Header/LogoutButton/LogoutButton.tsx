@@ -2,7 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAuth } from "../../lib/auth/AuthContext";
+import { useAuth } from "../../../lib/auth/AuthContext";
 import css from "./LogoutButton.module.css";
 
 interface LogoutButtonProps {

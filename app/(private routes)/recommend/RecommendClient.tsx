@@ -10,7 +10,7 @@ import {
 } from "@/lib/api/words";
 import WordsTable from "@/components/words/WordsTable";
 import WordsPagination from "@/components/words/WordsPagination";
-import Filters from "@/components/Dashboard/Filters";
+import Filters from "@/components/Dashboard/Filters/Filters";
 import { PaginatedWordsResponse, Category, Word } from "@/types/word";
 import css from "./Recommend.module.css";
 
